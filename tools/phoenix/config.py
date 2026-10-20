@@ -54,10 +54,6 @@ def tool_output_dir(run_id, tool, root=TOOL):
     return run_dir(run_id, root) / _component(tool)
 
 
-def validation_dir(suite_id, tool, root=TOOL):
-    return configured_path('results', root) / 'validations' / _component(suite_id) / _component(tool)
-
-
 def tool_state_dir(tool, root=TOOL):
     if tool != 'phoenix':
         raise ValueError('This configuration belongs to Phoenix only.')
@@ -75,3 +71,7 @@ def phoenix_url(root=TOOL):
 
 def phoenix_project(root=TOOL):
     return load_config(root)['phoenix']['project']
+
+
+def rosa_checkout(root=TOOL):
+    return resolve_path(load_config(root)['rosa']['checkout'], root)

@@ -1,14 +1,35 @@
 # ROSA Evaluation
 
-Local tools for observing and testing ROSA experiments. Each tool owns its Python
-virtual environment, dependency lockfile, and configuration. Phoenix is the only
-integrated tool today; it records traces, not answer-quality scores.
+Independent tools for observing ROSA. Phoenix is the only tool integrated today.
+There is no experiment suite or scripted model harness in this repository.
 
-## Teammate setup
+## Start Phoenix
 
-Prerequisites: Ubuntu 24.04 (or WSL), uv, and Python 3.12. Running ROSA experiments
-also requires ROS 2 Jazzy and a sibling `rosa-research` checkout. Phoenix itself
-does not require ROS, ROSA, or Ollama.
+Prerequisites: uv and Python 3.12 on Ubuntu/WSL. From this repository:
+
+```bash
+cd tools/phoenix
+uv sync --locked
+uv run phoenix-local start
+```
+
+Open http://localhost:6006. From the same folder:
+
+```bash
+uv run phoenix-local status
+uv run phoenix-local stop
+```
+
+`uv sync --locked` installs the committed dependency versions without changing the
+lockfile. `uv run` selects this tool's environment. `phoenix-local` is our installed
+launcher command. Stopping Phoenix preserves stored traces.
+
+Starting the server does **not** automatically instrument ROSA. The agent process
+must send traces to it. The launcher below does that for a live ROSA/Ollama run.
+
+## Trace a real ROSA run
+
+Keep the projects next to each other:
 
 ```text
 project/
@@ -16,159 +37,114 @@ project/
   rosa-evaluation/
 ```
 
-After cloning this repository, start Phoenix from its own directory:
+The ROSA checkout needs its uv dependencies (including Ollama and tracing groups),
+Python 3.12, and ROS 2 Jazzy. Ollama must be running with the selected model.
+Copy the evaluation root `.env.example` to `.env` if you have no existing `.env`,
+and set the Ollama endpoint/model there. On WSL the endpoint may be the Windows
+host address rather than localhost.
+
+With Phoenix running, from `tools/phoenix/`:
 
 ```bash
-cd tools/phoenix
-uv sync --locked
-uv run phoenix-local start
-uv run phoenix-local status
-uv run python -m rosa_phoenix.smoke
+./trace-rosa.sh
 ```
 
-Open http://localhost:6006. The smoke command sends one test trace and reads it
-back; it does not run an LLM. To stop the server:
+This invokes the actual ROSA agent with Ollama and asks it to list ROS 2 nodes.
+It sends model/tool traces to Phoenix; select `rosa-local` in the browser.
+This is one live tracing launcher, not a test suite. For a different task:
 
 ```bash
-uv run phoenix-local stop
+./trace-rosa.sh --query "List the currently running ROS 2 nodes."
 ```
 
-`uv sync --locked` installs the versions recorded in `uv.lock` without changing
-that lockfile. `uv run` uses this tool's environment automatically. `phoenix-local`
-is **our project's installed command**, not a uv or upstream Phoenix command.
-`python -m rosa_phoenix.smoke` runs our smoke-check module. No environment
-activation or repository-root Python imports are needed for these tool commands.
-
-From the repository root, the existing convenience script also works:
-
-```bash
-./tools/phoenix/run.sh start
-./tools/phoenix/run.sh smoke
-./tools/phoenix/run.sh stop
-```
-
-For a teammate using Codex, this is a suitable setup request:
-
-> Read this README and inspect the project first. Set up the Phoenix uv project
-> using the committed lockfile, start it, and run its smoke check. Preserve local
-> configuration and stored data. If rosa-research and ROS 2 Jazzy are available,
-> run the controlled integration validation too. Report what passed and anything
-> still needed. Do not upgrade dependencies, commit credentials, or change ROSA
-> application code as part of setup.
+`--query` is our launcher's option for the message sent to ROSA. Other options
+are listed by `./trace-rosa.sh --help`. The script sources ROS 2 Jazzy and uses
+**ROSA's own environment**, keeping its dependencies separate from the server's.
+The default query is read-only; a different query can cause ROSA to execute tools.
+Existing team scripts need to enable instrumentation too; merely starting Phoenix
+does not trace arbitrary Python processes. `tracing.py` contains the reusable
+tracing context used by this launcher, and `trace_rosa.py` shows its integration.
 
 ## Configuration
 
-Phoenix owns `tools/phoenix/config.toml`. Put personal overrides in
-`tools/phoenix/config.local.toml`, which Git ignores. For example:
+Each tool owns its settings. Phoenix defaults are in
+`tools/phoenix/config.toml`. Personal overrides belong in
+`tools/phoenix/config.local.toml` (ignored by Git), for example:
 
 ```toml
 [phoenix]
 url = "http://127.0.0.1:6007"
-project = "my-experiments"
+project = "my-rosa"
+
+[rosa]
+checkout = "../../../my-rosa-checkout"
 ```
 
-Both the server and ROSA tracing read these settings. There is no Phoenix `.env`
-file to configure. Paths in the Phoenix config resolve from `tools/phoenix/`,
-regardless of where a command is called. Defaults preserve the existing database
-under `.local/phoenix/data/` and generated files under `results/` at repository root.
-Stop Phoenix before changing its URL or state path. Changing the state path does
-not move existing traces; keep the default to continue using the existing store.
+Paths resolve from `tools/phoenix/`, not from your terminal directory. The server
+and tracing launcher read the same Phoenix URL/project settings. Stop the server
+before changing its URL or state path. Changing the state path does not migrate
+existing traces. No root configuration or baseline checkout is required.
 
-The **repository-root** `config.toml` separately configures ROSA checkout paths and
-experiment result paths. Its ignored `config.local.toml` can override them:
+CLI model options override shell variables, then the evaluation root `.env`, then
+the ROSA checkout's `.env`. uv does not load these files; our live launcher does.
+The server itself needs no `.env` file.
 
-```toml
-[checkouts]
-research = "../my-rosa-checkout"
-```
-
-Root config paths resolve from the repository root. If relocating all results,
-set the root `[paths].results` and Phoenix `[paths].results` to the same absolute
-directory. Each tool owns its output setting; changing one does not change another.
-
-## Run ROSA experiments
-
-Return to the repository root. Start Phoenix first, then:
-
-```bash
-./run.sh research --mode controlled
-```
-
-This runs actual ROSA tool dispatch using scripted model responses, without
-Ollama. The launcher sources ROS 2 Jazzy and uses the selected ROSA checkout's
-own environment. Phoenix's environment does not contain ROSA dependencies.
-
-For live experiments, copy root `.env.example` to `.env`, set the Ollama endpoint
-and model, ensure Ollama is running, then:
-
-```bash
-./run.sh research --mode live
-```
-
-Keep an existing `.env` if already configured. CLI model options override shell
-variables, which override evaluation `.env`, then the selected ROSA checkout's
-`.env`. Use `--tracing off` to run without sending traces.
-
-`experiments/` contains our ROSA runner, controlled test fixtures, tracing code,
-and reference scenarios. It is custom integration code; starting Phoenix does
-not run it. Scenario JSON files are references, not automatically executed.
-`rosa-baseline` is optional for comparisons, not needed for research-only runs.
-
-## Saved data and checks
+## Files and checks
 
 ```text
 tools/phoenix/
-  pyproject.toml, uv.lock       tool dependencies and installed launcher
-  config.toml                  shared Phoenix settings
-  config.local.toml            optional local overrides (ignored)
-  .venv/                       tool's Python environment (ignored)
-experiments/                   ROSA integration scripts
-config.toml                    ROSA checkout and experiment paths
-results/runs/<run-id>/          run metadata and results (ignored)
-results/runs/<run-id>/phoenix/  exported Phoenix records (ignored)
-results/validations/            controlled validation reports (ignored)
-.local/phoenix/                persistent database, process record, logs (ignored)
+  pyproject.toml, uv.lock   dependencies and installed launcher
+  .venv/                   isolated Python environment (ignored)
+  config.toml              shared Phoenix and ROSA connection settings
+  config.local.toml        personal overrides (ignored)
+  trace-rosa.sh             live ROSA tracing launcher
+  trace_rosa.py, tracing.py live invocation and instrumentation
+results/runs/<run-id>/      saved metadata, answers, exports (ignored)
+.local/phoenix/             persistent database and server logs (ignored)
 ```
 
-The runner prints each run ID and saved-file location. Phoenix also stores traces
-in its own database. Export a specific run from repository root:
+Existing results and historical archives remain local. The live launcher prints
+the run ID and result directory. From repository root, export stored traces with:
 
 ```bash
 ./tools/phoenix/run.sh inspect --run-id RUN_ID
 ```
 
-Replace `RUN_ID` with the printed ID. The export goes to that run's `phoenix/`
-directory. `--project NAME` selects a non-default Phoenix project; this inspect
-option belongs to our script and is different from uv's `--project` option.
+Replace `RUN_ID` with the printed ID. Exports go into that run's `phoenix/` folder.
+The root convenience commands `./tools/phoenix/run.sh start|status|stop` also work;
+choose one action in place of `start|status|stop`.
 
-Run configuration checks and controlled ROSA/Phoenix integration checks:
+Configuration checks, from root:
 
 ```bash
 python3 -m unittest discover -s tests -v
-./tools/phoenix/run.sh validate
 ```
 
-Validation defaults to research and checks eight cases, including errors,
-tracing disabled, and interrupted runs. It checks instrumentation behavior,
-not live model quality. Optional comparisons use:
+Optional Phoenix-only connectivity check, from `tools/phoenix/`:
 
 ```bash
-./tools/phoenix/run.sh validate --variant research --variant baseline
+uv run python -m rosa_phoenix.smoke
 ```
 
-## Adding another tool
+This sends and reads back one test span without ROSA or Ollama. It verifies the
+server connection, not real ROSA behavior or answer quality.
 
-Create `tools/<name>/` with its own `pyproject.toml`, `uv.lock`, `.venv`, config,
-and startup command. It should start without importing `experiments/` or another
-tool. Keep service data under `.local/<name>/` and exported records under
-`results/runs/<run-id>/<name>/`. Connecting it to ROSA is a separate integration
-step; no automatic plugin system is implemented.
+## Setup with Codex
 
-Commit source, shared config, lockfiles, and safe examples. Keep local configs,
-`.env`, environments, databases, results, logs, and backups out of Git. Ignore
-rules cover default locations; add rules if choosing other in-repository paths.
-Existing historical results and setup backups remain locally in ignored archive
-folders.
+A teammate can clone this repository and give Codex this request:
 
-Phoenix is pinned to 20.23.0. Our server shim disables its upstream gRPC listener
-and serves HTTP on loopback only. Revalidate that shim before upgrading Phoenix.
+> Read the README and inspect my ROSA checkout. Set up Phoenix with its committed
+> uv lockfile and configure the checkout path/Ollama endpoint locally. Preserve
+> existing configuration and traces. Run the Phoenix smoke check. With ROS 2 Jazzy
+> and Ollama available, verify one real ROSA tracing run and read back its spans.
+> Report anything unavailable. Do not upgrade dependencies, commit secrets, or
+> change ROSA application code as part of setup.
+
+For future tools, add `tools/<name>/` with its own uv project, environment,
+configuration, and startup command. Store its state in `.local/<name>/` and
+exports in `results/runs/<run-id>/<name>/`. No plugin framework is implemented.
+Commit source, shared settings, lockfiles, and safe examples. Keep environments,
+local configs, `.env`, results, databases, logs, and backups out of Git.
+
+Phoenix is pinned to 20.23.0. Our shim disables upstream gRPC and binds HTTP to
+loopback. Revalidate the shim before upgrading Phoenix.
