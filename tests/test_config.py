@@ -6,6 +6,7 @@ from experiments.config import (
     ROOT, checkout, configured_path, load_config, phoenix_url,
     run_dir, tool_output_dir, tool_state_dir, validation_dir,
 )
+from tools.phoenix import config as phoenix_config
 
 
 class ConfigurationTests(unittest.TestCase):
@@ -15,12 +16,25 @@ class ConfigurationTests(unittest.TestCase):
         self.root = Path(self.temporary.name) / 'evaluation'
         self.root.mkdir()
         (self.root / 'config.toml').write_text((ROOT / 'config.toml').read_text())
+        self.tool = self.root / 'tools/phoenix'
+        self.tool.mkdir(parents=True)
+        (self.tool / 'config.toml').write_text((ROOT / 'tools/phoenix/config.toml').read_text())
 
     def test_local_override_preserves_unmodified_defaults(self):
-        (self.root / 'config.local.toml').write_text('[tools.phoenix]\nurl = "http://localhost:6007"\n')
-        config = load_config(self.root)
-        self.assertEqual(config['tools']['phoenix']['project'], 'rosa-local')
+        (self.tool / 'config.local.toml').write_text('[phoenix]\nurl = "http://localhost:6007"\n')
+        config = load_config(self.tool)
+        self.assertEqual(config['phoenix']['project'], 'rosa-local')
         self.assertEqual(phoenix_url(self.root), 'http://localhost:6007')
+
+    def test_tool_settings_match_runner_without_importing_runner(self):
+        (self.tool / 'config.local.toml').write_text('[phoenix]\nurl = "http://localhost:6007"\n')
+        self.assertEqual(phoenix_config.phoenix_url(self.tool), phoenix_url(self.root))
+        self.assertEqual(phoenix_config.phoenix_project(self.tool), 'rosa-local')
+
+    def test_tool_paths_keep_existing_data_and_result_locations(self):
+        self.assertEqual(phoenix_config.tool_state_dir('phoenix', self.tool), self.root / '.local/phoenix')
+        self.assertEqual(phoenix_config.tool_output_dir('run-1', 'phoenix', self.tool),
+                         tool_output_dir('run-1', 'phoenix', self.root))
 
     def test_relative_and_absolute_output_paths(self):
         self.assertEqual(configured_path('results', self.root), self.root / 'results')
@@ -51,7 +65,7 @@ class ConfigurationTests(unittest.TestCase):
 
     def test_local_phoenix_cannot_accidentally_bind_a_remote_address(self):
         for url in ('http://0.0.0.0:6006', 'http://example.com:6006', 'http://user:pass@localhost:6006', 'http://localhost:6006/path'):
-            (self.root / 'config.local.toml').write_text(f'[tools.phoenix]\nurl = "{url}"\n')
+            (self.tool / 'config.local.toml').write_text(f'[phoenix]\nurl = "{url}"\n')
             with self.subTest(url=url), self.assertRaises(ValueError):
                 phoenix_url(self.root)
 

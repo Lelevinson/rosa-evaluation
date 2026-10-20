@@ -3,7 +3,7 @@ import json
 import time
 from uuid import uuid4
 
-from experiments.config import phoenix_url, run_dir, tool_output_dir
+from .config import phoenix_url, run_dir, tool_output_dir
 
 
 def main():

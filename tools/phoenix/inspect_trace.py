@@ -3,7 +3,7 @@ import argparse
 from datetime import datetime
 import json
 from pathlib import Path
-from experiments.config import phoenix_project, phoenix_url, tool_output_dir
+from .config import phoenix_project, phoenix_url, tool_output_dir
 
 
 def summarize(spans):

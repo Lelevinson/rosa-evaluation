@@ -8,7 +8,12 @@ import time
 from uuid import uuid4
 
 from .inspect_trace import fetch, summarize
-from experiments.config import ROOT, checkout, phoenix_url, validation_dir
+from .config import ROOT, load_config, resolve_path, phoenix_url, validation_dir
+
+
+def checkout(name):
+    # Only the ROSA integration checks need the repository's checkout settings.
+    return resolve_path(load_config(ROOT)['checkouts'][name], ROOT)
 
 
 

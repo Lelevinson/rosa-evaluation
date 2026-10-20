@@ -70,7 +70,8 @@ def tool_state_dir(tool, root=ROOT):
 
 
 def phoenix_url(root=ROOT):
-    url = load_config(root)['tools']['phoenix']['url'].rstrip('/')
+    tool = Path(root) / 'tools' / 'phoenix'
+    url = load_config(tool)['phoenix']['url'].rstrip('/')
     parsed = urlparse(url)
     if (parsed.scheme != 'http' or parsed.hostname not in {'127.0.0.1', 'localhost'}
             or parsed.username or parsed.password or parsed.path or parsed.query or parsed.fragment):
@@ -79,4 +80,4 @@ def phoenix_url(root=ROOT):
 
 
 def phoenix_project(root=ROOT):
-    return load_config(root)['tools']['phoenix']['project']
+    return load_config(Path(root) / 'tools' / 'phoenix')['phoenix']['project']

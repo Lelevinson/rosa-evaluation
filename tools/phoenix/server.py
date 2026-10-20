@@ -4,12 +4,13 @@ import json
 import os
 from pathlib import Path
 import signal
+import sys
 import socket
 import subprocess
 import time
 from urllib.request import urlopen
 from urllib.parse import urlparse
-from experiments.config import ROOT, phoenix_url, tool_state_dir
+from .config import ROOT, phoenix_url, tool_state_dir
 
 TOOL = Path(__file__).resolve().parent
 STATE = tool_state_dir('phoenix')
@@ -26,8 +27,9 @@ def owned_process():
     proc = Path('/proc') / str(record['pid'])
     try:
         return record['pid'] if (proc.joinpath('stat').read_text().split()[21] == record['started']
-            and b'tools.phoenix.phoenix_server' in proc.joinpath('cmdline').read_bytes()
-            and proc.joinpath('cwd').resolve() == ROOT) else None
+            and any(name in proc.joinpath('cmdline').read_bytes() for name in
+                (b'rosa_phoenix.phoenix_server', b'tools.phoenix.phoenix_server'))
+            and proc.joinpath('cwd').resolve() in {ROOT, TOOL}) else None
     except FileNotFoundError:
         return None
 
@@ -69,8 +71,8 @@ def main():
                    PHOENIX_DISABLE_AGENT_ASSISTANT='true', PHOENIX_ENABLE_MCP_SERVER='false',
                    PHOENIX_ALLOWED_SANDBOX_PROVIDERS='')
         with (STATE / 'server.log').open('ab') as log:
-            process = subprocess.Popen([str(TOOL / '.venv/bin/python'), '-m',
-                'tools.phoenix.phoenix_server', 'serve'], cwd=ROOT, env=env,
+            process = subprocess.Popen([sys.executable, '-m',
+                'rosa_phoenix.phoenix_server', 'serve'], cwd=TOOL, env=env,
                 stdin=subprocess.DEVNULL, stdout=log, stderr=log, start_new_session=True)
         PID.write_text(json.dumps({'pid': process.pid,
             'started': Path(f'/proc/{process.pid}/stat').read_text().split()[21]}))
