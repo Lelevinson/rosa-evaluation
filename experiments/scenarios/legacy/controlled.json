@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "suite_id": "controlled-tool-instrumentation",
+  "version": "1",
+  "factory": "evaluation.fixtures:make_agent",
+  "environment": {"fixture": "constant-value-7", "requires_robot": false},
+  "scenarios": [
+    {
+      "id": "zero-tools", "version": "1",
+      "query": "Mention a tool without executing it.",
+      "config": {"steps": [], "final_answer": "fixture_read is a tool. DONE"},
+      "success": {"type": "answer_contains", "text": "DONE"}
+    },
+    {
+      "id": "one-read", "version": "1", "query": "Read the fixture value.",
+      "config": {"steps": [{"name": "fixture_read", "args": {"key": "value"}}]},
+      "tool_contracts": {"fixture_read": {"kind": "read", "result_check": "always"}},
+      "success": {"type": "tool_result_equals", "tool": "fixture_read", "expected": {"value": 7}}
+    },
+    {
+      "id": "sequential-repeat", "version": "1", "query": "Read twice, then perform a mock action.",
+      "config": {"steps": [
+        {"name": "fixture_read", "args": {"key": "value"}},
+        {"name": "fixture_read", "args": {"key": "value"}},
+        {"name": "fixture_action", "args": {"value": 7}}
+      ]},
+      "tool_contracts": {
+        "fixture_read": {"kind": "read", "result_check": "always"},
+        "fixture_action": {"kind": "action", "result_check": "success_flag"}
+      },
+      "success": {"type": "tool_result_equals", "tool": "fixture_action", "expected": {"success": true, "verified_value": 7}}
+    },
+    {
+      "id": "execution-error", "version": "1", "query": "Trigger a controlled tool error.",
+      "config": {"steps": [{"name": "fixture_fail"}]}
+    },
+    {
+      "id": "validation-error", "version": "1", "query": "Use an invalid action argument.",
+      "config": {"steps": [{"name": "fixture_action", "args": {"value": "not-an-integer"}}]}
+    },
+    {
+      "id": "reported-failure", "version": "1", "query": "Return an explicit application error.",
+      "config": {"steps": [{"name": "fixture_report_failure"}]},
+      "tool_contracts": {"fixture_report_failure": {"kind": "read", "result_check": "error_field"}}
+    },
+    {
+      "id": "nested-tool", "version": "1", "query": "Execute an outer tool that internally invokes another tool.",
+      "config": {"steps": [{"name": "fixture_nested"}]},
+      "success": {"type": "tool_result_equals", "tool": "fixture_nested", "expected": {"value": 7}}
+    },
+    {
+      "id": "overlapping-tools", "version": "1", "mode": "astream",
+      "query": "Execute two overlapping waits.",
+      "config": {"steps": [[
+        {"name": "fixture_slow", "args": {"seconds": 0.05}},
+        {"name": "fixture_slow", "args": {"seconds": 0.01}}
+      ]]},
+      "success": {"type": "answer_contains", "text": "DONE"}
+    }
+  ]
+}
