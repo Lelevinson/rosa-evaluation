@@ -42,6 +42,25 @@ Phoenix requirements.
 
 ## Run an experiment
 
+For the prepared Qwen readiness check (native single/dependent tool loops plus
+custom-only ROSA dispatch and Phoenix tracing), start the services and run:
+
+```bash
+./run.sh research --probe-qwen
+```
+
+This requires the research branch's `load_default_tools=False` support and the
+downloaded `qwen3.5:9b` model. It exposes only fixed in-memory read tools. Results
+include model digest, inference settings, native parsed calls, timings, token
+counts, a ROSA trace ID, and Ollama's runtime memory report. This is a readiness
+smoke test, not the 60-scenario research benchmark or a model quality claim.
+
+When environments are linked from `/mnt/c` to the Linux filesystem, launchers
+resolve the environment path before running Python. Each launcher explicitly
+selects its own uv environment so a Phoenix parent process cannot sync research
+dependencies into Phoenix's environment. Shell scripts are checked out with LF
+line endings for WSL.
+
 ```bash
 ./run.sh research --mode controlled
 ```
@@ -124,6 +143,84 @@ implemented. Tracing shows what happened; it does not establish answer quality o
 robot task success.
 
 ## Checks
+
+For the process-separated stateful engineering pilot and paired cache runs:
+
+```bash
+./run.sh research --benchmark --backend scripted --suite full --repeats 3 --tracing off
+./run.sh research --benchmark --backend ollama --suite pilot --repeats 3 --request-budget 840
+./run.sh research --benchmark --backend siwc --suite pilot --repeats 3 --request-budget 840
+```
+
+The world and independent scorer run in a separate process with distinct agent
+and evaluator channels. Six fixed tools expose observations, simulated actions,
+verification and structured reports. Commands and verification are never cached.
+The agent cannot access the hidden fixture or scorer through its tool channel.
+Only trusted local simulation code executes; no ROS or physical action is exposed.
+
+`--suite pilot` uses 12 balanced fixtures and a limited live cache crossover;
+three repetitions produce 60 trials per backend. `--suite full` uses all 60
+fixtures. The scripted full control covers all fixtures under all three policies
+(540 trials with three repetitions). These sets share generator/template families;
+the reserved validation split is not an independently authored holdout-family set.
+`--suite smoke --repeats 1 --policies none` checks one development case per family.
+
+Batch output contains a frozen protocol, manifest, source hashes, incremental
+results and summaries. Each trial has its own run ID, raw tool/oracle evidence,
+structured score and Phoenix trace. A completed batch can contain failed tasks;
+completion does not mean the model passed the readiness/usefulness criteria.
+The legacy `api_failed` field also covers agent iteration exhaustion. State/claim
+scores and operational completion are reported separately.
+
+Audit a completed live batch against Phoenix and independently reconstructed
+state, action contracts, counters and cached-observation staleness:
+
+```bash
+./tools/phoenix/run.sh audit --batch-id BATCH_ID
+```
+
+Use `--offline` to recheck previously exported traces. Use `--oracle-only` for
+execution evidence without traces, such as the scripted control; this writes
+`phoenix/oracle-audit.json` and does not claim a Phoenix trace audit.
+
+OAuth requires fresh browser consent, uses memory-only renewable credentials,
+and revokes its session on exit. Request/trial/wall budgets are enforced. TTL is
+measured in logical tool-step ticks, not inference wall time. Injected read delays
+are explicit fixture costs; results do not establish real sensor costs or safety.
+Provider-managed prompt/KV caching is separate from the tested observation cache.
+
+The shared ROSA integration probe runs the same agent, prompts, tool definitions,
+and fixed mock single/dependent tasks with either candidate:
+
+```bash
+./run.sh research --probe-backends --backend ollama
+./run.sh research --probe-backends --backend siwc
+```
+
+Use `--case single` or `--case dependent` for one case, `--tracing off` to disable
+Phoenix, and `--model` to select an exact model. OAuth sign-in is interactive;
+at most eight requests are permitted and the session is revoked afterward.
+Its model comes from the live account catalog. Reports record provider settings
+separately because sampling controls and context limits differ. This probe uses
+the modified ROSA fork with an exact custom-only registry and fixed mock reads;
+use the stateful benchmark above for independently scored action outcomes.
+
+For the interactive ChatGPT OAuth readiness test, start Phoenix and run:
+
+```bash
+./run.sh research --probe-siwc
+```
+
+Open the printed loopback link and complete browser consent. This uses the
+research checkout's locked `siwc` dependencies and chooses the first visible
+account model, or an exact catalog slug supplied with `--model`. At most three
+inference requests check text, one fixed mock-tool call, and its continuation.
+Tokens stay in memory and the session is revoked afterward, so each run requires
+sign-in. Only public registration identifiers and a hashed account subject are
+saved under `~/.local/share/rosa-siwc/`. Reports exclude tokens and reasoning.
+This native transport smoke checks the transport separately from the shared ROSA
+adapter and stateful benchmark. Use the report's gates for application success and the Phoenix export
+to inspect observed operations.
 
 ```bash
 python3 -m unittest discover -s tests -v

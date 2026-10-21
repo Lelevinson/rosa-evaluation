@@ -1,0 +1,158 @@
+{
+  "run_id": "fd9b6b53-acbb-484f-8e22-32c40ba9a737",
+  "campaign": "stage4-batching-completion-20261021",
+  "backend": "siwc",
+  "model": "gpt-6.1-sol",
+  "stage": "batching",
+  "policy": "model_selected",
+  "intervention": "none",
+  "scenario_id": "parameters_and_topic_qos__nominal__0",
+  "repetition": 1,
+  "answer": "Report submitted successfully.\n\nObserved on `/jtvr_alpha`: `alpha=1`, `beta=2`, `gamma=3`.\n\nAcquired and acknowledged `/jtvr_alpha/status:topic_details`. No parameters were modified.",
+  "api_failed": false,
+  "error_type": null,
+  "orchestrator_recovery": false,
+  "strict_contract_pass": true,
+  "combined_pass": true,
+  "wall_seconds": 16.74182059799932,
+  "model_metrics": {
+    "calls": 4,
+    "input_tokens": 9139,
+    "output_tokens": 187,
+    "tool_dispatches": 3,
+    "truncated": 0,
+    "tool_errors": 0,
+    "elapsed_ms": 14749.11078500736
+  },
+  "raw_model_tool_calls": [
+    {
+      "name": "read_parameter_evidence",
+      "args": {
+        "node_name": "/jtvr_alpha",
+        "names": [
+          "alpha",
+          "beta",
+          "gamma"
+        ],
+        "report_names": [
+          "alpha",
+          "beta",
+          "gamma"
+        ],
+        "expected_values": {},
+        "strategy": "bulk"
+      },
+      "id": "call_de6gUXdCTOLhOy2zuy3cZh9g",
+      "type": "tool_call"
+    },
+    {
+      "name": "ros2_topic_info",
+      "args": {
+        "topics": [
+          "/jtvr_alpha/status"
+        ]
+      },
+      "id": "call_ANSsDIvzqeAsKPi76wZiv92F",
+      "type": "tool_call"
+    },
+    {
+      "name": "submit_parameter_report",
+      "args": {
+        "outcome": "success",
+        "observed_values": {
+          "/jtvr_alpha": {
+            "alpha": 1,
+            "beta": 2,
+            "gamma": 3
+          }
+        },
+        "acknowledged_details": [
+          "/jtvr_alpha/status:topic_details"
+        ]
+      },
+      "id": "call_ZEqMIHIhcDMLsaarBKKh6DCO",
+      "type": "tool_call"
+    }
+  ],
+  "model_visible_tool_names": [
+    "ros2_param_get",
+    "ros2_param_set",
+    "ros2_service_info",
+    "ros2_service_call",
+    "ros2_node_info",
+    "ros2_topic_info",
+    "read_parameter_evidence",
+    "submit_parameter_report"
+  ],
+  "query": "Read current parameters ['alpha', 'beta', 'gamma'] on /jtvr_alpha. Report the observed values for ['alpha', 'beta', 'gamma'] on /jtvr_alpha. Also acquire and acknowledge /jtvr_alpha/status:topic_details. Submit exactly one final report. Acknowledgment of a write is not verification. Do not call tools after reporting.",
+  "template": "parameters_and_topic_qos",
+  "cli_commands": 3,
+  "server_rpcs": 1,
+  "native_seconds": 1.8489043209992815,
+  "selector_seconds": 0.0,
+  "manifest_requests": 1,
+  "valid_manifests": 1,
+  "manifest_bypassed": false,
+  "first_manifest_valid": true,
+  "native_commands": [
+    {
+      "argv": [
+        "ros2",
+        "service",
+        "type",
+        "/jtvr_alpha/get_parameters"
+      ],
+      "success": true,
+      "seconds": 0.48799110099935206,
+      "stdout": "rcl_interfaces/srv/GetParameters\n",
+      "stderr": "",
+      "server_rpcs": []
+    },
+    {
+      "argv": [
+        "ros2",
+        "service",
+        "call",
+        "/jtvr_alpha/get_parameters",
+        "rcl_interfaces/srv/GetParameters",
+        "{names: [alpha, beta, gamma]}"
+      ],
+      "success": true,
+      "seconds": 0.8680040609979187,
+      "stdout": "waiting for service to become available...\nrequester: making request: rcl_interfaces.srv.GetParameters_Request(names=['alpha', 'beta', 'gamma'])\n\nresponse:\nrcl_interfaces.srv.GetParameters_Response(values=[rcl_interfaces.msg.ParameterValue(type=2, bool_value=False, integer_value=1, double_value=0.0, string_value='', byte_array_value=[], bool_array_value=[], integer_array_value=[], double_array_value=[], string_array_value=[]), rcl_interfaces.msg.ParameterValue(type=2, bool_value=False, integer_value=2, double_value=0.0, string_value='', byte_array_value=[], bool_array_value=[], integer_array_value=[], double_array_value=[], string_array_value=[]), rcl_interfaces.msg.ParameterValue(type=2, bool_value=False, integer_value=3, double_value=0.0, string_value='', byte_array_value=[], bool_array_value=[], integer_array_value=[], double_array_value=[], string_array_value=[])])\n\n",
+      "stderr": "",
+      "server_rpcs": [
+        {
+          "node": "/jtvr_alpha",
+          "kind": "get_parameters",
+          "names": [
+            "alpha",
+            "beta",
+            "gamma"
+          ],
+          "oracle_values": {
+            "alpha": 1,
+            "beta": 2,
+            "gamma": 3
+          },
+          "time_ns": 54253164239232
+        }
+      ]
+    },
+    {
+      "argv": [
+        "ros2",
+        "topic",
+        "info",
+        "/jtvr_alpha/status",
+        "--verbose"
+      ],
+      "success": true,
+      "seconds": 0.4929091590020107,
+      "stdout": "Type: std_msgs/msg/String\n\nPublisher count: 1\n\nNode name: jtvr_alpha\nNode namespace: /\nTopic type: std_msgs/msg/String\nTopic type hash: RIHS01_df668c740482bbd48fb39d76a70dfd4bd59db1288021743503259e948f6b1a18\nEndpoint type: PUBLISHER\nGID: 01.0f.ad.7f.3f.51.d2.47.00.00.00.00.00.00.13.03\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nSubscription count: 0\n\n",
+      "stderr": "",
+      "server_rpcs": []
+    }
+  ],
+  "trace_id": "6362b008dbe9737d0a4d5bb97c8df93a"
+}

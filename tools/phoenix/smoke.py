@@ -4,6 +4,7 @@ import time
 from uuid import uuid4
 
 from experiments.config import phoenix_url, run_dir, tool_output_dir
+from .inspect_trace import fetch
 
 
 def main():
@@ -35,8 +36,7 @@ def main():
     client = Client(base_url=phoenix_url())
     spans = []
     for _ in range(30):
-        spans = client.spans.get_spans(project_identifier='rosa-smoke',
-            attributes={'metadata.run_id': run_id}, limit=100)
+        spans = fetch(client, 'rosa-smoke', run_id)
         if spans:
             break
         time.sleep(0.2)

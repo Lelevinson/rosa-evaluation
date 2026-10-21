@@ -69,7 +69,7 @@ def main():
                    PHOENIX_DISABLE_AGENT_ASSISTANT='true', PHOENIX_ENABLE_MCP_SERVER='false',
                    PHOENIX_ALLOWED_SANDBOX_PROVIDERS='')
         with (STATE / 'server.log').open('ab') as log:
-            process = subprocess.Popen([str(TOOL / '.venv/bin/python'), '-m',
+            process = subprocess.Popen([str((TOOL / '.venv').resolve() / 'bin/python'), '-m',
                 'tools.phoenix.phoenix_server', 'serve'], cwd=ROOT, env=env,
                 stdin=subprocess.DEVNULL, stdout=log, stderr=log, start_new_session=True)
         PID.write_text(json.dumps({'pid': process.pid,

@@ -1,0 +1,196 @@
+{
+  "run_id": "1ad03673-bb4e-465c-a613-c118369ebc14",
+  "campaign": "stage4-batching-completion-20261021",
+  "backend": "ollama",
+  "model": "qwen3.5:9b",
+  "stage": "batching",
+  "policy": "model_selected",
+  "intervention": "none",
+  "scenario_id": "parameters_and_topic_qos__nominal__0",
+  "repetition": 0,
+  "answer": "An error occurred: 3 validation errors for submit_parameter_report\nobserved_values.alpha\n  Input should be a valid dictionary [type=dict_type, input_value=1, input_type=int]\n    For further information visit https://errors.pydantic.dev/2.14/v/dict_type\nobserved_values.beta\n  Input should be a valid dictionary [type=dict_type, input_value=2, input_type=int]\n    For further information visit https://errors.pydantic.dev/2.14/v/dict_type\nobserved_values.gamma\n  Input should be a valid dictionary [type=dict_type, input_value=3, input_type=int]\n    For further information visit https://errors.pydantic.dev/2.14/v/dict_type",
+  "api_failed": true,
+  "error_type": null,
+  "orchestrator_recovery": false,
+  "strict_contract_pass": false,
+  "combined_pass": false,
+  "wall_seconds": 44.507124491996365,
+  "model_metrics": {
+    "calls": 3,
+    "input_tokens": 8793,
+    "output_tokens": 317,
+    "tool_dispatches": 3,
+    "truncated": 0,
+    "tool_errors": 1,
+    "elapsed_ms": 37530.284924003354
+  },
+  "raw_model_tool_calls": [
+    {
+      "name": "read_parameter_evidence",
+      "args": {
+        "node_name": "/jtvr_alpha",
+        "names": [
+          "alpha",
+          "beta",
+          "gamma"
+        ],
+        "report_names": [
+          "alpha",
+          "beta",
+          "gamma"
+        ],
+        "expected_values": {},
+        "strategy": "direct"
+      },
+      "id": "2c217f71-49e2-4e8d-98ad-bde9bb3a0899",
+      "type": "tool_call"
+    },
+    {
+      "name": "ros2_topic_info",
+      "args": {
+        "topics": [
+          "/jtvr_alpha/status"
+        ]
+      },
+      "id": "1c4cce7b-8fb4-4905-862f-7753ed123774",
+      "type": "tool_call"
+    },
+    {
+      "name": "submit_parameter_report",
+      "args": {
+        "outcome": "success",
+        "observed_values": {
+          "alpha": 1,
+          "beta": 2,
+          "gamma": 3
+        },
+        "acknowledged_details": [
+          "entity:topic_details:/jtvr_alpha/status"
+        ]
+      },
+      "id": "091dce1b-c38e-4cea-b1cd-b7acc15373f8",
+      "type": "tool_call"
+    }
+  ],
+  "model_visible_tool_names": [
+    "ros2_param_get",
+    "ros2_param_set",
+    "ros2_service_info",
+    "ros2_service_call",
+    "ros2_node_info",
+    "ros2_topic_info",
+    "read_parameter_evidence",
+    "submit_parameter_report"
+  ],
+  "query": "Read current parameters ['alpha', 'beta', 'gamma'] on /jtvr_alpha. Report the observed values for ['alpha', 'beta', 'gamma'] on /jtvr_alpha. Also acquire and acknowledge /jtvr_alpha/status:topic_details. Submit exactly one final report. Acknowledgment of a write is not verification. Do not call tools after reporting.",
+  "template": "parameters_and_topic_qos",
+  "cli_commands": 4,
+  "server_rpcs": 3,
+  "native_seconds": 6.818181212991476,
+  "selector_seconds": 0.0,
+  "manifest_requests": 1,
+  "valid_manifests": 1,
+  "manifest_bypassed": false,
+  "first_manifest_valid": true,
+  "native_commands": [
+    {
+      "argv": [
+        "ros2",
+        "param",
+        "get",
+        "/jtvr_alpha",
+        "alpha",
+        "--timeout",
+        "5"
+      ],
+      "success": true,
+      "seconds": 1.134175110993965,
+      "stdout": "Integer value is: 1\n",
+      "stderr": "",
+      "server_rpcs": [
+        {
+          "node": "/jtvr_alpha",
+          "kind": "get_parameters",
+          "names": [
+            "alpha"
+          ],
+          "oracle_values": {
+            "alpha": 1
+          },
+          "time_ns": 59503638341959
+        }
+      ]
+    },
+    {
+      "argv": [
+        "ros2",
+        "param",
+        "get",
+        "/jtvr_alpha",
+        "beta",
+        "--timeout",
+        "5"
+      ],
+      "success": true,
+      "seconds": 4.108740616997238,
+      "stdout": "Integer value is: 2\n",
+      "stderr": "",
+      "server_rpcs": [
+        {
+          "node": "/jtvr_alpha",
+          "kind": "get_parameters",
+          "names": [
+            "beta"
+          ],
+          "oracle_values": {
+            "beta": 2
+          },
+          "time_ns": 59507777886474
+        }
+      ]
+    },
+    {
+      "argv": [
+        "ros2",
+        "param",
+        "get",
+        "/jtvr_alpha",
+        "gamma",
+        "--timeout",
+        "5"
+      ],
+      "success": true,
+      "seconds": 1.1289250519985217,
+      "stdout": "Integer value is: 3\n",
+      "stderr": "",
+      "server_rpcs": [
+        {
+          "node": "/jtvr_alpha",
+          "kind": "get_parameters",
+          "names": [
+            "gamma"
+          ],
+          "oracle_values": {
+            "gamma": 3
+          },
+          "time_ns": 59508920622533
+        }
+      ]
+    },
+    {
+      "argv": [
+        "ros2",
+        "topic",
+        "info",
+        "/jtvr_alpha/status",
+        "--verbose"
+      ],
+      "success": true,
+      "seconds": 0.4463404330017511,
+      "stdout": "Type: std_msgs/msg/String\n\nPublisher count: 1\n\nNode name: jtvr_alpha\nNode namespace: /\nTopic type: std_msgs/msg/String\nTopic type hash: RIHS01_df668c740482bbd48fb39d76a70dfd4bd59db1288021743503259e948f6b1a18\nEndpoint type: PUBLISHER\nGID: 01.0f.ad.7f.73.59.58.99.00.00.00.00.00.00.13.03\nQoS profile:\n  Reliability: RELIABLE\n  History (Depth): UNKNOWN\n  Durability: VOLATILE\n  Lifespan: Infinite\n  Deadline: Infinite\n  Liveliness: AUTOMATIC\n  Liveliness lease duration: Infinite\n\nSubscription count: 0\n\n",
+      "stderr": "",
+      "server_rpcs": []
+    }
+  ],
+  "trace_id": "ae0d3521b0457e68a928615ddca9f068"
+}

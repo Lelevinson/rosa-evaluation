@@ -50,8 +50,22 @@ def summarize(spans):
 
 
 def fetch(client, project, run_id):
-    return client.spans.get_spans(project_identifier=project,
-        attributes={'metadata.run_id': run_id}, limit=10000)
+    from httpx import HTTPStatusError
+    try:
+        matched = client.spans.get_spans(project_identifier=project,
+            attributes={'metadata.run_id': run_id}, limit=10000)
+        if not matched:
+            return []
+        # Native spans need not copy the root's metadata. Select the run first,
+        # then read its full traces so child operations are not silently omitted.
+        trace_ids = sorted({span['context']['trace_id'] for span in matched})
+        return client.spans.get_spans(project_identifier=project,
+            trace_ids=trace_ids, limit=10000)
+    except HTTPStatusError as error:
+        # A newly ingested project's read API can lag its successful OTLP write.
+        if error.response.status_code == 404:
+            return []
+        raise
 
 
 def main():

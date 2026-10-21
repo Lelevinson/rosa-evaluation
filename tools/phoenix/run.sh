@@ -7,9 +7,12 @@ if [[ $# -gt 0 ]]; then shift; fi
 case "$action" in
   start|stop|status) module=tools.phoenix.server; set -- "$action" "$@" ;;
   inspect) module=tools.phoenix.inspect_trace ;;
+  audit) module=tools.phoenix.audit_batch ;;
   validate|smoke) module="tools.phoenix.$action" ;;
-  *) echo 'Usage: ./tools/phoenix/run.sh start|stop|status|smoke|inspect|validate [options]' >&2; exit 2 ;;
+  *) echo 'Usage: ./tools/phoenix/run.sh start|stop|status|smoke|inspect|audit|validate [options]' >&2; exit 2 ;;
 esac
 cd "$root"
 # Phoenix does not need inherited ROS Python paths. Each tool owns its environment.
-exec env -u PYTHONPATH uv run --project "$tool" --locked python -B -m "$module" "$@"
+venv="$tool/.venv"
+if [[ -d "$venv" ]]; then venv=$(realpath "$venv"); fi
+exec env -u PYTHONPATH UV_PROJECT_ENVIRONMENT="$venv" uv run --project "$tool" --locked --exact python -B -m "$module" "$@"
