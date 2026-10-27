@@ -123,6 +123,7 @@ def snapshot():
         "frozen_files": len(freeze.get("files", {})),
         "freeze_mismatches": mismatches,
         "closeout": read_json(LIVE / "closeout.json") or None,
+        "m5": read_json(ROOT / "artifacts/macro-m5-20261027/status.json") or None,
         "backends": {backend: backend_status(backend, reviews) for backend in ("siwc", "ollama")},
     }
 
@@ -146,11 +147,17 @@ def render(data):
                    'Finish/inspect the frozen execution; review required clarification transcripts; reconcile correctness, efficiency, faults, audits and bounds; document the retention decision and M5 next steps.')
     gates = ('M4 execution, audits and review are closed. Qwen failed retention; this is a documented limitation, not an unfinished trial. M5 is not started.' if closed else
              'Incomplete execution or review remains an open gate. Saved RUNNING status alone does not rule out an external service/process problem.')
+    m5 = data.get('m5')
+    current_milestone = f'M4: {phase}.'
+    if m5:
+        current_milestone = f"M5: {m5['status']}. {m5['current_work']}"
+        next_action = m5['next_actions']
+        gates = '; '.join(f'{name}: {state}' for name, state in m5['gates'].items()) + '. ' + m5['human_review']
     lines = [f"Last refreshed: **{data['snapshot_at']}**. Saved-checkpoint snapshot.", "",
              "### Current work and next actions", "",
              "| Progress item | Current evidence / action |",
              "|---|---|",
-             f"| Current milestone | M4: {phase}. |",
+             f"| Current milestone | {current_milestone} |",
              f"| Recorded execution | {recorded}/80 trial rows; {80 - recorded} cells without a recorded result, including any in-flight trial. |",
              f"| Clarification review gate | {reviews_done}/8 valid reviews recorded; {8 - reviews_done} still required. A recorded review can pass or fail. |",
              f"| Current decision | {decision} |",

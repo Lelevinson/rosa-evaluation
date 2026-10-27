@@ -18,7 +18,7 @@ Movement and read-only readiness inspection work in Gazebo. The final focused
 comparison, **M4**, is complete: all80 trials and eight clarification reviews.
 Sol passed20/20 tasks in both conditions; Qwen passed15/20 with primitives and
 14/20 with macro. Sol met the preset retention screen; Qwen did not. M5
-consolidation is the recommended next work and has not started. Do not restart
+consolidation is now explicitly authorized and in progress. Do not restart
 the populated experiment directories.
 
 **Latest review:** the user supplied Claude's assessment of this overview.
@@ -34,7 +34,9 @@ review, final claims/analysis, then packaging/presentation. See the assessment
 for current gate status and corrections to the suggested thesis. Backup is not
 verified, deeper four-trace comparison and human review remain outstanding,
 and optional experiments are not launched. M4 scores and archives are unchanged;
-M5 has not started. The deeper trace review must be labeled retrospective because
+The user subsequently requested completion of M5; see the current status block.
+Independent human adjudication is deferred at the user's request; prepare its
+packet for later review and do not claim that a human has scored it. The deeper trace review must be labeled retrospective because
 results and some snapshots/prompts have already been inspected.
 
 ## Contents
@@ -815,7 +817,7 @@ not the current state. Stage 6 was allowed to precede Stage 5.
 | M2 | Demonstrate a genuinely different capability | Accepted: read-only readiness plus movement; no second actuator. |
 | M3 | Runnable natural-language selection/demo, deterministic reference and faults | Demonstration/attempts complete; Qwen ambiguity failure remains a documented limitation. |
 | M4 | One final focused paired primitives-versus-macro evaluation | Closed:80/80 recorded/audited and8/8 reviews; Sol passes retention, Qwen fails. |
-| M5 | Consolidate the project deliverable and research conclusions | Future: maintainable component, demo, final report/evidence, limitations and justified use cases. |
+| M5 | Consolidate the project deliverable and research conclusions | In progress by explicit user request: protect work, review saved evidence, consolidate claims, finish deliverables. Human review packet requested for later adjudication. |
 
 **M4 is not historical Stage 4, and M5 is not historical Stage 5 memory.** The
 October 30 return plan was later resumed by explicit user instructions; its old
