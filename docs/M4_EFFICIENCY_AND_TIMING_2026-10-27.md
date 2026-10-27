@@ -1,4 +1,4 @@
-# M4 efficiency and timing checkpoint
+# M4 final efficiency and timing
 
 Date: **2026-10-27**. Derived from saved trial rows; no new inference.
 
@@ -9,15 +9,15 @@ review completeness must be considered alongside savings. Partial runs are not f
 |---|---:|---:|---:|---:|---:|---:|---:|
 | Sol / primitives | 20/20 | 20 | 68 | 38 | 95,333 | 2,221 | 0 |
 | Sol / macro | 20/20 | 20 | 38 | 40 | 48,754 | 1,145 | 0 |
-| Qwen / primitives | 17/20 | 13 | 72 | 41 | 158,193 | 14,828 | 0 |
-| Qwen / macro | 17/20 | 13 | 41 | 37 | 76,468 | 9,301 | 0 |
+| Qwen / primitives | 20/20 | 15 | 91 | 50 | 207,958 | 19,445 | 0 |
+| Qwen / macro | 20/20 | 14 | 53 | 48 | 105,779 | 12,519 | 0 |
 
 | Backend / condition | Total recorded task seconds | Mean seconds/task | Median seconds/task |
 |---|---:|---:|---:|
 | Sol / primitives | 328.36 | 16.42 | 13.18 |
 | Sol / macro | 194.58 | 9.73 | 8.57 |
-| Qwen / primitives | 2,043.93 | 120.23 | 57.40 |
-| Qwen / macro | 1,274.92 | 75.00 | 46.50 |
+| Qwen / primitives | 2,669.72 | 133.49 | 117.59 |
+| Qwen / macro | 1,703.63 | 85.18 | 46.53 |
 
 These tables include unsuccessful recorded attempts. An early failure can look fast
 or cheap. They exclude any request still in flight without a recorded task result;
@@ -33,12 +33,12 @@ all-attempt accounting and is not the final frozen engineering-screen decision.
 | Backend | Saved status | Qualifying pairs /20 | Requests primitives → macro | Request reduction | Native ops primitives → macro | Native reduction | Task seconds primitives → macro | Time reduction |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
 | Sol | COMPLETE | 20/20 | 68 → 38 | +44.1% | 38 → 40 | -5.3% | 328.36 → 194.58 | +40.7% |
-| Qwen | RUNNING | 12/20 | 47 → 26 | +44.7% | 27 → 26 | +3.7% | 1,238.51 → 660.86 | +46.6% |
+| Qwen | COMPLETE | 13/20 | 53 → 28 | +47.2% | 31 → 29 | +6.5% | 1,417.23 → 696.76 | +50.8% |
 
 ## Campaign time and measurement limits
 
 - Sol: **17.68 minutes** (1,060.78 seconds), closed backend run.
-- Qwen: **64.90 minutes** (3,894.08 seconds), saved elapsed checkpoint; still incomplete.
+- Qwen: **81.97 minutes** (4,918.20 seconds), closed backend run.
 
 Task wall time covers the bounded model/tool loop, including waits and recovery.
 It excludes simulator setup/reset, outside-task independent scoring observations and
@@ -54,5 +54,8 @@ hardware-independent model-speed ranking. No energy, dollar cost or pure generat
 tokens/second was measured by these task-wall aggregates.
 
 Regenerate with `python -m tools.project_context --refresh`. The frozen experiment
-runner, scores and original reports remain unchanged. The final M4 report should
-include these measures using the completed schedule and required review overlay.
+runner and trial scores remain unchanged. Derived reports reflect the saved review overlay.
+
+Execution and all required reviews are complete. See the
+[final M4 report](../artifacts/macro-m4-20261027/FINAL_REPORT_FOR_CHATGPT.md)
+for the screen decision: Sol passes; Qwen fails the correctness condition despite savings.

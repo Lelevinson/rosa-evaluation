@@ -122,6 +122,7 @@ def snapshot():
         "operator_phase": read_json(LIVE / "operator/status.json").get("phase", "unavailable"),
         "frozen_files": len(freeze.get("files", {})),
         "freeze_mismatches": mismatches,
+        "closeout": read_json(LIVE / "closeout.json") or None,
         "backends": {backend: backend_status(backend, reviews) for backend in ("siwc", "ollama")},
     }
 
@@ -133,19 +134,28 @@ def render(data):
     stopped = [name for name, b in backends.items() if b["status"] not in ("COMPLETE", "RUNNING")]
     reviews_done = sum(b["clarification_review"]["passed"] + b["clarification_review"]["failed"]
                        for b in backends.values())
-    phase = ("execution closed; final interpretation pending" if execution_complete else
+    closure = data.get("closeout") or {}
+    closed = execution_complete and reviews_done == 8 and closure.get("study_complete") is True
+    phase = ("closed with mixed findings" if closed else
+             "execution closed; final interpretation pending" if execution_complete else
              "execution incomplete; inspect stopped/unstarted backend" if stopped else
              "live execution in progress")
+    decision = (closure['decision'] if closed else
+                'Bounded macro remains the engineering candidate. Final M4 retention and M5 progression require the completed evidence and interpretation.')
+    next_action = (closure['next_action'] if closed else
+                   'Finish/inspect the frozen execution; review required clarification transcripts; reconcile correctness, efficiency, faults, audits and bounds; document the retention decision and M5 next steps.')
+    gates = ('M4 execution, audits and review are closed. Qwen failed retention; this is a documented limitation, not an unfinished trial. M5 is not started.' if closed else
+             'Incomplete execution or review remains an open gate. Saved RUNNING status alone does not rule out an external service/process problem.')
     lines = [f"Last refreshed: **{data['snapshot_at']}**. Saved-checkpoint snapshot.", "",
              "### Current work and next actions", "",
              "| Progress item | Current evidence / action |",
              "|---|---|",
-             f"| Active milestone | M4: {phase}. |",
+             f"| Current milestone | M4: {phase}. |",
              f"| Recorded execution | {recorded}/80 trial rows; {80 - recorded} cells without a recorded result, including any in-flight trial. |",
              f"| Clarification review gate | {reviews_done}/8 valid reviews recorded; {8 - reviews_done} still required. A recorded review can pass or fail. |",
-             "| Current decision | Bounded macro remains the engineering candidate. Final M4 retention and M5 progression require the completed evidence and interpretation. |",
-             "| Next actions | Finish/inspect the frozen execution; review required clarification transcripts; reconcile correctness, efficiency, faults, audits and bounds; document the retention decision and M5 next steps. |",
-             "| Open gates / blockers | Incomplete execution or review remains an open gate. Saved RUNNING status alone does not rule out an external service/process problem. |", "",
+             f"| Current decision | {decision} |",
+             f"| Next actions | {next_action} |",
+             f"| Open gates / blockers | {gates} |", "",
              "| Backend | Saved status | Recorded / scheduled | Local + Phoenix audited | Reserved requests / cap |",
              "|---|---|---:|---:|---:|"]
     for backend, label in (("siwc", "Sol"), ("ollama", "Qwen")):
@@ -179,6 +189,10 @@ def render(data):
               "A final M4 decision also requires the frozen paired analysis and limits/audit checks.",
               "Refresh with `python -m tools.project_context --refresh`; narrative sections still",
               "need review when the study or roadmap changes."]
+    if closed:
+        lines += ["", "The supervisor phase above is its preserved pre-review checkpoint. Final closure",
+                  "is recorded in `closeout.json` and the [final M4 report](artifacts/macro-m4-20261027/FINAL_REPORT_FOR_CHATGPT.md).",
+                  "Completed review includes four failed Qwen clarification cases; eight reviews does not mean eight passes."]
     if data["freeze_mismatches"]:
         lines += ["", "**Source mismatch: do not interpret this as an unchanged frozen run.**"]
     return "\n".join(lines)
@@ -191,7 +205,8 @@ def efficiency_report(data):
     def reduction(reference, candidate):
         return f"{100 * (1 - candidate / reference):+.1f}%" if reference else "unavailable"
 
-    lines = ["# M4 efficiency and timing checkpoint", "",
+    final = (data.get("closeout") or {}).get("study_complete") is True
+    lines = ["# M4 final efficiency and timing" if final else "# M4 efficiency and timing checkpoint", "",
              f"Date: **{data['snapshot_date']}**. Derived from saved trial rows; no new inference.", "",
              "Positive reduction means less resource use or time in macro mode. Correctness and",
              "review completeness must be considered alongside savings. Partial runs are not final results.", "",
@@ -249,8 +264,13 @@ def efficiency_report(data):
               "hardware-independent model-speed ranking. No energy, dollar cost or pure generation",
               "tokens/second was measured by these task-wall aggregates.", "",
               "Regenerate with `python -m tools.project_context --refresh`. The frozen experiment",
-              "runner, scores and original reports remain unchanged. The final M4 report should",
-              "include these measures using the completed schedule and required review overlay."]
+              "runner and trial scores remain unchanged. Derived reports reflect the saved review overlay."]
+    if final:
+        lines += ["", "Execution and all required reviews are complete. See the",
+                  "[final M4 report](../artifacts/macro-m4-20261027/FINAL_REPORT_FOR_CHATGPT.md)",
+                  "for the screen decision: Sol passes; Qwen fails the correctness condition despite savings."]
+    else:
+        lines += ["The final M4 report should include these measures using the completed schedule and required review overlay."]
     return "\n".join(lines) + "\n"
 
 

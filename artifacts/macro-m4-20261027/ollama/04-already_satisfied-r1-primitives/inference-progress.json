@@ -1,0 +1,336 @@
+{
+  "inference": {
+    "calls": 5,
+    "known_input_tokens": 12603,
+    "known_output_tokens": 1712,
+    "output_upper_bound": 1712,
+    "usage_complete": true,
+    "events": [
+      {
+        "call": 1,
+        "status": "RETURNED",
+        "requested_output_allowance": 1024,
+        "usage": {
+          "input_tokens": 1682,
+          "output_tokens": 106,
+          "total_tokens": 1788
+        },
+        "finish_reason": "stop",
+        "physical_request_index": 1
+      },
+      {
+        "call": 2,
+        "status": "RETURNED",
+        "requested_output_allowance": 1024,
+        "usage": {
+          "input_tokens": 1859,
+          "output_tokens": 353,
+          "total_tokens": 2212
+        },
+        "finish_reason": "stop",
+        "physical_request_index": 2
+      },
+      {
+        "call": 3,
+        "status": "RETURNED",
+        "requested_output_allowance": 1024,
+        "usage": {
+          "input_tokens": 2334,
+          "output_tokens": 136,
+          "total_tokens": 2470
+        },
+        "finish_reason": "stop",
+        "physical_request_index": 3
+      },
+      {
+        "call": 4,
+        "status": "RETURNED",
+        "requested_output_allowance": 1024,
+        "usage": {
+          "input_tokens": 2733,
+          "output_tokens": 979,
+          "total_tokens": 3712
+        },
+        "finish_reason": "stop",
+        "physical_request_index": 4
+      },
+      {
+        "call": 5,
+        "status": "RETURNED",
+        "requested_output_allowance": 474,
+        "usage": {
+          "input_tokens": 3995,
+          "output_tokens": 138,
+          "total_tokens": 4133
+        },
+        "finish_reason": "stop",
+        "physical_request_index": 5
+      }
+    ],
+    "decision_calls": 5,
+    "infrastructure_failures": 0,
+    "returned_usage_valid": true
+  },
+  "snapshot": {
+    "module_version": "0.2.0",
+    "mode": "primitives",
+    "limits": {
+      "native_operations": 10,
+      "tool_attempts": 16,
+      "corrections": 3,
+      "seconds": 360.0,
+      "tolerance": 0.025
+    },
+    "catalogue": {
+      "ur5e.home": {
+        "kind": "state_change",
+        "targets": {
+          "/ur5e": {
+            "shoulder_pan_joint": 0.0,
+            "shoulder_lift_joint": -1.57,
+            "elbow_joint": 1.57,
+            "wrist_1_joint": -1.57,
+            "wrist_2_joint": -1.57,
+            "wrist_3_joint": 0.0
+          }
+        },
+        "max_writes": 1
+      },
+      "ur5e.stage_left": {
+        "kind": "state_change",
+        "targets": {
+          "/ur5e": {
+            "shoulder_pan_joint": -0.14,
+            "shoulder_lift_joint": -1.57,
+            "elbow_joint": 1.57,
+            "wrist_1_joint": -1.57,
+            "wrist_2_joint": -1.57,
+            "wrist_3_joint": 0.2
+          }
+        },
+        "max_writes": 1
+      },
+      "ur5e.park_right": {
+        "kind": "state_change",
+        "targets": {
+          "/ur5e": {
+            "shoulder_pan_joint": 0.16,
+            "shoulder_lift_joint": -1.57,
+            "elbow_joint": 1.57,
+            "wrist_1_joint": -1.57,
+            "wrist_2_joint": -1.57,
+            "wrist_3_joint": -0.12
+          }
+        },
+        "max_writes": 1
+      },
+      "ur5e.inspect_readiness": {
+        "kind": "read_only_inspection",
+        "subject": "/ur5e_readiness",
+        "required_checks": {
+          "controllers": [
+            "trajectory_controller_active",
+            "joint_state_broadcaster_active"
+          ],
+          "joint_state": [
+            "joint_sample_fresh"
+          ]
+        },
+        "max_writes": 0,
+        "success_means": "every required readiness check freshly observed true",
+        "evidence_encoding": "true=1.0, false=0.0, unavailable=null"
+      }
+    },
+    "events": [
+      {
+        "type": "tool",
+        "call_index": 1,
+        "name": "read_state",
+        "input": {
+          "nodes": [
+            "/ur5e_readiness"
+          ]
+        },
+        "status": "RETURNED",
+        "span_id": "652ecd0671b314fc",
+        "actor": "model"
+      },
+      {
+        "type": "validation",
+        "code": "skill_selection_required",
+        "details": {
+          "available_skills": [
+            "ur5e.home",
+            "ur5e.inspect_readiness",
+            "ur5e.park_right",
+            "ur5e.stage_left"
+          ]
+        },
+        "attempt": 1,
+        "native_dispatch_for_rejected_call": false
+      },
+      {
+        "type": "tool",
+        "call_index": 2,
+        "name": "select_skill",
+        "input": {
+          "skill_id": "ur5e.stage_left"
+        },
+        "status": "RETURNED",
+        "span_id": "b9112140a13142a4",
+        "actor": "model"
+      },
+      {
+        "type": "workflow_transition",
+        "state": "SELECTED",
+        "reason": "model_selected_authorized_skill",
+        "actor": "model"
+      },
+      {
+        "type": "tool",
+        "call_index": 3,
+        "name": "read_state",
+        "input": {
+          "nodes": [
+            "/ur5e"
+          ]
+        },
+        "status": "RETURNED",
+        "span_id": "a59638ea19f1b556",
+        "actor": "model"
+      },
+      {
+        "type": "tool",
+        "call_index": 4,
+        "name": "verify_outcome",
+        "input": {},
+        "status": "RETURNED",
+        "span_id": "b09fb5d971d00cba",
+        "actor": "model"
+      },
+      {
+        "type": "verification",
+        "actor": "model",
+        "goal_reached": true,
+        "after_write": 0
+      }
+    ],
+    "operations": [
+      {
+        "operation_id": 1,
+        "kind": "read",
+        "actor": "model",
+        "status": "RETURNED",
+        "started": 2342.244691275,
+        "result": {
+          "shoulder_pan_joint": -0.13999999999999976,
+          "shoulder_lift_joint": -1.5699999999997376,
+          "elbow_joint": 1.5700000000011773,
+          "wrist_1_joint": -1.5699999999970746,
+          "wrist_2_joint": -1.5700000000000036,
+          "wrist_3_joint": 0.1999999999999999
+        },
+        "finished": 2342.251450653
+      },
+      {
+        "operation_id": 2,
+        "kind": "read",
+        "actor": "model",
+        "status": "RETURNED",
+        "started": 2479.280243042,
+        "result": {
+          "shoulder_pan_joint": -0.13999999999999976,
+          "shoulder_lift_joint": -1.5699999999997376,
+          "elbow_joint": 1.5700000000011773,
+          "wrist_1_joint": -1.5699999999970746,
+          "wrist_2_joint": -1.5700000000000036,
+          "wrist_3_joint": 0.1999999999999999
+        },
+        "finished": 2479.287942982
+      }
+    ],
+    "observations": [
+      {
+        "observed_values": {
+          "/ur5e": {
+            "shoulder_pan_joint": -0.13999999999999976,
+            "shoulder_lift_joint": -1.5699999999997376,
+            "elbow_joint": 1.5700000000011773,
+            "wrist_1_joint": -1.5699999999970746,
+            "wrist_2_joint": -1.5700000000000036,
+            "wrist_3_joint": 0.1999999999999999
+          }
+        },
+        "evidence": [
+          {
+            "node": "/ur5e",
+            "operation_id": 1,
+            "after_write": 0,
+            "acquired_monotonic": 2342.251487907,
+            "actor": "model",
+            "unavailable": null
+          }
+        ],
+        "observation_id": "obs-80e7f9abe2db-1"
+      },
+      {
+        "observed_values": {
+          "/ur5e": {
+            "shoulder_pan_joint": -0.13999999999999976,
+            "shoulder_lift_joint": -1.5699999999997376,
+            "elbow_joint": 1.5700000000011773,
+            "wrist_1_joint": -1.5699999999970746,
+            "wrist_2_joint": -1.5700000000000036,
+            "wrist_3_joint": 0.1999999999999999
+          }
+        },
+        "evidence": [
+          {
+            "node": "/ur5e",
+            "operation_id": 2,
+            "after_write": 0,
+            "acquired_monotonic": 2479.288035626,
+            "actor": "model",
+            "unavailable": null
+          }
+        ],
+        "observation_id": "obs-80e7f9abe2db-2"
+      }
+    ],
+    "reports": [],
+    "verification": {
+      "after_write": 0,
+      "goal_reached": true,
+      "actor": "model",
+      "observed_values": {
+        "/ur5e": {
+          "shoulder_pan_joint": -0.13999999999999976,
+          "shoulder_lift_joint": -1.5699999999997376,
+          "elbow_joint": 1.5700000000011773,
+          "wrist_1_joint": -1.5699999999970746,
+          "wrist_2_joint": -1.5700000000000036,
+          "wrist_3_joint": 0.1999999999999999
+        }
+      },
+      "evidence": [
+        {
+          "node": "/ur5e",
+          "operation_id": 2,
+          "after_write": 0,
+          "acquired_monotonic": 2479.288035626,
+          "actor": "model",
+          "unavailable": null
+        }
+      ],
+      "observation_id": "obs-80e7f9abe2db-2"
+    },
+    "last_write": 0,
+    "validation_errors": 1,
+    "tool_calls": 4,
+    "selected_skill": "ur5e.stage_left",
+    "workflow_state": "SELECTED",
+    "program_managed": false,
+    "base_macro_version": "0.1.0",
+    "selected_max_writes": 1
+  }
+}

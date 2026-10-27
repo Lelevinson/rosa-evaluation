@@ -15,8 +15,11 @@ supports current decisions; it does not replace an up-to-date progress report.
 **Read first:** the project improves ROSA's surrounding software, not the LLM's
 weights. The current candidate is a small reusable **bounded macro component**.
 Movement and read-only readiness inspection work in Gazebo. The final focused
-comparison, **M4**, is in progress. Sol's half is complete; Qwen's full result is
-not yet established. Do not restart the populated experiment directories.
+comparison, **M4**, is complete: all80 trials and eight clarification reviews.
+Sol passed20/20 tasks in both conditions; Qwen passed15/20 with primitives and
+14/20 with macro. Sol met the preset retention screen; Qwen did not. M5
+consolidation is the recommended next work and has not started. Do not restart
+the populated experiment directories.
 
 ## Contents
 
@@ -82,44 +85,48 @@ The figures are a snapshot, not a continuously refreshed dashboard. Refresh befo
 sharing this document or making a new claim about an active run.
 
 <!-- PROJECT_STATUS_START -->
-Last refreshed: **2026-10-27 20:40:28**. Saved-checkpoint snapshot.
+Last refreshed: **2026-10-27 21:13:17**. Saved-checkpoint snapshot.
 
 ### Current work and next actions
 
 | Progress item | Current evidence / action |
 |---|---|
-| Active milestone | M4: live execution in progress. |
-| Recorded execution | 74/80 trial rows; 6 cells without a recorded result, including any in-flight trial. |
-| Clarification review gate | 4/8 valid reviews recorded; 4 still required. A recorded review can pass or fail. |
-| Current decision | Bounded macro remains the engineering candidate. Final M4 retention and M5 progression require the completed evidence and interpretation. |
-| Next actions | Finish/inspect the frozen execution; review required clarification transcripts; reconcile correctness, efficiency, faults, audits and bounds; document the retention decision and M5 next steps. |
-| Open gates / blockers | Incomplete execution or review remains an open gate. Saved RUNNING status alone does not rule out an external service/process problem. |
+| Current milestone | M4: closed with mixed findings. |
+| Recorded execution | 80/80 trial rows; 0 cells without a recorded result, including any in-flight trial. |
+| Clarification review gate | 8/8 valid reviews recorded; 0 still required. A recorded review can pass or fail. |
+| Current decision | Retain bounded module as optional engineering capability; Sol positive, Qwen failed reliability-preserving retention. No unqualified cross-model recommendation. |
+| Next actions | M5 consolidation/write-up using the mixed findings; no new experiment or architecture launched. |
+| Open gates / blockers | M4 execution, audits and review are closed. Qwen failed retention; this is a documented limitation, not an unfinished trial. M5 is not started. |
 
 | Backend | Saved status | Recorded / scheduled | Local + Phoenix audited | Reserved requests / cap |
 |---|---|---:|---:|---:|
 | Sol | COMPLETE | 40/40 | 40 | 106 / 323 |
-| Qwen | RUNNING | 34/40 | 34 | 118 / 323 |
+| Qwen | COMPLETE | 40/40 | 40 | 144 / 323 |
 
 Recorded rows can include a row awaiting its audit. Reserved requests can include
 an in-flight or failed request; they are not generated-token totals. Unfinished
 cells are not assumed to pass. These counts do not establish process liveness.
 
 - **Sol:** clarification reviews passed 4/4; failed 0; recorded answers pending/invalid review 0. Answers for unrecorded cells remain unreviewed.
-- **Qwen:** clarification reviews passed 0/4; failed 0; recorded answers pending/invalid review 4. Answers for unrecorded cells remain unreviewed.
+- **Qwen:** clarification reviews passed 0/4; failed 4; recorded answers pending/invalid review 0. Answers for unrecorded cells remain unreviewed.
 
 | Backend / condition | Audited automatic passes / recorded | Recorded requests | Native operations |
 |---|---:|---:|---:|
 | Sol / primitives | 20/20 | 68 | 38 |
 | Sol / macro | 20/20 | 38 | 40 |
-| Qwen / primitives | 13/17 | 72 | 41 |
-| Qwen / macro | 13/17 | 41 | 37 |
+| Qwen / primitives | 15/20 | 91 | 50 |
+| Qwen / macro | 14/20 | 53 | 48 |
 
-Supervisor's saved phase: `RUNNING_ollama`. Frozen source check: 62 files; 0 mismatches.
+Supervisor's saved phase: `EXECUTION_FINISHED_REVIEW_REQUIRED`. Frozen source check: 62 files; 0 mismatches.
 
 The automatic primary-pass count is separate from required clarification review.
 A final M4 decision also requires the frozen paired analysis and limits/audit checks.
 Refresh with `python -m tools.project_context --refresh`; narrative sections still
 need review when the study or roadmap changes.
+
+The supervisor phase above is its preserved pre-review checkpoint. Final closure
+is recorded in `closeout.json` and the [final M4 report](artifacts/macro-m4-20261027/FINAL_REPORT_FOR_CHATGPT.md).
+Completed review includes four failed Qwen clarification cases; eight reviews does not mean eight passes.
 <!-- PROJECT_STATUS_END -->
 
 ### Confirmed closed checkpoints
@@ -131,7 +138,9 @@ need review when the study or roadmap changes.
 | M3 demonstration | Deterministic 3/3; Sol 3/3; Qwen 2/3 | Eight of nine including scripted controls; actual model trials were five of six. Qwen failed ambiguity handling. |
 | M2/M3 observability | 19/19 local and exact persisted-Phoenix audits; 331 spans | Does not repair earlier studies' audit exceptions. |
 | M4 zero-model gate | 20/20 controls; 20/20 Phoenix audits; 202 spans | Prerequisite for the live comparison, not live model-performance evidence. |
-| M4 Sol | Primitives 20/20; macro 20/20 | All 40 audits passed; four clarification transcripts reviewed; Qwen/full-study verdict pending. |
+| M4 Sol | Primitives 20/20; macro 20/20 | All40 audits and four clarification reviews passed; retention screen passed. |
+| M4 Qwen | Primitives15/20; macro14/20 | All40 audits passed; all four clarification cases failed review; retention screen failed. |
+| M4 complete study | All80 trial results; all80 audits; all8 required reviews recorded | Mixed findings; no unconditional two-backend reliability-preserving recommendation. |
 
 Sol's closed M4 measurements: primitives **68 model requests and 38 native
 operations**; macro **38 requests and 40 native operations**. This is **44.1% fewer
@@ -141,8 +150,10 @@ establish general reliability, novelty or a causal cross-model speed ranking.
 The [M4 efficiency and timing report](docs/M4_EFFICIENCY_AND_TIMING_2026-10-27.md)
 adds known input/output tokens, task mean/median/total times, backend elapsed time
 including overhead, and matched-success call/time/native-operation reductions.
-It is refreshed from the same snapshot. Qwen remains explicitly partial while
-running; fewer calls alone do not establish a faster or more reliable system.
+It is refreshed from the same snapshot. Both backend runs are now complete;
+fewer calls alone do not establish a more reliable system. The
+[final M4 report](artifacts/macro-m4-20261027/FINAL_REPORT_FOR_CHATGPT.md) gives
+the completed paired comparison, all failures, review decisions and next steps.
 
 ## 3. Repositories and evidence authority
 
@@ -787,7 +798,7 @@ not the current state. Stage 6 was allowed to precede Stage 5.
 | M1 | Package the existing bounded macro as a reusable component | Checkpointed; engineering acceptance complete. |
 | M2 | Demonstrate a genuinely different capability | Accepted: read-only readiness plus movement; no second actuator. |
 | M3 | Runnable natural-language selection/demo, deterministic reference and faults | Demonstration/attempts complete; Qwen ambiguity failure remains a documented limitation. |
-| M4 | One final focused paired primitives-versus-macro evaluation | Active;80 live trials scheduled; full result and all required reviews pending. |
+| M4 | One final focused paired primitives-versus-macro evaluation | Closed:80/80 recorded/audited and8/8 reviews; Sol passes retention, Qwen fails. |
 | M5 | Consolidate the project deliverable and research conclusions | Future: maintainable component, demo, final report/evidence, limitations and justified use cases. |
 
 **M4 is not historical Stage 4, and M5 is not historical Stage 5 memory.** The
@@ -853,10 +864,41 @@ successful pairs, and at most 25% extra native operations on those pairs. It is 
 a population-level equivalence/noninferiority proof. All-attempt costs, paired
 wins/losses and failures accompany the matched-success subset.
 
-Eight live clarification transcripts require the frozen review rubric. Four
-Sol reviews are recorded; Qwen's reviews have not yet been recorded.
-Operator review by Codex is not independent human adjudication. The automatic
-report is a checkpoint, not automatically the final scientific verdict.
+All eight live clarification transcripts were reviewed with the frozen rubric:
+four Sol passes and four Qwen failures. Operator review by Codex is not independent
+human adjudication. The initial automatic report was a checkpoint; the final
+report and closeout record now document the completed interpretation.
+
+### Completed M4 result and decision
+
+Sol:20/20 in each condition,68→38 requests,328.36→194.58 task seconds,
+38→40 native operations. Macro saved44.1% calls and40.7% task time with5.3% more
+native work. Mean task time16.42→9.73 seconds. Closed backend runtime17.68 minutes.
+
+Qwen:15/20 primitives versus14/20 macro;91→53 requests,2,669.72→1,703.63
+task seconds,50→48 native operations. Mean task time133.49→85.18 seconds;
+closed backend runtime81.97 minutes. These all-attempt savings accompany a loss
+of one primary pass and do not meet the preset no-greater-failure requirement.
+On13 jointly successful pairs, calls53→28 (47.2% fewer), native31→29. The macro
+has one paired win and two losses; both losses are partial-command cases.
+
+All11 Qwen failures selected readiness inspection, including seven explicit
+movement requests and four ambiguous requests that required clarification.
+Five later terminated on output length; this does not establish truncation as
+the cause of the preceding wrong capability choice. Qwen accepted five grounded
+readiness SUCCESS reports for the wrong/unresolved goal (two primitive, three
+macro). Unsupported selected-evidence success attempts and dispatch violations
+were zero; those metrics do not establish correct user intent.
+
+All80 live audits matched3,290 persisted spans; controls add202 spans. Both
+simulators cleaned up;250 total model requests, no infrastructure retry, incomplete
+usage, censored or unstarted cells. The old supervisor phase still says review
+required; `closeout.json` records subsequent completed review and mixed findings.
+
+Decision: keep the module as an optional bounded engineering capability, document
+the positive Sol result and failed Qwen screen together, and consolidate in M5.
+Do not claim a general local-model reliability improvement or adopt macro as an
+unconditional cross-model default. No new experiment or architecture was launched.
 
 If results show useful efficiency without observed correctness loss, retaining
 the module for consolidation may be justified. If correctness falls, examine the
@@ -955,7 +997,7 @@ An archive's SHA256 sidecar establishes byte identity, not scientific validity.
 | M2/M3 | [Current combined report](docs/M2_M3_COMBINED_REPORT_2026-10-27.md) |
 | Public module | [v0.2 README](../rosa-research/docs/MACRO_CAPABILITIES_V2_README.md), [specification](../rosa-research/docs/MACRO_CAPABILITIES_V2_SPEC.md) |
 | OAuth repair | [Live renewal validation](../rosa-research/docs/REMEMBERED_AUTH_ROTATION_VALIDATION_2026-10-27.md) |
-| Active M4 | [Protocol](docs/M4_MACRO_PROTOCOL_2026-10-27.md), [status entry](MILESTONE_M4_STATUS.md), [freeze](artifacts/macro-m4-20261027/freeze.json) |
+| Completed M4 | [Final report](artifacts/macro-m4-20261027/FINAL_REPORT_FOR_CHATGPT.md), [timing](docs/M4_EFFICIENCY_AND_TIMING_2026-10-27.md), [protocol](docs/M4_MACRO_PROTOCOL_2026-10-27.md), [status entry](MILESTONE_M4_STATUS.md), [freeze](artifacts/macro-m4-20261027/freeze.json) |
 
 Major archives, each with a corresponding `.sha256` sidecar:
 
@@ -971,6 +1013,7 @@ Major archives, each with a corresponding `.sha256` sidecar:
 | Joined macro reference | [ROSA_MACRO_TRANSFER_V1_COMPLETE_WITH_CONTINUATION_2026-10-23.zip](artifacts/ROSA_MACRO_TRANSFER_V1_COMPLETE_WITH_CONTINUATION_2026-10-23.zip) |
 | M1 | [ROSA_MACRO_MODULE_V1_M1_ENGINEERING_2026-10-27.zip](artifacts/ROSA_MACRO_MODULE_V1_M1_ENGINEERING_2026-10-27.zip) |
 | M2/M3 | [ROSA_MACRO_M2_M3_ENGINEERING_AND_LIVE_DEMO_2026-10-27.zip](artifacts/ROSA_MACRO_M2_M3_ENGINEERING_AND_LIVE_DEMO_2026-10-27.zip) |
+| M4 final reviewed study | [ROSA_M4_FINAL_REVIEW_2026-10-27.zip](artifacts/ROSA_M4_FINAL_REVIEW_2026-10-27.zip), [verification](artifacts/ROSA_M4_FINAL_REVIEW_2026-10-27.verification.json) |
 
 M1 ZIP SHA256:
 `4057039c91eaaa40b512a4925b5fad324f1f4174a0614625b18a246ed82e7be8`.
@@ -979,7 +1022,14 @@ M2/M3 ZIP SHA256:
 M2/M3's382 manifest file hashes matched archived bytes. Its original packaged
 report remains immutable; the newer canonical report includes labeled amendments.
 
-Active M4 records, which can change while workers run:
+M4 final package:947 manifest file hashes verified, ZIP integrity and secret-pattern
+scan passed. SHA256:
+`fb3a47aecfaaa380cb295ef5bfa8cca5d4511f2c842dc783144b5ba6a747b0ab`.
+The original pre-review execution ZIP is preserved; its933 manifest entries were
+also rechecked. The packaged handoff snapshot predates this archive-verification
+note; it already records the completed experiment and mixed scientific findings.
+
+M4 checkpoint and per-trial records (execution is now closed):
 
 ```text
 artifacts/macro-m4-20261027/freeze.json
@@ -994,15 +1044,21 @@ artifacts/macro-m4-20261027/<backend>/<job>/phoenix-audit.json
 artifacts/macro-m4-20261027/clarification-review.json
 ```
 
-At execution end the supervisor is configured to generate analysis.json,
-M4_EXECUTION_REPORT.md and an execution-checkpoint ZIP/sidecar. Their future
-filenames are not evidence they already exist. The archive may precede final
-clarification review and remains labeled a checkpoint. No final Qwen/full-M4
-conclusion belongs in this handoff until actual results/reviews support it.
+The supervisor generated analysis.json, M4_EXECUTION_REPORT.md and the
+ROSA_M4_EXECUTION_CHECKPOINT_2026-10-27.zip/sidecar before final Qwen review.
+That original archive is preserved. The reviewed analysis and detailed final
+report are later derived products; pre-review versions are retained under
+`review-history/execution-checkpoint/`. The final review package is separately
+named ROSA_M4_FINAL_REVIEW_2026-10-27.zip with its own manifest and sidecars.
+Consult its verification file before claiming final-package integrity.
 
 ## 15. Operational handoff
 
 ### Safe inspection during the active study
+
+M4 has now finished; the restrictions below describe active frozen campaigns,
+not a requirement to keep a completed worker or simulator running. Do not rerun
+the closed populated M4 directories. Next work is consolidation, not a restart.
 
 Read checkpoints/logs and verify actual process identity/start time before
 concluding a worker is alive or dead. PIDs can be reused. A progress count records
@@ -1123,6 +1179,7 @@ assistant continuously edits files while no assistant task or refresh process ru
 | Protected credential rotation failed after initial saving worked | Apply focused Windows atomic-replacement fix; retain failure and verify real resume. |
 | M4 recovery reserve approved prospectively | Keep ordinary budgets, charge every attempt, restrict retries and never replay robot commands. |
 | Some README/status sections are historical | This overview and dated actual checkpoints determine current planning; old files remain evidence. |
+| M4 completed with mixed backend findings | Sol meets the retention screen; Qwen fails15/20→14/20 despite savings. Keep optional module, consolidate honestly; no universal reliability claim. |
 
 For a new assistant: read this document, refresh/inspect actual current state,
 then follow the user's requested task. Do not claim the project is finished,
