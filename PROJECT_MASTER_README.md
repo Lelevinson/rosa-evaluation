@@ -28,7 +28,14 @@ appropriately qualified uncertainty and human clarification review. Qwen's faile
 engineering gate is not proof of harm; the small study also does not establish
 equivalent reliability or a difference that is definitely just noise. A suggested
 selection diagnostic and remote backup remain proposals, not newly launched work.
-M4 scores and archives are unchanged; M5 has not started.
+The later [Claude/ChatGPT discussion recap](docs/M5_REVIEW_DISCUSSION_RECEIVED_2026-10-27.md)
+converges on four proposed M5 gates: off-machine protection, existing-trace/human
+review, final claims/analysis, then packaging/presentation. See the assessment
+for current gate status and corrections to the suggested thesis. Backup is not
+verified, deeper four-trace comparison and human review remain outstanding,
+and optional experiments are not launched. M4 scores and archives are unchanged;
+M5 has not started. The deeper trace review must be labeled retrospective because
+results and some snapshots/prompts have already been inspected.
 
 ## Contents
 

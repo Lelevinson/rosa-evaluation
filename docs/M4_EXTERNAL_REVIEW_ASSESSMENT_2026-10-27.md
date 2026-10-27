@@ -55,21 +55,67 @@ M4 remains closed; its frozen protocol, scores and evidence archives are unchang
    invocations; Qwen used up to eight charged calls. The study does not establish
    that longer tasks would improve the macro's reliability advantage.
 
-## Proposed M5 priorities, not new execution orders
+## Consolidated M5 priorities after the further Claude/ChatGPT discussion
 
-1. Prepare a short claim/evidence/limitation ledger and a focused final narrative.
-2. Add appropriately qualified uncertainty and paired/family-aware summaries from
-   saved data, clearly labeled as post-hoc analysis rather than a changed protocol.
-3. Obtain human review of the eight clarification cases; retain the existing Codex
-   operator reviews and any disagreements instead of silently replacing them.
-4. Check off-machine backup/publication status and package a runnable demonstration.
-   Local commits are still not a remote backup. No push or new demo model calls
-   are performed merely because this feedback recommends them.
-5. Consider a separately scoped selection-only diagnostic only if the team needs
-   an answer that changes an actual project decision. Varying wording, catalogue
-   order/descriptions or reasoning adds distinct interventions and may require
-   transfer checks; hundreds of related paraphrases do not establish broad autonomy.
-   This diagnostic is optional and has not been authorized or started by this review.
+The user subsequently supplied a [recap of the discussion](M5_REVIEW_DISCUSSION_RECEIVED_2026-10-27.md).
+The four gates below consolidate that feedback; M5 execution has not started.
+No quoted recommendation constitutes new authorization for remote publication,
+model requests or a new study.
+
+| Gate | Work and exit evidence | Current status |
+|---|---|---|
+| 1. Protect the work | Credential-check intended source/history/evidence, verify the destination and branch, and establish an off-machine copy of source, archives and checksums. | Local member/martin commits and verified ZIPs exist. No off-machine backup is verified in this session; no push is performed by processing this recap. |
+| 2. Review existing failures | Compare the four Qwen partial-command records: actual model-visible prompts/tool descriptions, initial selection, feedback, native dispatch and outcome. Prepare the eight clarification cases for independent human scoring and preserve disagreements. | Outcome summaries/snapshots and some prompts have already been inspected; a deeper comparative first-turn review remains outstanding. Eight Codex operator reviews are complete; independent human review is not. |
+| 3. Finalize claims and analysis | Present the ten-family table, paired wins/losses, both efficiency views and a concise claim/evidence/limitation ledger. Add only appropriately qualified exploratory uncertainty. | The M4 report already has family results and paired counts. A concise final ledger and additional family-aware uncertainty analysis remain future work. |
+| 4. Package and present | Consolidate the existing module/installation instructions and limits, a clearly attributed recorded demonstration and a focused report with technical appendices. | The module and M3 demo work; no final presentation package or recorded-video completion is claimed. No new demo inference is launched by this recap. |
+
+### Forensic expectations and provenance
+
+Hypothesis for deeper review: describing immediate execution in macro mode may
+make readiness inspection appear an attractive preliminary action, while primitive
+mode may elicit direct movement selection. Look for the actual condition wording,
+tool schemas and first selection; also inspect competing interpretations and
+subsequent feedback. A model explanation, if present, is supporting evidence,
+not privileged access to its causal reasoning. A selection difference alone
+does not isolate its cause. Inconclusive traces must remain inconclusive.
+
+These expectations are recorded **after M4 results and some snapshots/prompts
+were already seen**. They are a retrospective analysis plan, not preregistered
+predictions or a blind discovery. Do not claim the four trial outcomes were unseen.
+Both conditions commit to one skill; the macro additionally executes its routine
+immediately. Commitment is not a macro-only property.
+
+### Corrections to the proposed final thesis
+
+- Say savings in **model orchestration**; native work did not uniformly stay flat
+  or increase. Sol had38→40 native operations (+5.3%); Qwen50→48 (-4.0%) across
+  all attempts, and31→29 (-6.5%) on both-pass pairs. Different work/failures limit
+  what those counts mean. Do not pool backends to hide that distinction.
+- All11 failed Qwen tasks selected inspection. Only five ended with accepted
+  grounded readiness SUCCESS reports; the other six ended with safe error output
+  after truncation or validation-retry exhaustion. Do not call all11 false success
+  reports or claim that every failed trial completed a report.
+- Matched-success costs describe the subset where both modes succeeded; they
+  exclude discordant/harder cases. Report them alongside all-attempt costs and
+  correctness, without replacing either view or retuning the frozen primary screen.
+- Plain Wilson intervals are illustrative binomial references, not a guaranteed
+  lower bound on uncertainty or proof that reliability is preserved. Pairing,
+  repeated cases and family clustering need explicit treatment. Fixed seed/settings
+  do not provide independent coverage of20 task families.
+- The absence of stock-ROSA comparison limits claims about superiority over
+  untouched upstream ROSA or the whole accumulated repair bundle. It does not
+  invalidate the narrower within-ROSA comparison against a shared repaired
+  primitive reference. Narrowing the claim can be preferable to starting a study.
+
+### Optional experiment boundary
+
+A stock-ROSA comparison or small selection diagnostic is future work unless a
+specific unresolved question materially affects an actual engineering decision
+or necessary claim. Neither is automatically required to close M5. Any diagnostic
+needs its own frozen cases, interventions, scoring and budget. Presentation
+sensitivity would not establish a general model-capability explanation. No
+reasoning-enabled rescue, router/planner, backend migration or hardware expansion
+is authorized by this recap.
 
 Memory, full JTVR, hardware and a new general planner remain deferred. M5 is still
 the recommended next milestone, not a new study already in progress.
