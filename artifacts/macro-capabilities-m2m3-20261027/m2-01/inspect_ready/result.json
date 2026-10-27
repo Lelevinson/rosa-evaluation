@@ -1,0 +1,379 @@
+{
+  "case": "inspect_ready",
+  "pass": true,
+  "selected_skill": "ur5e.inspect_readiness",
+  "expected_status": "SUCCESS",
+  "report": {
+    "report_accepted": true,
+    "status": "SUCCESS",
+    "observed_values": {
+      "/ur5e_readiness": {
+        "trajectory_controller_active": 1.0,
+        "joint_state_broadcaster_active": 1.0,
+        "joint_sample_fresh": 1.0
+      }
+    },
+    "actor": "model",
+    "verification_actor": "shared_evidence_reuse",
+    "observation_id": "obs-04a092224c9d-1",
+    "values_supplied_by": "program_from_existing_observation"
+  },
+  "bundle": {
+    "selected_skill": "ur5e.inspect_readiness",
+    "capability_kind": "read_only_inspection",
+    "workflow_state": "AWAITING_REPORT",
+    "verification": {
+      "after_write": 0,
+      "goal_reached": true,
+      "actor": "program",
+      "observed_values": {
+        "/ur5e_readiness": {
+          "trajectory_controller_active": 1.0,
+          "joint_state_broadcaster_active": 1.0,
+          "joint_sample_fresh": 1.0
+        }
+      },
+      "evidence": [
+        {
+          "node": "/ur5e_readiness",
+          "fields": [
+            "trajectory_controller_active",
+            "joint_state_broadcaster_active"
+          ],
+          "source": "controllers",
+          "operation_id": 1,
+          "after_write": 0,
+          "actor": "program",
+          "unavailable": null
+        },
+        {
+          "node": "/ur5e_readiness",
+          "fields": [
+            "joint_sample_fresh"
+          ],
+          "source": "joint_state",
+          "operation_id": 2,
+          "after_write": 0,
+          "actor": "program",
+          "unavailable": null
+        }
+      ],
+      "observation_id": "obs-04a092224c9d-1",
+      "readiness_checks": {
+        "controllers": {
+          "trajectory_controller_active": true,
+          "joint_state_broadcaster_active": true
+        },
+        "joint_state": {
+          "joint_sample_fresh": true
+        }
+      },
+      "capability_kind": "read_only_inspection",
+      "evidence_encoding": "boolean_as_0_1_or_null"
+    },
+    "next_step_owner": "model"
+  },
+  "snapshot": {
+    "module_version": "0.2.0",
+    "mode": "macro",
+    "limits": {
+      "native_operations": 10,
+      "tool_attempts": 16,
+      "corrections": 3,
+      "seconds": 180.0,
+      "tolerance": 0.025
+    },
+    "catalogue": {
+      "ur5e.home": {
+        "kind": "state_change",
+        "targets": {
+          "/ur5e": {
+            "shoulder_pan_joint": 0.0,
+            "shoulder_lift_joint": -1.57,
+            "elbow_joint": 1.57,
+            "wrist_1_joint": -1.57,
+            "wrist_2_joint": -1.57,
+            "wrist_3_joint": 0.0
+          }
+        },
+        "max_writes": 1
+      },
+      "ur5e.offset": {
+        "kind": "state_change",
+        "targets": {
+          "/ur5e": {
+            "shoulder_pan_joint": 0.18,
+            "shoulder_lift_joint": -1.57,
+            "elbow_joint": 1.57,
+            "wrist_1_joint": -1.57,
+            "wrist_2_joint": -1.57,
+            "wrist_3_joint": 0.16
+          }
+        },
+        "max_writes": 1
+      },
+      "ur5e.inspect_readiness": {
+        "kind": "read_only_inspection",
+        "subject": "/ur5e_readiness",
+        "required_checks": {
+          "controllers": [
+            "trajectory_controller_active",
+            "joint_state_broadcaster_active"
+          ],
+          "joint_state": [
+            "joint_sample_fresh"
+          ]
+        },
+        "max_writes": 0,
+        "success_means": "every required readiness check freshly observed true",
+        "evidence_encoding": "true=1.0, false=0.0, unavailable=null"
+      }
+    },
+    "events": [
+      {
+        "type": "tool",
+        "call_index": 1,
+        "name": "select_skill",
+        "input": {
+          "skill_id": "ur5e.inspect_readiness"
+        },
+        "status": "RETURNED",
+        "span_id": "2c804382f93d8a5e",
+        "actor": "model"
+      },
+      {
+        "type": "workflow_transition",
+        "state": "SELECTED",
+        "reason": "model_selected_authorized_skill",
+        "actor": "model"
+      },
+      {
+        "type": "tool",
+        "call_index": 2,
+        "name": "verify_outcome",
+        "input": {},
+        "status": "RETURNED",
+        "span_id": "35b75654c55e541f",
+        "actor": "program"
+      },
+      {
+        "type": "verification",
+        "actor": "program",
+        "goal_reached": true,
+        "after_write": 0
+      },
+      {
+        "type": "tool",
+        "call_index": 3,
+        "name": "write_state",
+        "input": {
+          "node_name": "/ur5e",
+          "values": {
+            "shoulder_pan_joint": 0.0,
+            "shoulder_lift_joint": -1.57,
+            "elbow_joint": 1.57,
+            "wrist_1_joint": -1.57,
+            "wrist_2_joint": -1.57,
+            "wrist_3_joint": 0.0
+          }
+        },
+        "status": "RETURNED",
+        "span_id": "c7011f6ef0f649ba",
+        "actor": "model"
+      },
+      {
+        "type": "validation",
+        "code": "read_only_skill_forbids_write",
+        "details": {
+          "max_writes": 0
+        },
+        "attempt": 1,
+        "native_dispatch_for_rejected_call": false
+      },
+      {
+        "type": "tool",
+        "call_index": 4,
+        "name": "submit_report",
+        "input": {
+          "status": "SUCCESS",
+          "observation_id": "obs-04a092224c9d-1"
+        },
+        "status": "RETURNED",
+        "span_id": "4957d6c28dacfb1f",
+        "actor": "model"
+      },
+      {
+        "type": "report_reference",
+        "actor": "model",
+        "status": "SUCCESS",
+        "observation_id": "obs-04a092224c9d-1",
+        "accepted": true,
+        "values_supplied_by": "program_from_existing_observation"
+      },
+      {
+        "type": "evidence_reuse",
+        "actor": "shared_contract",
+        "operation_ids": [
+          1
+        ]
+      },
+      {
+        "type": "workflow_transition",
+        "state": "TERMINAL",
+        "reason": "model_report_accepted",
+        "actor": "model"
+      }
+    ],
+    "operations": [
+      {
+        "operation_id": 1,
+        "kind": "read_controllers",
+        "actor": "program",
+        "status": "RETURNED",
+        "started": 3828.21813377,
+        "result": {
+          "trajectory_controller_active": true,
+          "joint_state_broadcaster_active": true
+        },
+        "finished": 3828.219203923
+      },
+      {
+        "operation_id": 2,
+        "kind": "read_joint_state",
+        "actor": "program",
+        "status": "RETURNED",
+        "started": 3828.219247324,
+        "result": {
+          "joint_sample_fresh": true
+        },
+        "finished": 3828.224693039
+      }
+    ],
+    "observations": [
+      {
+        "observed_values": {
+          "/ur5e_readiness": {
+            "trajectory_controller_active": 1.0,
+            "joint_state_broadcaster_active": 1.0,
+            "joint_sample_fresh": 1.0
+          }
+        },
+        "evidence": [
+          {
+            "node": "/ur5e_readiness",
+            "fields": [
+              "trajectory_controller_active",
+              "joint_state_broadcaster_active"
+            ],
+            "source": "controllers",
+            "operation_id": 1,
+            "after_write": 0,
+            "actor": "program",
+            "unavailable": null
+          },
+          {
+            "node": "/ur5e_readiness",
+            "fields": [
+              "joint_sample_fresh"
+            ],
+            "source": "joint_state",
+            "operation_id": 2,
+            "after_write": 0,
+            "actor": "program",
+            "unavailable": null
+          }
+        ],
+        "observation_id": "obs-04a092224c9d-1",
+        "readiness_checks": {
+          "controllers": {
+            "trajectory_controller_active": true,
+            "joint_state_broadcaster_active": true
+          },
+          "joint_state": {
+            "joint_sample_fresh": true
+          }
+        },
+        "capability_kind": "read_only_inspection",
+        "evidence_encoding": "boolean_as_0_1_or_null"
+      }
+    ],
+    "reports": [
+      {
+        "status": "SUCCESS",
+        "observed_values": {
+          "/ur5e_readiness": {
+            "trajectory_controller_active": 1.0,
+            "joint_state_broadcaster_active": 1.0,
+            "joint_sample_fresh": 1.0
+          }
+        },
+        "actor": "model",
+        "accepted": true,
+        "verification_actor": "shared_evidence_reuse",
+        "after_write": 0,
+        "observation_id": "obs-04a092224c9d-1",
+        "values_supplied_by": "program_from_existing_observation"
+      }
+    ],
+    "verification": {
+      "observed_values": {
+        "/ur5e_readiness": {
+          "trajectory_controller_active": 1.0,
+          "joint_state_broadcaster_active": 1.0,
+          "joint_sample_fresh": 1.0
+        }
+      },
+      "evidence": [
+        {
+          "node": "/ur5e_readiness",
+          "fields": [
+            "trajectory_controller_active",
+            "joint_state_broadcaster_active"
+          ],
+          "source": "controllers",
+          "operation_id": 1,
+          "after_write": 0,
+          "actor": "program",
+          "unavailable": null
+        }
+      ],
+      "after_write": 0,
+      "goal_reached": true,
+      "actor": "shared_evidence_reuse"
+    },
+    "last_write": 0,
+    "validation_errors": 1,
+    "tool_calls": 4,
+    "selected_skill": "ur5e.inspect_readiness",
+    "workflow_state": "TERMINAL",
+    "program_managed": true,
+    "base_macro_version": "0.1.0",
+    "selected_max_writes": 0
+  },
+  "local_audit": {
+    "pass": true,
+    "errors": [],
+    "explicit_tool_spans": 4,
+    "native_spans": 2,
+    "langchain_tool_callbacks": 4,
+    "total_spans": 12
+  },
+  "independent_observation": {
+    "shoulder_pan_joint": 0.17999999999999974,
+    "shoulder_lift_joint": -1.5699999999997398,
+    "elbow_joint": 1.5700000000011776,
+    "wrist_1_joint": -1.5699999999970746,
+    "wrist_2_joint": -1.5699999999999998,
+    "wrist_3_joint": 1.4253895571019967e-21
+  },
+  "independent_checks": {
+    "trajectory_controller_active": true,
+    "joint_state_broadcaster_active": true,
+    "joint_sample_fresh": true
+  },
+  "dispatches": 0,
+  "required_dispatches": 0,
+  "movement_records": [],
+  "injected_source_calls": 0,
+  "rejected_write": "{\"code\": \"read_only_skill_forbids_write\", \"corrections_remaining\": 2, \"details\": {\"max_writes\": 0}, \"rejected\": true}"
+}
