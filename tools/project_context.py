@@ -6,12 +6,14 @@ import hashlib
 import json
 from pathlib import Path
 import re
+from statistics import median
 from urllib.parse import unquote, urlsplit
 from zoneinfo import ZoneInfo
 
 
 ROOT = Path(__file__).resolve().parents[1]
 MASTER = ROOT / "PROJECT_MASTER_README.md"
+EFFICIENCY = ROOT / "docs/M4_EFFICIENCY_AND_TIMING_2026-10-27.md"
 LIVE = ROOT / "artifacts/macro-m4-20261027"
 START = "<!-- PROJECT_STATUS_START -->"
 END = "<!-- PROJECT_STATUS_END -->"
@@ -30,6 +32,7 @@ def backend_status(backend, reviews):
     checkpoint = read_json(LIVE / backend / "checkpoint.json")
     rows = checkpoint.get("trials", [])
     review_counts = {"passed": 0, "failed": 0, "pending_or_invalid": 0}
+    reviewed_passes = set()
     for row in rows:
         if row.get("case") != "ambiguous_goal":
             continue
@@ -41,6 +44,8 @@ def backend_status(backend, reviews):
             review_counts["pending_or_invalid"] += 1
         else:
             review_counts["passed" if review["pass"] else "failed"] += 1
+            if review["pass"]:
+                reviewed_passes.add(key)
     conditions = {}
     for condition in ("primitives", "macro"):
         subset = [row for row in rows if row.get("condition") == condition]
@@ -52,7 +57,30 @@ def backend_status(backend, reviews):
                 audit_pass(row) and row.get("primary_pass") is True for row in subset),
             "recorded_model_requests": sum(row["inference"]["calls"] for row in subset),
             "recorded_native_operations": sum(row["score"]["native_operations"] for row in subset),
+            "known_input_tokens": sum(row["inference"]["known_input_tokens"] for row in subset),
+            "known_output_tokens": sum(row["inference"]["known_output_tokens"] for row in subset),
+            "usage_incomplete_rows": sum(not row["inference"]["usage_complete"] for row in subset),
+            "task_wall_seconds": sum(row["wall_seconds"] for row in subset),
+            "mean_task_seconds": (sum(row["wall_seconds"] for row in subset) / len(subset)
+                                  if subset else None),
+            "median_task_seconds": median(row["wall_seconds"] for row in subset) if subset else None,
         }
+    pairs = {}
+    for row in rows:
+        pairs.setdefault((row["case"], row["repetition"]), {})[row["condition"]] = row
+    matched = [pair for pair in pairs.values() if set(pair) == {"primitives", "macro"}
+               and all(audit_pass(row) and row.get("primary_pass") is True
+                       and (row["case"] != "ambiguous_goal"
+                            or backend + "/" + row["job"]["id"] in reviewed_passes)
+                       for row in pair.values())]
+    matched_costs = {
+        condition: {
+            "model_requests": sum(pair[condition]["inference"]["calls"] for pair in matched),
+            "native_operations": sum(pair[condition]["score"]["native_operations"] for pair in matched),
+            "task_wall_seconds": sum(pair[condition]["wall_seconds"] for pair in matched),
+        }
+        for condition in ("primitives", "macro")
+    }
     clean = (checkpoint.get("simulator_cleanup", {}).get("returncode") == 0
              and checkpoint.get("cleanup_errors") == [])
     return {
@@ -64,6 +92,10 @@ def backend_status(backend, reviews):
         "reserved_requests": checkpoint.get("campaign", {}).get("reserved_requests"),
         "request_cap": checkpoint.get("campaign", {}).get("request_cap"),
         "conditions": conditions,
+        "review_qualified_matched_success_pairs": len(matched),
+        "matched_success_costs": matched_costs,
+        "saved_campaign_elapsed_seconds": checkpoint.get("campaign", {}).get("elapsed_seconds"),
+        "closed_total_elapsed_seconds": checkpoint.get("total_elapsed_seconds"),
         "clarification_review": review_counts,
         "required_clarification_reviews": 4,
         "execution_and_audits_complete": (
@@ -133,6 +165,76 @@ def render(data):
     return "\n".join(lines)
 
 
+def efficiency_report(data):
+    def number(value):
+        return f"{value:,.2f}" if value is not None else "unavailable"
+
+    def reduction(reference, candidate):
+        return f"{100 * (1 - candidate / reference):+.1f}%" if reference else "unavailable"
+
+    lines = ["# M4 efficiency and timing checkpoint", "",
+             f"Date: **{data['snapshot_date']}**. Derived from saved trial rows; no new inference.", "",
+             "Positive reduction means less resource use or time in macro mode. Correctness and",
+             "review completeness must be considered alongside savings. Partial runs are not final results.", "",
+             "| Backend / condition | Recorded /20 | Audited automatic passes | Requests | Native ops | Known input tokens | Known output tokens | Incomplete-usage rows |",
+             "|---|---:|---:|---:|---:|---:|---:|---:|"]
+    for backend, label in (("siwc", "Sol"), ("ollama", "Qwen")):
+        for condition, c in data["backends"][backend]["conditions"].items():
+            lines.append(f"| {label} / {condition} | {c['recorded_rows']}/20 | "
+                         f"{c['audited_automatic_primary_passes']} | {c['recorded_model_requests']} | "
+                         f"{c['recorded_native_operations']} | {c['known_input_tokens']:,} | "
+                         f"{c['known_output_tokens']:,} | {c['usage_incomplete_rows']} |")
+    lines += ["", "| Backend / condition | Total recorded task seconds | Mean seconds/task | Median seconds/task |",
+              "|---|---:|---:|---:|"]
+    for backend, label in (("siwc", "Sol"), ("ollama", "Qwen")):
+        for condition, c in data["backends"][backend]["conditions"].items():
+            lines.append(f"| {label} / {condition} | {number(c['task_wall_seconds'])} | "
+                         f"{number(c['mean_task_seconds'])} | {number(c['median_task_seconds'])} |")
+    lines += ["", "These tables include unsuccessful recorded attempts. An early failure can look fast",
+              "or cheap. They exclude any request still in flight without a recorded task result;",
+              "the master checkpoint separately reports campaign reservations. Unknown token usage",
+              "is not zero; known totals are lower bounds where usage is incomplete.", "",
+              "## Same-case pairs where both conditions passed", "",
+              "This descriptive subset requires both audits and valid recorded clarification reviews",
+              "when applicable. Pending/failed clarification reviews exclude that pair. It supplements",
+              "all-attempt accounting and is not the final frozen engineering-screen decision.", "",
+              "| Backend | Saved status | Qualifying pairs /20 | Requests primitives → macro | Request reduction | Native ops primitives → macro | Native reduction | Task seconds primitives → macro | Time reduction |",
+              "|---|---|---:|---:|---:|---:|---:|---:|---:|"]
+    for backend, label in (("siwc", "Sol"), ("ollama", "Qwen")):
+        b = data["backends"][backend]
+        p, m = b["matched_success_costs"]["primitives"], b["matched_success_costs"]["macro"]
+        lines.append(f"| {label} | {b['status']} | {b['review_qualified_matched_success_pairs']}/20 | "
+                     f"{p['model_requests']} → {m['model_requests']} | "
+                     f"{reduction(p['model_requests'], m['model_requests'])} | "
+                     f"{p['native_operations']} → {m['native_operations']} | "
+                     f"{reduction(p['native_operations'], m['native_operations'])} | "
+                     f"{number(p['task_wall_seconds'])} → {number(m['task_wall_seconds'])} | "
+                     f"{reduction(p['task_wall_seconds'], m['task_wall_seconds'])} |")
+    lines += ["", "## Campaign time and measurement limits", ""]
+    for backend, label in (("siwc", "Sol"), ("ollama", "Qwen")):
+        b = data["backends"][backend]
+        closed = b["closed_total_elapsed_seconds"]
+        elapsed = closed if closed is not None else b["saved_campaign_elapsed_seconds"]
+        state = "closed backend run" if closed is not None else "saved elapsed checkpoint; still incomplete"
+        minutes = f"{elapsed / 60:.2f}" if elapsed is not None else "unavailable"
+        lines.append(f"- {label}: **{minutes} minutes** ({number(elapsed)} seconds), {state}.")
+    lines += ["", "Task wall time covers the bounded model/tool loop, including waits and recovery.",
+              "It excludes simulator setup/reset, outside-task independent scoring observations and",
+              "persisted trace audits. Backend elapsed time also includes those overheads and, when",
+              "closed, cleanup; it does not include waiting for the other backend's serialized turn.",
+              "Means and medians cover recorded rows only; incomplete trials can distort comparisons.",
+              "All-attempt costs and final reporting must retain infrastructure-censored attempts too.", "",
+              "Compare architecture within each backend first. Qwen runs on the laptop with partial",
+              "CPU/GPU offload; Sol uses a remote service with different sampling, tokenization and",
+              "compute. Observed elapsed-time differences describe this setup, not a controlled",
+              "hardware-independent model-speed ranking. No energy, dollar cost or pure generation",
+              "tokens/second was measured by these task-wall aggregates.", "",
+              "Regenerate with `python -m tools.project_context --refresh`. The frozen experiment",
+              "runner, scores and original reports remain unchanged. The final M4 report should",
+              "include these measures using the completed schedule and required review overlay."]
+    return "\n".join(lines) + "\n"
+
+
 def atomic_write(path, value):
     temporary = path.with_name(path.name + ".tmp")
     temporary.write_text(value, encoding="utf-8")
@@ -167,8 +269,9 @@ def main():
         before, rest = text.split(START)
         _, after = rest.split(END)
         atomic_write(ROOT / "PROJECT_LIVE_STATUS.json", json.dumps(data, indent=2) + "\n")
+        atomic_write(EFFICIENCY, efficiency_report(data))
         atomic_write(MASTER, before + START + "\n" + render(data) + "\n" + END + after)
-        print("Updated master status block and PROJECT_LIVE_STATUS.json; experiment files unchanged.")
+        print("Updated master status, JSON snapshot and efficiency/timing report; experiment files unchanged.")
     if args.check and not check_links():
         raise SystemExit(1)
     if not args.refresh and not args.check:

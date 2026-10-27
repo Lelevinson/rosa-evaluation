@@ -83,7 +83,7 @@ Saved-checkpoint snapshot: **2026-10-27**.
 | Backend | Saved status | Recorded / scheduled | Local + Phoenix audited | Reserved requests / cap |
 |---|---|---:|---:|---:|
 | Sol | COMPLETE | 40/40 | 40 | 106 / 323 |
-| Qwen | RUNNING | 30/40 | 30 | 103 / 323 |
+| Qwen | RUNNING | 33/40 | 33 | 112 / 323 |
 
 Recorded rows can include a row awaiting its audit. Reserved requests can include
 an in-flight or failed request; they are not generated-token totals. Unfinished
@@ -96,8 +96,8 @@ cells are not assumed to pass. These counts do not establish process liveness.
 |---|---:|---:|---:|
 | Sol / primitives | 20/20 | 68 | 38 |
 | Sol / macro | 20/20 | 38 | 40 |
-| Qwen / primitives | 12/15 | 62 | 37 |
-| Qwen / macro | 11/15 | 36 | 32 |
+| Qwen / primitives | 12/16 | 67 | 39 |
+| Qwen / macro | 13/17 | 41 | 37 |
 
 Supervisor's saved phase: `RUNNING_ollama`. Frozen source check: 62 files; 0 mismatches.
 
@@ -122,6 +122,12 @@ Sol's closed M4 measurements: primitives **68 model requests and 38 native
 operations**; macro **38 requests and 40 native operations**. This is **44.1% fewer
 model requests and 5.3% more native operations** in the tested cases. It does not
 establish general reliability, novelty or a causal cross-model speed ranking.
+
+The [M4 efficiency and timing report](docs/M4_EFFICIENCY_AND_TIMING_2026-10-27.md)
+adds known input/output tokens, task mean/median/total times, backend elapsed time
+including overhead, and matched-success call/time/native-operation reductions.
+It is refreshed from the same snapshot. Qwen remains explicitly partial while
+running; fewer calls alone do not establish a faster or more reliable system.
 
 ## 3. Repositories and evidence authority
 
@@ -1066,7 +1072,8 @@ the whole history with the most recent favorable result.
   and installed model weights unless a new authorized task requires a change.
 
 The refresh helper is read-only with respect to experiments. It updates this
-file's marked status block and PROJECT_LIVE_STATUS.json only. It does not silently
+file's marked status block, PROJECT_LIVE_STATUS.json and the linked M4 efficiency/
+timing checkpoint only. It does not silently
 maintain every narrative paragraph: the assistant must update the interpretation
 when a result/decision changes. Do not advertise automatic realtime maintenance.
 
