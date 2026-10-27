@@ -44,3 +44,17 @@ research lock and separate Phoenix lock. No dependency/model installation occurr
 
 No M4 conclusion, final retention decision or M5 progression is claimed here.
 Commits remain local; no remote push was performed.
+
+## Completed hosted checkpoint
+
+Sol completed all40 scheduled trials with all40 local/Phoenix audits passing and
+clean simulator teardown. Primitives:20/20 primary passes,68 model requests,
+38 native operations. Macro:20/20 primary passes,38 requests,40 native operations.
+That is44.1% fewer model requests with5.3% more native operations in these cases.
+It is a within-backend observation, not a broad reliability/generalization claim.
+
+All four Sol clarification transcripts were reviewed against the frozen rubric:
+each requests user clarification/confirmation before selecting a skill, acquiring
+observations or reporting completion. The review is recorded as Codex operator
+review, not independent human adjudication. Qwen is running; its results and four
+clarification reviews remain pending. The full M4 verdict therefore remains pending.

@@ -1,0 +1,192 @@
+{
+  "inference": {
+    "calls": 3,
+    "known_input_tokens": 3427,
+    "known_output_tokens": 84,
+    "output_upper_bound": 84,
+    "usage_complete": true,
+    "events": [
+      {
+        "call": 1,
+        "status": "RETURNED",
+        "requested_output_allowance": null,
+        "usage": {
+          "input_tokens": 976,
+          "output_tokens": 25,
+          "total_tokens": 1001
+        },
+        "finish_reason": "completed",
+        "physical_request_index": 1
+      },
+      {
+        "call": 2,
+        "status": "RETURNED",
+        "requested_output_allowance": null,
+        "usage": {
+          "input_tokens": 1086,
+          "output_tokens": 25,
+          "total_tokens": 1111
+        },
+        "finish_reason": "completed",
+        "physical_request_index": 2
+      },
+      {
+        "call": 3,
+        "status": "RETURNED",
+        "requested_output_allowance": null,
+        "usage": {
+          "input_tokens": 1365,
+          "output_tokens": 34,
+          "total_tokens": 1399
+        },
+        "finish_reason": "completed",
+        "physical_request_index": 3
+      }
+    ],
+    "decision_calls": 3,
+    "infrastructure_failures": 0,
+    "returned_usage_valid": true
+  },
+  "snapshot": {
+    "module_version": "0.2.0",
+    "mode": "primitives",
+    "limits": {
+      "native_operations": 10,
+      "tool_attempts": 16,
+      "corrections": 3,
+      "seconds": 360.0,
+      "tolerance": 0.025
+    },
+    "catalogue": {
+      "ur5e.inspect_readiness": {
+        "kind": "read_only_inspection",
+        "subject": "/ur5e_readiness",
+        "required_checks": {
+          "controllers": [
+            "trajectory_controller_active",
+            "joint_state_broadcaster_active"
+          ],
+          "joint_state": [
+            "joint_sample_fresh"
+          ]
+        },
+        "max_writes": 0,
+        "success_means": "every required readiness check freshly observed true",
+        "evidence_encoding": "true=1.0, false=0.0, unavailable=null"
+      }
+    },
+    "events": [
+      {
+        "type": "tool",
+        "call_index": 1,
+        "name": "select_skill",
+        "input": {
+          "skill_id": "ur5e.inspect_readiness"
+        },
+        "status": "RETURNED",
+        "span_id": "d462ff65a22bc60c",
+        "actor": "model"
+      },
+      {
+        "type": "workflow_transition",
+        "state": "SELECTED",
+        "reason": "model_selected_authorized_skill",
+        "actor": "model"
+      },
+      {
+        "type": "tool",
+        "call_index": 2,
+        "name": "read_state",
+        "input": {
+          "nodes": [
+            "/ur5e_readiness"
+          ]
+        },
+        "status": "RETURNED",
+        "span_id": "4dca49ccbfebaeeb",
+        "actor": "model"
+      }
+    ],
+    "operations": [
+      {
+        "operation_id": 1,
+        "kind": "read_controllers",
+        "actor": "model",
+        "status": "RETURNED",
+        "started": 1460.138501832,
+        "result": {
+          "trajectory_controller_active": true,
+          "joint_state_broadcaster_active": true
+        },
+        "finished": 1460.139536224
+      },
+      {
+        "operation_id": 2,
+        "kind": "read_joint_state",
+        "actor": "model",
+        "status": "ERROR",
+        "started": 1460.13957149,
+        "error_type": "TimeoutError",
+        "finished": 1460.139621952
+      }
+    ],
+    "observations": [
+      {
+        "observed_values": {
+          "/ur5e_readiness": {
+            "trajectory_controller_active": 1.0,
+            "joint_state_broadcaster_active": 1.0,
+            "joint_sample_fresh": null
+          }
+        },
+        "evidence": [
+          {
+            "node": "/ur5e_readiness",
+            "fields": [
+              "trajectory_controller_active",
+              "joint_state_broadcaster_active"
+            ],
+            "source": "controllers",
+            "operation_id": 1,
+            "after_write": 0,
+            "actor": "model",
+            "unavailable": null
+          },
+          {
+            "node": "/ur5e_readiness",
+            "fields": [
+              "joint_sample_fresh"
+            ],
+            "source": "joint_state",
+            "operation_id": 2,
+            "after_write": 0,
+            "actor": "model",
+            "unavailable": "observation_timeout"
+          }
+        ],
+        "observation_id": "obs-b032355ed4c9-1",
+        "readiness_checks": {
+          "controllers": {
+            "trajectory_controller_active": true,
+            "joint_state_broadcaster_active": true
+          },
+          "joint_state": {
+            "joint_sample_fresh": null
+          }
+        },
+        "capability_kind": "read_only_inspection",
+        "evidence_encoding": "boolean_as_0_1_or_null"
+      }
+    ],
+    "reports": [],
+    "verification": null,
+    "last_write": 0,
+    "validation_errors": 0,
+    "tool_calls": 2,
+    "selected_skill": "ur5e.inspect_readiness",
+    "workflow_state": "SELECTED",
+    "program_managed": false,
+    "base_macro_version": "0.1.0",
+    "selected_max_writes": 0
+  }
+}

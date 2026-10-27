@@ -1,0 +1,193 @@
+{
+  "inference": {
+    "calls": 2,
+    "known_input_tokens": 2789,
+    "known_output_tokens": 57,
+    "output_upper_bound": 57,
+    "usage_complete": true,
+    "events": [
+      {
+        "call": 1,
+        "status": "RETURNED",
+        "requested_output_allowance": null,
+        "usage": {
+          "input_tokens": 1275,
+          "output_tokens": 24,
+          "total_tokens": 1299
+        },
+        "finish_reason": "completed",
+        "physical_request_index": 1
+      },
+      {
+        "call": 2,
+        "status": "RETURNED",
+        "requested_output_allowance": null,
+        "usage": {
+          "input_tokens": 1514,
+          "output_tokens": 33,
+          "total_tokens": 1547
+        },
+        "finish_reason": "completed",
+        "physical_request_index": 2
+      }
+    ],
+    "decision_calls": 2,
+    "infrastructure_failures": 0,
+    "returned_usage_valid": true
+  },
+  "snapshot": {
+    "module_version": "0.2.0",
+    "mode": "macro",
+    "limits": {
+      "native_operations": 10,
+      "tool_attempts": 16,
+      "corrections": 3,
+      "seconds": 360.0,
+      "tolerance": 0.025
+    },
+    "catalogue": {
+      "ur5e.home": {
+        "kind": "state_change",
+        "targets": {
+          "/ur5e": {
+            "shoulder_pan_joint": 0.0,
+            "shoulder_lift_joint": -1.57,
+            "elbow_joint": 1.57,
+            "wrist_1_joint": -1.57,
+            "wrist_2_joint": -1.57,
+            "wrist_3_joint": 0.0
+          }
+        },
+        "max_writes": 1
+      },
+      "ur5e.stage_left": {
+        "kind": "state_change",
+        "targets": {
+          "/ur5e": {
+            "shoulder_pan_joint": -0.14,
+            "shoulder_lift_joint": -1.57,
+            "elbow_joint": 1.57,
+            "wrist_1_joint": -1.57,
+            "wrist_2_joint": -1.57,
+            "wrist_3_joint": 0.2
+          }
+        },
+        "max_writes": 1
+      },
+      "ur5e.park_right": {
+        "kind": "state_change",
+        "targets": {
+          "/ur5e": {
+            "shoulder_pan_joint": 0.16,
+            "shoulder_lift_joint": -1.57,
+            "elbow_joint": 1.57,
+            "wrist_1_joint": -1.57,
+            "wrist_2_joint": -1.57,
+            "wrist_3_joint": -0.12
+          }
+        },
+        "max_writes": 1
+      },
+      "ur5e.inspect_readiness": {
+        "kind": "read_only_inspection",
+        "subject": "/ur5e_readiness",
+        "required_checks": {
+          "controllers": [
+            "trajectory_controller_active",
+            "joint_state_broadcaster_active"
+          ],
+          "joint_state": [
+            "joint_sample_fresh"
+          ]
+        },
+        "max_writes": 0,
+        "success_means": "every required readiness check freshly observed true",
+        "evidence_encoding": "true=1.0, false=0.0, unavailable=null"
+      }
+    },
+    "events": [
+      {
+        "type": "tool",
+        "call_index": 1,
+        "name": "select_skill",
+        "input": {
+          "skill_id": "ur5e.stage_left"
+        },
+        "status": "RETURNED",
+        "span_id": "f9e1d99656ef42ea",
+        "actor": "model"
+      },
+      {
+        "type": "workflow_transition",
+        "state": "SELECTED",
+        "reason": "model_selected_authorized_skill",
+        "actor": "model"
+      },
+      {
+        "type": "tool",
+        "call_index": 2,
+        "name": "read_state",
+        "input": {
+          "nodes": [
+            "/ur5e"
+          ]
+        },
+        "status": "RETURNED",
+        "span_id": "9279768fd8857edf",
+        "actor": "program"
+      },
+      {
+        "type": "workflow_transition",
+        "state": "NEEDS_DECISION",
+        "reason": "observation_unavailable_no_write",
+        "actor": "program"
+      }
+    ],
+    "operations": [
+      {
+        "operation_id": 1,
+        "kind": "read",
+        "actor": "program",
+        "status": "ERROR",
+        "started": 1764.591595244,
+        "error_type": "TimeoutError",
+        "finished": 1764.59165518
+      }
+    ],
+    "observations": [
+      {
+        "observed_values": {
+          "/ur5e": {
+            "elbow_joint": null,
+            "shoulder_lift_joint": null,
+            "shoulder_pan_joint": null,
+            "wrist_1_joint": null,
+            "wrist_2_joint": null,
+            "wrist_3_joint": null
+          }
+        },
+        "evidence": [
+          {
+            "node": "/ur5e",
+            "operation_id": 1,
+            "after_write": 0,
+            "acquired_monotonic": 1764.609147108,
+            "actor": "program",
+            "unavailable": "observation_timeout"
+          }
+        ],
+        "observation_id": "obs-dbaedbe124aa-1"
+      }
+    ],
+    "reports": [],
+    "verification": null,
+    "last_write": 0,
+    "validation_errors": 0,
+    "tool_calls": 2,
+    "selected_skill": "ur5e.stage_left",
+    "workflow_state": "NEEDS_DECISION",
+    "program_managed": true,
+    "base_macro_version": "0.1.0",
+    "selected_max_writes": 1
+  }
+}
