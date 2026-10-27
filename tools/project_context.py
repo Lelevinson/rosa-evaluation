@@ -117,6 +117,7 @@ def snapshot():
             mismatches.append(name)
     return {
         "snapshot_date": datetime.now(ZoneInfo("Asia/Taipei")).date().isoformat(),
+        "snapshot_at": datetime.now(ZoneInfo("Asia/Taipei")).strftime("%Y-%m-%d %H:%M:%S"),
         "scope": "Saved checkpoint snapshot, not a live process probe or final research verdict",
         "operator_phase": read_json(LIVE / "operator/status.json").get("phase", "unavailable"),
         "frozen_files": len(freeze.get("files", {})),
@@ -126,7 +127,25 @@ def snapshot():
 
 
 def render(data):
-    lines = [f"Saved-checkpoint snapshot: **{data['snapshot_date']}**.", "",
+    backends = data["backends"]
+    recorded = sum(b["recorded_rows"] for b in backends.values())
+    execution_complete = all(b["execution_and_audits_complete"] for b in backends.values())
+    stopped = [name for name, b in backends.items() if b["status"] not in ("COMPLETE", "RUNNING")]
+    reviews_done = sum(b["clarification_review"]["passed"] + b["clarification_review"]["failed"]
+                       for b in backends.values())
+    phase = ("execution closed; final interpretation pending" if execution_complete else
+             "execution incomplete; inspect stopped/unstarted backend" if stopped else
+             "live execution in progress")
+    lines = [f"Last refreshed: **{data['snapshot_at']}**. Saved-checkpoint snapshot.", "",
+             "### Current work and next actions", "",
+             "| Progress item | Current evidence / action |",
+             "|---|---|",
+             f"| Active milestone | M4: {phase}. |",
+             f"| Recorded execution | {recorded}/80 trial rows; {80 - recorded} cells without a recorded result, including any in-flight trial. |",
+             f"| Clarification review gate | {reviews_done}/8 valid reviews recorded; {8 - reviews_done} still required. A recorded review can pass or fail. |",
+             "| Current decision | Bounded macro remains the engineering candidate. Final M4 retention and M5 progression require the completed evidence and interpretation. |",
+             "| Next actions | Finish/inspect the frozen execution; review required clarification transcripts; reconcile correctness, efficiency, faults, audits and bounds; document the retention decision and M5 next steps. |",
+             "| Open gates / blockers | Incomplete execution or review remains an open gate. Saved RUNNING status alone does not rule out an external service/process problem. |", "",
              "| Backend | Saved status | Recorded / scheduled | Local + Phoenix audited | Reserved requests / cap |",
              "|---|---|---:|---:|---:|"]
     for backend, label in (("siwc", "Sol"), ("ollama", "Qwen")):

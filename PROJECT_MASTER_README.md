@@ -1,12 +1,16 @@
-# Improved ROSA — master project record and chatbot handoff
+# Improved ROSA — living progress report and master project record
 
 Updated: **2026-10-27**. Maintained project context, decision history and evidence map.
 
-This is the main overview for handing this project to another chatbot, researcher
+This is the maintained progress report and main overview for handing this project to another chatbot, researcher
 or teammate. It separates implemented software, measured results, unfinished work,
 proposals and historical plans. It is a summary with links to detailed evidence,
 not a substitute for every raw transcript or a claim that every hypothesis worked.
 It contains no credentials. Dates are shown without a geographic location.
+
+Start with [current work, progress, gates and next actions](#2-current-verified-status).
+That section describes where the project stands now. The research history below
+supports current decisions; it does not replace an up-to-date progress report.
 
 **Read first:** the project improves ROSA's surrounding software, not the LLM's
 weights. The current candidate is a small reusable **bounded macro component**.
@@ -78,12 +82,23 @@ The figures are a snapshot, not a continuously refreshed dashboard. Refresh befo
 sharing this document or making a new claim about an active run.
 
 <!-- PROJECT_STATUS_START -->
-Saved-checkpoint snapshot: **2026-10-27**.
+Last refreshed: **2026-10-27 20:40:28**. Saved-checkpoint snapshot.
+
+### Current work and next actions
+
+| Progress item | Current evidence / action |
+|---|---|
+| Active milestone | M4: live execution in progress. |
+| Recorded execution | 74/80 trial rows; 6 cells without a recorded result, including any in-flight trial. |
+| Clarification review gate | 4/8 valid reviews recorded; 4 still required. A recorded review can pass or fail. |
+| Current decision | Bounded macro remains the engineering candidate. Final M4 retention and M5 progression require the completed evidence and interpretation. |
+| Next actions | Finish/inspect the frozen execution; review required clarification transcripts; reconcile correctness, efficiency, faults, audits and bounds; document the retention decision and M5 next steps. |
+| Open gates / blockers | Incomplete execution or review remains an open gate. Saved RUNNING status alone does not rule out an external service/process problem. |
 
 | Backend | Saved status | Recorded / scheduled | Local + Phoenix audited | Reserved requests / cap |
 |---|---|---:|---:|---:|
 | Sol | COMPLETE | 40/40 | 40 | 106 / 323 |
-| Qwen | RUNNING | 33/40 | 33 | 112 / 323 |
+| Qwen | RUNNING | 34/40 | 34 | 118 / 323 |
 
 Recorded rows can include a row awaiting its audit. Reserved requests can include
 an in-flight or failed request; they are not generated-token totals. Unfinished
@@ -96,7 +111,7 @@ cells are not assumed to pass. These counts do not establish process liveness.
 |---|---:|---:|---:|
 | Sol / primitives | 20/20 | 68 | 38 |
 | Sol / macro | 20/20 | 38 | 40 |
-| Qwen / primitives | 12/16 | 67 | 39 |
+| Qwen / primitives | 13/17 | 72 | 41 |
 | Qwen / macro | 13/17 | 41 | 37 |
 
 Supervisor's saved phase: `RUNNING_ollama`. Frozen source check: 62 files; 0 mismatches.
@@ -1053,6 +1068,13 @@ the whole history with the most recent favorable result.
 
 - Update after a milestone, material result, correction, roadmap decision or
   implementation change. Refresh the status block before sharing/reporting live work.
+- Treat this as an ongoing progress report. Maintain current work, measured
+  completion, blockers/open gates, decisions and the next concrete actions near
+  the front. Do not merely append another historical entry after completing work.
+- Before a substantive project handoff, reconcile current status, roadmap,
+  experiment interpretation, limitations and decision log with the evidence.
+  Mark completed, stopped, waiting and unstarted work accurately; remove obsolete
+  present-tense statements while preserving historical results.
 - Record date, evidence source, actual denominator, study version and exceptions.
   Keep numbers and status conditional when work is active/unreviewed.
 - Preserve original protocols, source freezes, scores, failed attempts and ZIPs.
@@ -1076,6 +1098,10 @@ file's marked status block, PROJECT_LIVE_STATUS.json and the linked M4 efficienc
 timing checkpoint only. It does not silently
 maintain every narrative paragraph: the assistant must update the interpretation
 when a result/decision changes. Do not advertise automatic realtime maintenance.
+Background trials do not rewrite the narrative by themselves. During active work,
+refresh when inspecting/reporting progress; after a run closes or a decision
+changes, update the narrative and next actions as well. Do not imply that this
+assistant continuously edits files while no assistant task or refresh process runs.
 
 ## 17. Decision log and corrections
 

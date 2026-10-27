@@ -1,6 +1,6 @@
 # ROSA Evaluation
 
-Start with the [master project record and chatbot handoff](PROJECT_MASTER_README.md)
+Start with the [living progress report and master project record](PROJECT_MASTER_README.md)
 for goals, architecture, roadmaps, experiment history, current status and limitations.
 Its active-run figures are dated snapshots; refresh before relying on them.
 
