@@ -21,6 +21,15 @@ Sol passed20/20 tasks in both conditions; Qwen passed15/20 with primitives and
 consolidation is the recommended next work and has not started. Do not restart
 the populated experiment directories.
 
+**Latest review:** the user supplied Claude's assessment of this overview.
+Our [recorded assessment and proposed M5 priorities](docs/M4_EXTERNAL_REVIEW_ASSESSMENT_2026-10-27.md)
+emphasize truthful evidence versus correct intent, a concise claim ledger,
+appropriately qualified uncertainty and human clarification review. Qwen's failed
+engineering gate is not proof of harm; the small study also does not establish
+equivalent reliability or a difference that is definitely just noise. A suggested
+selection diagnostic and remote backup remain proposals, not newly launched work.
+M4 scores and archives are unchanged; M5 has not started.
+
 ## Contents
 
 1. [Goals and research question](#1-goals-and-research-question)
