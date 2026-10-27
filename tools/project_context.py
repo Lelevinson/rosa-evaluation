@@ -158,8 +158,8 @@ def render(data):
              "| Progress item | Current evidence / action |",
              "|---|---|",
              f"| Current milestone | {current_milestone} |",
-             f"| Recorded execution | {recorded}/80 trial rows; {80 - recorded} cells without a recorded result, including any in-flight trial. |",
-             f"| Clarification review gate | {reviews_done}/8 valid reviews recorded; {8 - reviews_done} still required. A recorded review can pass or fail. |",
+             f"| M4 recorded execution | {recorded}/80 trial rows; {80 - recorded} cells without a recorded result, including any in-flight trial. |",
+             f"| M4 operator clarification review | {reviews_done}/8 valid operator reviews recorded; {8 - reviews_done} still required. This is not independent human adjudication. |",
              f"| Current decision | {decision} |",
              f"| Next actions | {next_action} |",
              f"| Open gates / blockers | {gates} |", "",
@@ -172,6 +172,11 @@ def render(data):
         lines.append(f"| {label} | {item['status']} | {item['recorded_rows']}/40 | "
                      f"{item['audited_rows']} | {requests if requests is not None else 'unknown'} / "
                      f"{cap if cap is not None else 'unknown'} |")
+    if m5:
+        lines += ["", f"M5 separately used **{m5['demo_model_requests']} presentation inference requests** "
+                  f"and **{m5['new_research_trials']} new research trials**. Independent human ratings are "
+                  "deferred by user choice; the [eight-case packet](artifacts/macro-m5-20261027/ROSA_M5_HUMAN_REVIEW_PACKET.zip) "
+                  "is ready. The eight operator ratings above do not count as human review."]
     lines += ["", "Recorded rows can include a row awaiting its audit. Reserved requests can include",
               "an in-flight or failed request; they are not generated-token totals. Unfinished",
               "cells are not assumed to pass. These counts do not establish process liveness.", ""]

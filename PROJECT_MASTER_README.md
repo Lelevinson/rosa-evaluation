@@ -27,17 +27,19 @@ emphasize truthful evidence versus correct intent, a concise claim ledger,
 appropriately qualified uncertainty and human clarification review. Qwen's failed
 engineering gate is not proof of harm; the small study also does not establish
 equivalent reliability or a difference that is definitely just noise. A suggested
-selection diagnostic and remote backup remain proposals, not newly launched work.
+selection diagnostic remains future work; M5 backup and delivery are now authorized.
 The later [Claude/ChatGPT discussion recap](docs/M5_REVIEW_DISCUSSION_RECEIVED_2026-10-27.md)
 converges on four proposed M5 gates: off-machine protection, existing-trace/human
 review, final claims/analysis, then packaging/presentation. See the assessment
-for current gate status and corrections to the suggested thesis. Backup is not
-verified, deeper four-trace comparison and human review remain outstanding,
-and optional experiments are not launched. M4 scores and archives are unchanged;
-The user subsequently requested completion of M5; see the current status block.
-Independent human adjudication is deferred at the user's request; prepare its
-packet for later review and do not claim that a human has scored it. The deeper trace review must be labeled retrospective because
-results and some snapshots/prompts have already been inspected.
+for current gate status and corrections to the suggested thesis. The user then
+requested completion of M5. The four-trace review, family-aware postprocessing,
+one-page claim ledger, ten-page report, installation acceptance and two recorded
+Gazebo presentation runs are complete. Human adjudication is deferred by user
+choice; the label-withheld packet is ready. Research source was pushed and all86
+remote-tarball files verified. Evaluation upload remains pending explicit
+public/private destination approval after automatic approval review rejected the
+public retained-evidence push. M4 scores/archives are unchanged; no new research
+experiment was launched. All M5 trace interpretation is retrospective.
 
 ## Contents
 
@@ -103,23 +105,25 @@ The figures are a snapshot, not a continuously refreshed dashboard. Refresh befo
 sharing this document or making a new claim about an active run.
 
 <!-- PROJECT_STATUS_START -->
-Last refreshed: **2026-10-27 21:13:17**. Saved-checkpoint snapshot.
+Last refreshed: **2026-10-27 23:26:44**. Saved-checkpoint snapshot.
 
 ### Current work and next actions
 
 | Progress item | Current evidence / action |
 |---|---|
-| Current milestone | M4: closed with mixed findings. |
-| Recorded execution | 80/80 trial rows; 0 cells without a recorded result, including any in-flight trial. |
-| Clarification review gate | 8/8 valid reviews recorded; 0 still required. A recorded review can pass or fail. |
+| Current milestone | M5: TECHNICAL_DELIVERY_COMPLETE_PUBLICATION_PENDING. All local technical deliverables and original-evidence integrity checks complete. Awaiting explicit destination/disclosure approval to finish evaluation off-machine backup. |
+| M4 recorded execution | 80/80 trial rows; 0 cells without a recorded result, including any in-flight trial. |
+| M4 operator clarification review | 8/8 valid operator reviews recorded; 0 still required. This is not independent human adjudication. |
 | Current decision | Retain bounded module as optional engineering capability; Sol positive, Qwen failed reliability-preserving retention. No unqualified cross-model recommendation. |
-| Next actions | M5 consolidation/write-up using the mixed findings; no new experiment or architecture launched. |
-| Open gates / blockers | M4 execution, audits and review are closed. Qwen failed retention; this is a documented limitation, not an unfinished trial. M5 is not started. |
+| Next actions | Use the pending public/private destination decision to upload and independently verify the evaluation backup. Independent human scoring is deferred by user choice; packet is ready. No further research experiment is scheduled. |
+| Open gates / blockers | M5.1_backup: PARTIAL: research b13df0f pushed and all86 source files independently verified; evaluation publication awaits explicit destination/disclosure approval.; M5.2_existing_evidence: TRACE_REVIEW_COMPLETE; HUMAN_PACKET_READY; HUMAN_ADJUDICATION_DEFERRED_BY_USER; M5.3_research_consolidation: COMPLETE: family table, paired outcomes, both cost views, exploratory family-aware uncertainty,10-page report and1-page ledger.; M5.4_deliverables: COMPLETE_LOCAL: validated wheel, two-backend Gazebo video,10-page report,1-page ledger,898-file verified delivery ZIP.. User requested packet preparation for later review; independent human adjudication is deferred, not complete. |
 
 | Backend | Saved status | Recorded / scheduled | Local + Phoenix audited | Reserved requests / cap |
 |---|---|---:|---:|---:|
 | Sol | COMPLETE | 40/40 | 40 | 106 / 323 |
 | Qwen | COMPLETE | 40/40 | 40 | 144 / 323 |
+
+M5 separately used **4 presentation inference requests** and **0 new research trials**. Independent human ratings are deferred by user choice; the [eight-case packet](artifacts/macro-m5-20261027/ROSA_M5_HUMAN_REVIEW_PACKET.zip) is ready. The eight operator ratings above do not count as human review.
 
 Recorded rows can include a row awaiting its audit. Reserved requests can include
 an in-flight or failed request; they are not generated-token totals. Unfinished
@@ -173,6 +177,54 @@ fewer calls alone do not establish a more reliable system. The
 [final M4 report](artifacts/macro-m4-20261027/FINAL_REPORT_FOR_CHATGPT.md) gives
 the completed paired comparison, all failures, review decisions and next steps.
 
+### Current M5 delivery outputs
+
+- [Focused research report: Markdown](artifacts/macro-m5-20261027/M5_RESEARCH_REPORT.md)
+  and [ten-page PDF](artifacts/macro-m5-20261027/ROSA_M5_RESEARCH_REPORT.pdf).
+- [Claim/evidence/limitation ledger](artifacts/macro-m5-20261027/CLAIM_LEDGER.md)
+  and [one-page PDF](artifacts/macro-m5-20261027/ROSA_M5_CLAIM_LEDGER.pdf).
+- [Four-trace forensic review](artifacts/macro-m5-20261027/PARTIAL_COMMAND_FORENSIC_REVIEW.md),
+  [family-level results](artifacts/macro-m5-20261027/per-family-results.csv),
+  [paired outcomes](artifacts/macro-m5-20261027/paired-outcomes.csv),
+  [both efficiency views](artifacts/macro-m5-20261027/efficiency-both-views.csv), and
+  [exploratory uncertainty](artifacts/macro-m5-20261027/UNCERTAINTY_AND_PAIRED_ANALYSIS.md).
+- [Human-review packet](artifacts/macro-m5-20261027/ROSA_M5_HUMAN_REVIEW_PACKET.zip):
+  eight cases, labels/scores withheld, ratings empty. The operator key is separate.
+  Human review is deferred, not completed; response style can still reveal source.
+- [50.4-second Gazebo demonstration](artifacts/macro-m5-20261027/ROSA_M5_GAZEBO_DEMONSTRATION.mp4)
+  and [video provenance](artifacts/macro-m5-20261027/video-provenance.json). Both new
+  presentation runs reached the explicit offset goal in two model calls each;
+  four requests total, no retakes. Model/tool loop times were16.18 seconds for Sol
+  and98.99 for Qwen, including presentation overhead, not a new speed benchmark.
+  Waiting is labeled8x; the camera-motion segment is1x. No desktop capture.
+- [Installation acceptance](artifacts/macro-m5-20261027/package/acceptance.json)
+  and [module delivery guide](../rosa-research/docs/M5_MODULE_DELIVERY_README_2026-10-27.md):
+  offline wheel build, empty target, both public capabilities, installed CLI help,
+  no experiment imports. Existing dependencies/ROS retained; not a fresh-OS test.
+- [Backup scan](artifacts/macro-m5-20261027/credential-scan.json),
+  [off-machine verification status](artifacts/macro-m5-20261027/off-machine-verification.json)
+  and [dependency-lock addendum](artifacts/macro-m5-20261027/lockfile-backup-addendum.json).
+- [Focused delivery ZIP](artifacts/ROSA_M5_DELIVERY_2026-10-27.zip) and
+  [verification](artifacts/ROSA_M5_DELIVERY_2026-10-27.verification.json):898 file
+  hashes verified,23,688,385 bytes, ZIP integrity and credential-pattern checks pass.
+  SHA256: `e19b01e5940e848553c2cf36433199847c6c20f447e2aa112bd64c4ff7f97e72`.
+  This is locally ready, not yet a verified off-machine evaluation backup.
+  The packaged handoff snapshot precedes the outer checksum and this verification note.
+
+The deeper review adds an observed recovery-path distinction: both primitive
+partial-command runs first request a readiness read before selecting a skill.
+That is rejected without acquisition, after which Qwen selects the movement skill.
+Both macro runs select inspection immediately, then attempt the correct movement
+skill but are rejected by the shared commitment rule. System prompts and tool
+schemas are identical; user-message condition wording differs. This documents
+action/feedback interaction, not a causal explanation of the first choice.
+
+M5 engineering exceptions are preserved: two exact expired sentinel literals were
+reviewed as noncredentials in the scan; an initial installation probe incorrectly
+used an internal field and was corrected to the public snapshot API; the first
+backup filter excluded14 historical uv.lock copies, now preserved by a separately
+verified addendum. None required changing the frozen runtime or old evidence.
+
 ## 3. Repositories and evidence authority
 
 | Component | Repository / local directory | Responsibility |
@@ -186,10 +238,14 @@ work onto another member's branch or publish to the default branch without the
 user's instruction. A source copy inside an evidence ZIP does not replace an
 implementation commit in the research repository.
 
-Recent M1/M2/M3/M4 commits were made **locally**. A local file or commit is not proof
-that it was pushed to GitHub. Some older research/report files remain untracked
-locally; existing unrelated changes, including the research README, were preserved.
-The current snapshot records observed repository state without fetching/pushing.
+Research implementation and the M5 delivery guide throughb13df0f were pushed to
+member/martin; the remote tip and all86 source-tarball files were independently verified in M5.
+Evaluation commits and retained-evidence backup remain local pending explicit
+publication/destination approval. Some older files remain untracked individually
+but are included in the retained-work backup; original unrelated working changes,
+including the research README and Stage4 result edits, remain preserved. See the
+M5 off-machine record for the precise backed-up revision instead of assuming that
+every later local commit has been uploaded.
 
 Important checkpoints, which need not be the latest documentation HEAD:
 
@@ -817,7 +873,7 @@ not the current state. Stage 6 was allowed to precede Stage 5.
 | M2 | Demonstrate a genuinely different capability | Accepted: read-only readiness plus movement; no second actuator. |
 | M3 | Runnable natural-language selection/demo, deterministic reference and faults | Demonstration/attempts complete; Qwen ambiguity failure remains a documented limitation. |
 | M4 | One final focused paired primitives-versus-macro evaluation | Closed:80/80 recorded/audited and8/8 reviews; Sol passes retention, Qwen fails. |
-| M5 | Consolidate the project deliverable and research conclusions | In progress by explicit user request: protect work, review saved evidence, consolidate claims, finish deliverables. Human review packet requested for later adjudication. |
+| M5 | Consolidate the project deliverable and research conclusions | Technical delivery complete locally: trace review, packet, tables, report, ledger, wheel and video. Evaluation backup publication awaits explicit destination choice; human adjudication deferred by user. |
 
 **M4 is not historical Stage 4, and M5 is not historical Stage 5 memory.** The
 October 30 return plan was later resumed by explicit user instructions; its old

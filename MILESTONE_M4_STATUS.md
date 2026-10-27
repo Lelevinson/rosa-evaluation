@@ -45,7 +45,9 @@ research lock and separate Phoenix lock. No dependency/model installation occurr
 Final retention: Sol passes; Qwen fails because macro primary completion is14/20
 versus15/20 for primitives. Keep the module optional and consolidate the mixed
 findings; no new experiment or architecture is launched. M5 is not yet started.
-Commits remain local; no remote push was performed.
+At the original M4 closeout, commits were local. M5 subsequently published and
+verified the research branch; evaluation backup publication awaits an explicit
+destination/disclosure choice. See the living master record for current status.
 
 See the [final report](artifacts/macro-m4-20261027/FINAL_REPORT_FOR_CHATGPT.md),
 [efficiency/timing](docs/M4_EFFICIENCY_AND_TIMING_2026-10-27.md) and

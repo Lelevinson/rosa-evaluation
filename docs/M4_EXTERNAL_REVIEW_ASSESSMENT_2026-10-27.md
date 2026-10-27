@@ -2,6 +2,11 @@
 
 Date: **2026-10-27**. Status: interpretation and M5 planning context only.
 
+Subsequent status: the user explicitly authorized M5 execution. The live
+[master record](../PROJECT_MASTER_README.md) now tracks completed work, deferred
+human review and pending evaluation-publication approval. The planning discussion
+below records the earlier handoff and is not the current execution status.
+
 The user supplied a response attributed to Claude after sharing the master README.
 This records that feedback and our assessment; it is not an independent audit of
 the raw evidence. Attached recommendations are discussion material, not permission

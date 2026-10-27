@@ -114,7 +114,7 @@ def retained_paths():
         if path == ARCHIVE or path.is_relative_to(OUT):
             continue
         if (path.name.startswith('.env') or path.suffix in ('.dpapi', '.db', '.sqlite', '.sqlite3', '.pyc', '.tmp')
-                or path.name.endswith('.lock') or '__pycache__' in path.parts):
+                or path.name == 'gazebo.lock' or '__pycache__' in path.parts):
             continue
         result.append((path, relative))
     return result

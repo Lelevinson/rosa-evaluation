@@ -4,6 +4,12 @@ Start with the [living progress report and master project record](PROJECT_MASTER
 for goals, architecture, roadmaps, experiment history, current status and limitations.
 Its active-run figures are dated snapshots; refresh before relying on them.
 
+M5 deliverables: [focused report](artifacts/macro-m5-20261027/M5_RESEARCH_REPORT.md),
+[PDF](artifacts/macro-m5-20261027/ROSA_M5_RESEARCH_REPORT.pdf),
+[claim ledger](artifacts/macro-m5-20261027/CLAIM_LEDGER.md), and
+[Gazebo video](artifacts/macro-m5-20261027/ROSA_M5_GAZEBO_DEMONSTRATION.mp4).
+Human adjudication is deferred; current backup/publication status is in the master record.
+
 Shared experiment launchers and separate tool integrations for ROSA research.
 Phoenix currently provides tracing and trace validation. Other evaluation tools
 can be added under `tools/` with their own dependencies and configuration.
