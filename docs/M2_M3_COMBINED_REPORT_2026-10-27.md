@@ -193,6 +193,55 @@ corrections, 180 seconds and a cumulative 2,048 observed-output-token threshold.
 The external trial alarm uses the smaller of 180 seconds and remaining backend
 allowance. Calls are reserved/checkpointed before inference; retries count.
 
+### Report amendment: why inference is capped and how recovery could improve
+
+Added after the completed M2/M3 campaign, following the user's question about
+allowing extra requests for external failures. This is a prospective recommendation,
+not a change to the completed protocol, implementation, scores or resource counts.
+The original checksummed evidence ZIP retains the report version packaged at
+completion; share this updated Markdown alongside that archive for this amendment.
+
+Per-task caps bound the agent's decision/retry allowance and support fair comparisons.
+The whole-run ceiling also bounds quota consumption and prevents an unattended
+error loop. These are distinct from recovery after a confirmed infrastructure
+failure. A small, predefined infrastructure reserve would make future runs more
+robust without allowing unlimited attempts.
+
+**Neither backend exhausted its allowance in M3:** Qwen used **7 of 24** reserved
+requests and Sol used **5 of 24**. Qwen's failed clarification task used two calls;
+it selected inspection and ended with an accepted report rather than requesting
+clarification. More available requests would not automatically correct that decision.
+The subsequent OAuth checks made zero model requests.
+
+For the next frozen protocol, consider the following bounded recovery policy:
+
+- Keep an equivalent normal decision allowance for each compared condition, for
+  example eight usable model calls per task. Separately define a small shared
+  infrastructure reserve, for example three failed-request retries per backend.
+  These numbers are illustrative, not an approved or implemented new protocol.
+- Restrict the reserve to documented recoverable transport/provider failures.
+  Wrong skill selection, invalid arguments, output truncation and exhaustion of
+  the ordinary decision allowance remain measured agent/system behavior. A usable
+  completion returned by a retry still consumes the ordinary decision budget.
+- Predefine eligible errors, backoff, restart/resume rules and aggregate request,
+  token and wall-time ceilings inclusive of recovery. The reserve does not bypass
+  quota exhaustion, unavailable authorization, new manual consent or robot limits.
+- Log every attempted request, its reason and lineage, returned or missing usage,
+  and elapsed time. Infrastructure requests still count toward total system cost;
+  absent usage stays unknown/censored rather than being treated as zero.
+- Preserve interrupted and unsuccessful attempts. Label any resumed execution
+  separately; never replace an original outcome with repeated attempts until it
+  passes. Report primary completion and infrastructure-recovered completion
+  separately under rules fixed before seeing results.
+- If a robot command's outcome is uncertain, reconcile with fresh observations
+  before deciding what can resume. An inference retry must never blindly replay
+  an uncertain write.
+
+Recommendation: retain bounded budgets and introduce an explicit infrastructure
+reserve in a future protocol. Do not retroactively rerun or relabel these results.
+
+### Serving profile and audit coverage
+
 Qwen: qwen3.5:9b Q4_K_M, Ollama server 0.40.6, explicitly num_ctx=8192,
 num_predict=1024, temperature=0, seed=42, use_mmap=true, no streaming/reasoning/cache.
 Digest: 56671c2ab9385f9cfcb404638e32cd62d88e3501d44822208363c010179a3c90.

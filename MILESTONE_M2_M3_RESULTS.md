@@ -15,6 +15,12 @@ Research completion: cf722cf (OAuth rotation fix), c0c61a0 (M2 capability/M3 dem
 
 [Combined report for review](docs/M2_M3_COMBINED_REPORT_2026-10-27.md)
 
+The report now includes a post-campaign amendment explaining inference caps and
+recommending a separately bounded infrastructure retry reserve for future frozen
+protocols. Qwen used 7/24 requests and Sol 5/24; the cap did not cause Qwen's
+clarification failure. Share the current Markdown alongside the original ZIP,
+which retains its original report and checksummed evidence unchanged.
+
 [Evidence ZIP](artifacts/ROSA_MACRO_M2_M3_ENGINEERING_AND_LIVE_DEMO_2026-10-27.zip)
 and [SHA256](artifacts/ROSA_MACRO_M2_M3_ENGINEERING_AND_LIVE_DEMO_2026-10-27.sha256).
 All 382 manifest file hashes matched archived bytes; ZIP integrity and credential
