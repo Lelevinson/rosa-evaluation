@@ -337,7 +337,7 @@ for future experiments rather than editing the old hash expectations.
 
 The archive includes raw case/trial JSON, checkpoints, independent observations,
 local/Phoenix traces and audits, simulator setup/logs, original source freezes,
-current source snapshots, research/evaluation/Phoenix uv.lock files, configuration,
+current source snapshots, the shared research runtime and separate Phoenix uv.lock files, configuration,
 public authorization statuses, complete final test logs and a checksum manifest.
 The M2 source was not separately frozen before its execution; the earliest archived
 new-capability source is the subsequent deterministic M3 snapshot. This is an

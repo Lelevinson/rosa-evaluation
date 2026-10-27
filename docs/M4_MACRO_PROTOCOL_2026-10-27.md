@@ -159,6 +159,8 @@ Freeze cases, prompts, scoring, schedule, limits, source bytes and dependency lo
 before controls/live inference. Verify immutable M2/M3 evidence against its original
 382-entry manifest. Current OAuth hotfix sources are prospective and explicitly
 included; do not weaken old historical hash gates to rerun frozen studies.
+The evaluation runner shares the research environment/lock; Phoenix has its own
+tools/phoenix lock. There is no separate evaluation-root Python project or uv.lock.
 
 Use the existing local audit and exact persisted-Phoenix span/closed-tree auditor,
 unchanged. Agent traces use the existing capability project/root span, with explicit

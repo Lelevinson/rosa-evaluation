@@ -40,7 +40,6 @@ def freeze():
     names += list(Path(__file__).parent.glob('*.py'))
     names += list((ROOT / 'experiments/macro_capabilities_v2').glob('*.py'))
     names += [ROOT.parent / p for p in ('rosa-research/uv.lock', 'rosa-research/pyproject.toml',
-        'rosa-evaluation/uv.lock', 'rosa-evaluation/pyproject.toml',
         'rosa-evaluation/tools/phoenix/uv.lock', 'rosa-evaluation/tools/phoenix/pyproject.toml')]
     names += [PROTOCOL, ROOT / 'tests/test_macro_m4.py']
     names += [ROOT.parent / 'reports/m4-ollama.ps1', ROOT.parent / 'reports/m4-service-preflight.json']
