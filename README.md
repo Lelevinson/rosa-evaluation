@@ -8,7 +8,8 @@ M5 deliverables: [focused report](artifacts/macro-m5-20261027/M5_RESEARCH_REPORT
 [PDF](artifacts/macro-m5-20261027/ROSA_M5_RESEARCH_REPORT.pdf),
 [claim ledger](artifacts/macro-m5-20261027/CLAIM_LEDGER.md), and
 [Gazebo video](artifacts/macro-m5-20261027/ROSA_M5_GAZEBO_DEMONSTRATION.mp4).
-Human adjudication is deferred; current backup/publication status is in the master record.
+Human adjudication is deferred. Evaluation backups remain local by user instruction;
+research source is verified remotely. See the master record for current status.
 
 Shared experiment launchers and separate tool integrations for ROSA research.
 Phoenix currently provides tracing and trace validation. Other evaluation tools

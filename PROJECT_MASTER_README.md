@@ -1,6 +1,6 @@
 # Improved ROSA — living progress report and master project record
 
-Updated: **2026-10-27**. Maintained project context, decision history and evidence map.
+Updated: **2026-10-28**. Maintained project context, decision history and evidence map.
 
 This is the maintained progress report and main overview for handing this project to another chatbot, researcher
 or teammate. It separates implemented software, measured results, unfinished work,
@@ -18,7 +18,8 @@ Movement and read-only readiness inspection work in Gazebo. The final focused
 comparison, **M4**, is complete: all80 trials and eight clarification reviews.
 Sol passed20/20 tasks in both conditions; Qwen passed15/20 with primitives and
 14/20 with macro. Sol met the preset retention screen; Qwen did not. M5
-consolidation is now explicitly authorized and in progress. Do not restart
+technical consolidation is complete locally; evaluation off-machine backup and
+independent human adjudication are deferred by user choice. Do not restart
 the populated experiment directories.
 
 **Latest review:** the user supplied Claude's assessment of this overview.
@@ -36,9 +37,11 @@ requested completion of M5. The four-trace review, family-aware postprocessing,
 one-page claim ledger, ten-page report, installation acceptance and two recorded
 Gazebo presentation runs are complete. Human adjudication is deferred by user
 choice; the label-withheld packet is ready. Research source was pushed and all86
-remote-tarball files verified. Evaluation upload remains pending explicit
-public/private destination approval after automatic approval review rejected the
-public retained-evidence push. M4 scores/archives are unchanged; no new research
+remote-tarball files verified. On2026-10-28, the user chose to keep the evaluation
+backup local. Its off-machine protection is deferred; no publication approval is
+pending. The earlier rejected public push made no evaluation transfer.
+See the [local-retention decision](docs/M5_LOCAL_RETENTION_DECISION_2026-10-28.md).
+M4 scores/archives are unchanged; no new research
 experiment was launched. All M5 trace interpretation is retrospective.
 
 ## Contents
@@ -105,18 +108,18 @@ The figures are a snapshot, not a continuously refreshed dashboard. Refresh befo
 sharing this document or making a new claim about an active run.
 
 <!-- PROJECT_STATUS_START -->
-Last refreshed: **2026-10-27 23:26:44**. Saved-checkpoint snapshot.
+Last refreshed: **2026-10-28 00:12:36**. Saved-checkpoint snapshot.
 
 ### Current work and next actions
 
 | Progress item | Current evidence / action |
 |---|---|
-| Current milestone | M5: TECHNICAL_DELIVERY_COMPLETE_PUBLICATION_PENDING. All local technical deliverables and original-evidence integrity checks complete. Awaiting explicit destination/disclosure approval to finish evaluation off-machine backup. |
+| Current milestone | M5: TECHNICAL_DELIVERY_COMPLETE_EVALUATION_LOCAL_BY_USER_CHOICE. All local technical deliverables and original-evidence integrity checks complete. Evaluation backup remains local by user instruction; its off-machine protection is deferred, with no publication decision pending. |
 | M4 recorded execution | 80/80 trial rows; 0 cells without a recorded result, including any in-flight trial. |
 | M4 operator clarification review | 8/8 valid operator reviews recorded; 0 still required. This is not independent human adjudication. |
 | Current decision | Retain bounded module as optional engineering capability; Sol positive, Qwen failed reliability-preserving retention. No unqualified cross-model recommendation. |
-| Next actions | Use the pending public/private destination decision to upload and independently verify the evaluation backup. Independent human scoring is deferred by user choice; packet is ready. No further research experiment is scheduled. |
-| Open gates / blockers | M5.1_backup: PARTIAL: research b13df0f pushed and all86 source files independently verified; evaluation publication awaits explicit destination/disclosure approval.; M5.2_existing_evidence: TRACE_REVIEW_COMPLETE; HUMAN_PACKET_READY; HUMAN_ADJUDICATION_DEFERRED_BY_USER; M5.3_research_consolidation: COMPLETE: family table, paired outcomes, both cost views, exploratory family-aware uncertainty,10-page report and1-page ledger.; M5.4_deliverables: COMPLETE_LOCAL: validated wheel, two-backend Gazebo video,10-page report,1-page ledger,898-file verified delivery ZIP.. User requested packet preparation for later review; independent human adjudication is deferred, not complete. |
+| Next actions | Retain the evaluation backup locally. Independent human scoring is deferred by user choice; packet is ready. No uploads or further research experiments are scheduled. Any future external evaluation backup needs a new user instruction. |
+| Open gates / blockers | M5.1_backup: PARTIAL: research b13df0f pushed and all86 source files independently verified; evaluation off-machine backup deferred by user, local retention selected on2026-10-28.; M5.2_existing_evidence: TRACE_REVIEW_COMPLETE; HUMAN_PACKET_READY; HUMAN_ADJUDICATION_DEFERRED_BY_USER; M5.3_research_consolidation: COMPLETE: family table, paired outcomes, both cost views, exploratory family-aware uncertainty,10-page report and1-page ledger.; M5.4_deliverables: COMPLETE_LOCAL: validated wheel, two-backend Gazebo video,10-page report,1-page ledger,898-file verified delivery ZIP.. User requested packet preparation for later review; independent human adjudication is deferred, not complete. |
 
 | Backend | Saved status | Recorded / scheduled | Local + Phoenix audited | Reserved requests / cap |
 |---|---|---:|---:|---:|
@@ -240,8 +243,9 @@ implementation commit in the research repository.
 
 Research implementation and the M5 delivery guide throughb13df0f were pushed to
 member/martin; the remote tip and all86 source-tarball files were independently verified in M5.
-Evaluation commits and retained-evidence backup remain local pending explicit
-publication/destination approval. Some older files remain untracked individually
+Evaluation commits and retained-evidence backup remain local by the user's
+2026-10-28 instruction. Off-machine evaluation backup is deferred; no upload is
+scheduled. Some older files remain untracked individually
 but are included in the retained-work backup; original unrelated working changes,
 including the research README and Stage4 result edits, remain preserved. See the
 M5 off-machine record for the precise backed-up revision instead of assuming that
@@ -873,7 +877,7 @@ not the current state. Stage 6 was allowed to precede Stage 5.
 | M2 | Demonstrate a genuinely different capability | Accepted: read-only readiness plus movement; no second actuator. |
 | M3 | Runnable natural-language selection/demo, deterministic reference and faults | Demonstration/attempts complete; Qwen ambiguity failure remains a documented limitation. |
 | M4 | One final focused paired primitives-versus-macro evaluation | Closed:80/80 recorded/audited and8/8 reviews; Sol passes retention, Qwen fails. |
-| M5 | Consolidate the project deliverable and research conclusions | Technical delivery complete locally: trace review, packet, tables, report, ledger, wheel and video. Evaluation backup publication awaits explicit destination choice; human adjudication deferred by user. |
+| M5 | Consolidate the project deliverable and research conclusions | Technical delivery complete locally: trace review, packet, tables, report, ledger, wheel and video. Evaluation off-machine backup and human adjudication deferred by user; local evaluation retention selected2026-10-28. |
 
 **M4 is not historical Stage 4, and M5 is not historical Stage 5 memory.** The
 October 30 return plan was later resumed by explicit user instructions; its old
