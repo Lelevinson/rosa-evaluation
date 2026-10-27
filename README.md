@@ -1,5 +1,9 @@
 # ROSA Evaluation
 
+Start with the [master project record and chatbot handoff](PROJECT_MASTER_README.md)
+for goals, architecture, roadmaps, experiment history, current status and limitations.
+Its active-run figures are dated snapshots; refresh before relying on them.
+
 Shared experiment launchers and separate tool integrations for ROSA research.
 Phoenix currently provides tracing and trace validation. Other evaluation tools
 can be added under `tools/` with their own dependencies and configuration.
