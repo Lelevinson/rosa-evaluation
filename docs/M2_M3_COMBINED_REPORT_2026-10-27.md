@@ -1,6 +1,6 @@
 # ROSA M2/M3 combined engineering and live-demo report
 
-Date: 2026-10-27, Asia/Taipei. Branch: `member/martin` in both repositories.
+Date: 2026-10-27. Branch: `member/martin` in both repositories.
 
 ## Decision and actual completion
 
