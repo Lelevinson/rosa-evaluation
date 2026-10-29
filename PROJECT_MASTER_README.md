@@ -115,7 +115,7 @@ The figures are a snapshot, not a continuously refreshed dashboard. Refresh befo
 sharing this document or making a new claim about an active run.
 
 <!-- PROJECT_STATUS_START -->
-Last refreshed: **2026-10-30 01:09:07**. Saved-checkpoint snapshot.
+Last refreshed: **2026-10-30 01:17:08**. Saved-checkpoint snapshot.
 
 ### Current work and next actions
 
@@ -259,6 +259,13 @@ but are included in the retained-work backup; original unrelated working changes
 including the research README and Stage4 result edits, remain preserved. See the
 M5 off-machine record for the precise backed-up revision instead of assuming that
 every later local commit has been uploaded.
+
+The [2026-10-30 GitHub access check](docs/GITHUB_ACCESS_CHECK_2026-10-30.md)
+confirmed that GitHub CLI and Windows Git Credential Manager both authenticate as
+fkilr50, with push permission to both repositories. No login/configuration repair
+was required and no upload was performed. The earlier evaluation push rejection
+concerned public disclosure authorization; the user's local-retention decision
+remains in effect.
 
 Important checkpoints, which need not be the latest documentation HEAD:
 
