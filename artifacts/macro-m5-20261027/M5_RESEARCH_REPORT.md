@@ -10,6 +10,11 @@ See also the [initial intake](HUMAN_REVIEW_AND_PROMPT_CLARITY_2026-10-29.md).
 The original results below and the archived ten-page PDF are unchanged.
 The earlier statements about deferred review describe the original report date.
 
+**Backup update · 2026-10-30:** [M5 technical closeout and verified local backup](../../docs/M5_CLOSEOUT_AND_LOCAL_BACKUP_2026-10-30.md).
+Available history through research b13df0f and evaluation b5e94bf was restored and
+verified locally with shallow-history metadata. Evaluation off-machine protection
+remains deferred; no upload or new experiment was performed.
+
 We implemented bounded robotic skill macros within a repaired ROSA framework and evaluated them against model-managed primitive execution. On the tested catalogue, macros reduced LLM orchestration overhead while producing mixed correctness outcomes. Sol passed all20 tasks in each condition; Qwen passed15/20 with primitives and14/20 with macros. Five accepted, evidence-grounded reports failed the requested goal. The results support efficiency benefits in this environment, without establishing general reliability improvement or superiority to unmodified ROSA.
 
 | Backend | Correct: primitive / macro | Calls | Mean task seconds |

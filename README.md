@@ -12,6 +12,8 @@ Eight human ratings are preserved as [outcome-oriented owner feedback](artifacts
 independent human adjudication under the frozen criterion was not obtained.
 Evaluation backups remain local by user instruction;
 research source is verified remotely. See the master record for current status.
+Both committed branches have [verified local backups](docs/M5_CLOSEOUT_AND_LOCAL_BACKUP_2026-10-30.md),
+including their shallow-history markers. No evaluation upload was performed.
 
 Shared experiment launchers and separate tool integrations for ROSA research.
 Phoenix currently provides tracing and trace validation. Other evaluation tools

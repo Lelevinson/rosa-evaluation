@@ -48,6 +48,10 @@ remote-tarball files verified. On2026-10-28, the user chose to keep the evaluati
 backup local. Its off-machine protection is deferred; no publication approval is
 pending. The earlier rejected public push made no evaluation transfer.
 See the [local-retention decision](docs/M5_LOCAL_RETENTION_DECISION_2026-10-28.md).
+Both committed branches now also have verified local shallow-aware backups;
+see the [M5 technical closeout and backup](docs/M5_CLOSEOUT_AND_LOCAL_BACKUP_2026-10-30.md).
+The protected base revisions are research b13df0f and evaluation b5e94bf. This is
+local protection of available history, not an off-machine evaluation backup.
 M4 scores/archives are unchanged; no new research
 experiment was launched. All M5 trace interpretation is retrospective.
 
@@ -115,18 +119,18 @@ The figures are a snapshot, not a continuously refreshed dashboard. Refresh befo
 sharing this document or making a new claim about an active run.
 
 <!-- PROJECT_STATUS_START -->
-Last refreshed: **2026-10-30 01:17:08**. Saved-checkpoint snapshot.
+Last refreshed: **2026-10-30 01:24:48**. Saved-checkpoint snapshot.
 
 ### Current work and next actions
 
 | Progress item | Current evidence / action |
 |---|---|
-| Current milestone | M5: TECHNICAL_DELIVERY_COMPLETE_EVALUATION_LOCAL_BY_USER_CHOICE. Local technical delivery complete. Eight human ratings preserved as outcome-oriented owner feedback; interpretation closed2026-10-30. Independent human adjudication under the frozen criterion was not obtained. Evaluation backup remains local by user choice. |
+| Current milestone | M5: TECHNICAL_DELIVERY_COMPLETE_EVALUATION_LOCAL_BY_USER_CHOICE. M5 technical delivery and outcome-oriented owner feedback complete. Both committed branches have verified shallow-aware local restores. Evaluation off-machine backup remains deferred; frozen-criterion independent human adjudication was not obtained. |
 | M4 recorded execution | 80/80 trial rows; 0 cells without a recorded result, including any in-flight trial. |
 | M4 operator clarification review | 8/8 valid operator reviews recorded; 0 still required. This is not independent human adjudication. |
 | Current decision | Retain bounded module as optional engineering capability; Sol positive, Qwen failed reliability-preserving retention. No unqualified cross-model recommendation. |
-| Next actions | Use concise explicit wording for future known-goal tasks; keep ambiguous-intent evaluation separate. Retain evaluation backups locally. No new experiments, frozen prompt changes or GitHub uploads are scheduled. |
-| Open gates / blockers | M5.1_backup: PARTIAL: research b13df0f pushed and all86 source files independently verified; evaluation off-machine backup deferred by user, local retention selected on2026-10-28.; M5.2_existing_evidence: TRACE_REVIEW_COMPLETE; STAKEHOLDER_FEEDBACK_CLOSED_8_RATINGS; FROZEN_CRITERION_INDEPENDENT_HUMAN_ADJUDICATION_NOT_OBTAINED; FROZEN_SCORES_UNCHANGED; M5.3_research_consolidation: COMPLETE: family table, paired outcomes, both cost views, exploratory family-aware uncertainty,10-page report and1-page ledger.; M5.4_deliverables: COMPLETE_LOCAL: validated wheel, two-backend Gazebo video,10-page report,1-page ledger,898-file verified delivery ZIP.. Eight ratings submitted by martin on2026-10-29 (four pass, four fail). Outcome-oriented owner preference clarified2026-10-30; stakeholder review closed. Frozen-criterion independent human adjudication was not obtained. Prior aggregate-result exposure is disclosed. |
+| Next actions | Use the delivered report, claim ledger, video and installation guide. Retain local backups; off-machine evaluation backup and frozen-criterion independent human adjudication remain unfulfilled and unscheduled. Use concise explicit wording for future known-goal tasks. No new studies, runtime changes or GitHub uploads are scheduled. |
+| Open gates / blockers | M5.1_backup: LOCAL_RESTORE_VERIFIED: research b13df0f and evaluation b5e94bf; shallow boundaries preserved. Research b13df0f separately verified remotely. Evaluation off-machine backup deferred by user.; M5.2_existing_evidence: TRACE_REVIEW_COMPLETE; STAKEHOLDER_FEEDBACK_CLOSED_8_RATINGS; FROZEN_CRITERION_INDEPENDENT_HUMAN_ADJUDICATION_NOT_OBTAINED; FROZEN_SCORES_UNCHANGED; M5.3_research_consolidation: COMPLETE: family table, paired outcomes, both cost views, exploratory family-aware uncertainty,10-page report and1-page ledger.; M5.4_deliverables: COMPLETE_LOCAL: validated wheel, two-backend Gazebo video,10-page report,1-page ledger,898-file verified delivery ZIP.. Eight ratings submitted by martin on2026-10-29 (four pass, four fail). Outcome-oriented owner preference clarified2026-10-30; stakeholder review closed. Frozen-criterion independent human adjudication was not obtained. Prior aggregate-result exposure is disclosed. |
 
 | Backend | Saved status | Recorded / scheduled | Local + Phoenix audited | Reserved requests / cap |
 |---|---|---:|---:|---:|
@@ -216,6 +220,10 @@ the completed paired comparison, all failures, review decisions and next steps.
 - [Backup scan](artifacts/macro-m5-20261027/credential-scan.json),
   [off-machine verification status](artifacts/macro-m5-20261027/off-machine-verification.json)
   and [dependency-lock addendum](artifacts/macro-m5-20261027/lockfile-backup-addendum.json).
+- [2026-10-30 committed backup record](artifacts/macro-m5-20261027/committed-backup-20261030.json):
+  both branches restored into new bare repositories, exact protected trees matched,
+  and Git object checks passed. Sources are shallow; the bundle and matching
+  history-boundary marker are both required. Backup directory is outside Git.
 - [Focused delivery ZIP](artifacts/ROSA_M5_DELIVERY_2026-10-27.zip) and
   [verification](artifacts/ROSA_M5_DELIVERY_2026-10-27.verification.json):898 file
   hashes verified,23,688,385 bytes, ZIP integrity and credential-pattern checks pass.
