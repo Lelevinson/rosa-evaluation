@@ -174,9 +174,10 @@ def render(data):
                      f"{cap if cap is not None else 'unknown'} |")
     if m5:
         lines += ["", f"M5 separately used **{m5['demo_model_requests']} presentation inference requests** "
-                  f"and **{m5['new_research_trials']} new research trials**. Independent human ratings are "
-                  "deferred by user choice; the [eight-case packet](artifacts/macro-m5-20261027/ROSA_M5_HUMAN_REVIEW_PACKET.zip) "
-                  "is ready. The eight operator ratings above do not count as human review."]
+                  f"and **{m5['new_research_trials']} new research trials**. "
+                  f"Human-review status: {m5['human_review']} "
+                  "The [eight-case packet](artifacts/macro-m5-20261027/ROSA_M5_HUMAN_REVIEW_PACKET.zip) "
+                  "is retained. The eight operator ratings above do not count as human review."]
     lines += ["", "Recorded rows can include a row awaiting its audit. Reserved requests can include",
               "an in-flight or failed request; they are not generated-token totals. Unfinished",
               "cells are not assumed to pass. These counts do not establish process liveness.", ""]

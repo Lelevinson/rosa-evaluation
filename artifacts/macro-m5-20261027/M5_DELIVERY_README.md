@@ -1,5 +1,11 @@
 # ROSA M5 delivery
 
+**Current review update2026-10-30:** see the
+[human-review resolution and task-wording guidance](HUMAN_REVIEW_RESOLUTION_2026-10-30.md).
+Eight submitted human ratings are preserved as outcome-oriented owner feedback;
+frozen-criterion independent human adjudication was not obtained. Original archived copies of
+this delivery retain the creation-time status described below.
+
 Date: **2026-10-27**. This is a technical delivery, with independent human review
 deferred at the user's request. Read the current status and off-machine verification
 records for publication status; a local ZIP is not an off-machine backup.

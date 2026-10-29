@@ -45,7 +45,9 @@ research lock and separate Phoenix lock. No dependency/model installation occurr
 Final retention: Sol passes; Qwen fails because macro primary completion is14/20
 versus15/20 for primitives. Keep the module optional and consolidate the mixed
 findings; no new experiment or architecture is launched. M5 technical delivery
-subsequently completed locally; independent human adjudication remains deferred.
+subsequently completed locally. Eight human ratings were received2026-10-29;
+the owner clarified an outcome-oriented preference on2026-10-30. Stakeholder
+feedback is closed; frozen-criterion independent human adjudication was not obtained.
 At the original M4 closeout, commits were local. M5 subsequently published and
 verified the research branch. On2026-10-28 the user selected local evaluation
 retention, deferring its off-machine backup. No evaluation upload is scheduled.

@@ -1,6 +1,6 @@
 # Improved ROSA — living progress report and master project record
 
-Updated: **2026-10-28**. Maintained project context, decision history and evidence map.
+Updated: **2026-10-30**. Maintained project context, decision history and evidence map.
 
 This is the maintained progress report and main overview for handing this project to another chatbot, researcher
 or teammate. It separates implemented software, measured results, unfinished work,
@@ -18,8 +18,10 @@ Movement and read-only readiness inspection work in Gazebo. The final focused
 comparison, **M4**, is complete: all80 trials and eight clarification reviews.
 Sol passed20/20 tasks in both conditions; Qwen passed15/20 with primitives and
 14/20 with macro. Sol met the preset retention screen; Qwen did not. M5
-technical consolidation is complete locally; evaluation off-machine backup and
-independent human adjudication are deferred by user choice. Do not restart
+technical consolidation is complete locally; evaluation off-machine backup is
+deferred by user choice. Eight human ratings were received on2026-10-29; on2026-10-30
+the owner clarified an outcome-oriented preference. Stakeholder feedback is closed;
+frozen-criterion independent human adjudication was not obtained. Do not restart
 the populated experiment directories.
 
 **Latest review:** the user supplied Claude's assessment of this overview.
@@ -35,8 +37,13 @@ review, final claims/analysis, then packaging/presentation. See the assessment
 for current gate status and corrections to the suggested thesis. The user then
 requested completion of M5. The four-trace review, family-aware postprocessing,
 one-page claim ledger, ten-page report, installation acceptance and two recorded
-Gazebo presentation runs are complete. Human adjudication is deferred by user
-choice; the label-withheld packet is ready. Research source was pushed and all86
+Gazebo presentation runs are complete. Martin submitted eight human ratings on
+2026-10-29, passing inspection and failing clarification. These oppose the frozen
+clarification criterion. On2026-10-30, the owner clarified that practical outcomes
+matter more to them and normal tasks should be concise and explicit. The review
+is retained as stakeholder feedback, not validation under the frozen criterion.
+See the [dated resolution and task-wording guidance](artifacts/macro-m5-20261027/HUMAN_REVIEW_RESOLUTION_2026-10-30.md).
+Original ratings are preserved; frozen scores are unchanged. Research source was pushed and all86
 remote-tarball files verified. On2026-10-28, the user chose to keep the evaluation
 backup local. Its off-machine protection is deferred; no publication approval is
 pending. The earlier rejected public push made no evaluation transfer.
@@ -108,25 +115,25 @@ The figures are a snapshot, not a continuously refreshed dashboard. Refresh befo
 sharing this document or making a new claim about an active run.
 
 <!-- PROJECT_STATUS_START -->
-Last refreshed: **2026-10-28 00:12:36**. Saved-checkpoint snapshot.
+Last refreshed: **2026-10-30 01:09:07**. Saved-checkpoint snapshot.
 
 ### Current work and next actions
 
 | Progress item | Current evidence / action |
 |---|---|
-| Current milestone | M5: TECHNICAL_DELIVERY_COMPLETE_EVALUATION_LOCAL_BY_USER_CHOICE. All local technical deliverables and original-evidence integrity checks complete. Evaluation backup remains local by user instruction; its off-machine protection is deferred, with no publication decision pending. |
+| Current milestone | M5: TECHNICAL_DELIVERY_COMPLETE_EVALUATION_LOCAL_BY_USER_CHOICE. Local technical delivery complete. Eight human ratings preserved as outcome-oriented owner feedback; interpretation closed2026-10-30. Independent human adjudication under the frozen criterion was not obtained. Evaluation backup remains local by user choice. |
 | M4 recorded execution | 80/80 trial rows; 0 cells without a recorded result, including any in-flight trial. |
 | M4 operator clarification review | 8/8 valid operator reviews recorded; 0 still required. This is not independent human adjudication. |
 | Current decision | Retain bounded module as optional engineering capability; Sol positive, Qwen failed reliability-preserving retention. No unqualified cross-model recommendation. |
-| Next actions | Retain the evaluation backup locally. Independent human scoring is deferred by user choice; packet is ready. No uploads or further research experiments are scheduled. Any future external evaluation backup needs a new user instruction. |
-| Open gates / blockers | M5.1_backup: PARTIAL: research b13df0f pushed and all86 source files independently verified; evaluation off-machine backup deferred by user, local retention selected on2026-10-28.; M5.2_existing_evidence: TRACE_REVIEW_COMPLETE; HUMAN_PACKET_READY; HUMAN_ADJUDICATION_DEFERRED_BY_USER; M5.3_research_consolidation: COMPLETE: family table, paired outcomes, both cost views, exploratory family-aware uncertainty,10-page report and1-page ledger.; M5.4_deliverables: COMPLETE_LOCAL: validated wheel, two-backend Gazebo video,10-page report,1-page ledger,898-file verified delivery ZIP.. User requested packet preparation for later review; independent human adjudication is deferred, not complete. |
+| Next actions | Use concise explicit wording for future known-goal tasks; keep ambiguous-intent evaluation separate. Retain evaluation backups locally. No new experiments, frozen prompt changes or GitHub uploads are scheduled. |
+| Open gates / blockers | M5.1_backup: PARTIAL: research b13df0f pushed and all86 source files independently verified; evaluation off-machine backup deferred by user, local retention selected on2026-10-28.; M5.2_existing_evidence: TRACE_REVIEW_COMPLETE; STAKEHOLDER_FEEDBACK_CLOSED_8_RATINGS; FROZEN_CRITERION_INDEPENDENT_HUMAN_ADJUDICATION_NOT_OBTAINED; FROZEN_SCORES_UNCHANGED; M5.3_research_consolidation: COMPLETE: family table, paired outcomes, both cost views, exploratory family-aware uncertainty,10-page report and1-page ledger.; M5.4_deliverables: COMPLETE_LOCAL: validated wheel, two-backend Gazebo video,10-page report,1-page ledger,898-file verified delivery ZIP.. Eight ratings submitted by martin on2026-10-29 (four pass, four fail). Outcome-oriented owner preference clarified2026-10-30; stakeholder review closed. Frozen-criterion independent human adjudication was not obtained. Prior aggregate-result exposure is disclosed. |
 
 | Backend | Saved status | Recorded / scheduled | Local + Phoenix audited | Reserved requests / cap |
 |---|---|---:|---:|---:|
 | Sol | COMPLETE | 40/40 | 40 | 106 / 323 |
 | Qwen | COMPLETE | 40/40 | 40 | 144 / 323 |
 
-M5 separately used **4 presentation inference requests** and **0 new research trials**. Independent human ratings are deferred by user choice; the [eight-case packet](artifacts/macro-m5-20261027/ROSA_M5_HUMAN_REVIEW_PACKET.zip) is ready. The eight operator ratings above do not count as human review.
+M5 separately used **4 presentation inference requests** and **0 new research trials**. Human-review status: Eight ratings submitted by martin on2026-10-29 (four pass, four fail). Outcome-oriented owner preference clarified2026-10-30; stakeholder review closed. Frozen-criterion independent human adjudication was not obtained. Prior aggregate-result exposure is disclosed. The [eight-case packet](artifacts/macro-m5-20261027/ROSA_M5_HUMAN_REVIEW_PACKET.zip) is retained. The eight operator ratings above do not count as human review.
 
 Recorded rows can include a row awaiting its audit. Reserved requests can include
 an in-flight or failed request; they are not generated-token totals. Unfinished
@@ -193,7 +200,9 @@ the completed paired comparison, all failures, review decisions and next steps.
   [exploratory uncertainty](artifacts/macro-m5-20261027/UNCERTAINTY_AND_PAIRED_ANALYSIS.md).
 - [Human-review packet](artifacts/macro-m5-20261027/ROSA_M5_HUMAN_REVIEW_PACKET.zip):
   eight cases, labels/scores withheld, ratings empty. The operator key is separate.
-  Human review is deferred, not completed; response style can still reveal source.
+  Eight human ratings received2026-10-29; outcome-oriented stakeholder feedback
+  closed2026-10-30. Frozen-criterion independent adjudication was not obtained. Prior exposure and
+  the owner's role are disclosed; response style can still reveal source.
 - [50.4-second Gazebo demonstration](artifacts/macro-m5-20261027/ROSA_M5_GAZEBO_DEMONSTRATION.mp4)
   and [video provenance](artifacts/macro-m5-20261027/video-provenance.json). Both new
   presentation runs reached the explicit offset goal in two model calls each;
@@ -877,7 +886,7 @@ not the current state. Stage 6 was allowed to precede Stage 5.
 | M2 | Demonstrate a genuinely different capability | Accepted: read-only readiness plus movement; no second actuator. |
 | M3 | Runnable natural-language selection/demo, deterministic reference and faults | Demonstration/attempts complete; Qwen ambiguity failure remains a documented limitation. |
 | M4 | One final focused paired primitives-versus-macro evaluation | Closed:80/80 recorded/audited and8/8 reviews; Sol passes retention, Qwen fails. |
-| M5 | Consolidate the project deliverable and research conclusions | Technical delivery complete locally: trace review, packet, tables, report, ledger, wheel and video. Evaluation off-machine backup and human adjudication deferred by user; local evaluation retention selected2026-10-28. |
+| M5 | Consolidate the project deliverable and research conclusions | Technical delivery complete locally: trace review, packet, tables, report, ledger, wheel and video. Eight human ratings preserved; owner-feedback interpretation closed2026-10-30. Independent human adjudication under the frozen criterion not obtained. Evaluation off-machine backup deferred; local retention selected2026-10-28. |
 
 **M4 is not historical Stage 4, and M5 is not historical Stage 5 memory.** The
 October 30 return plan was later resumed by explicit user instructions; its old

@@ -8,7 +8,9 @@ M5 deliverables: [focused report](artifacts/macro-m5-20261027/M5_RESEARCH_REPORT
 [PDF](artifacts/macro-m5-20261027/ROSA_M5_RESEARCH_REPORT.pdf),
 [claim ledger](artifacts/macro-m5-20261027/CLAIM_LEDGER.md), and
 [Gazebo video](artifacts/macro-m5-20261027/ROSA_M5_GAZEBO_DEMONSTRATION.mp4).
-Human adjudication is deferred. Evaluation backups remain local by user instruction;
+Eight human ratings are preserved as [outcome-oriented owner feedback](artifacts/macro-m5-20261027/HUMAN_REVIEW_RESOLUTION_2026-10-30.md);
+independent human adjudication under the frozen criterion was not obtained.
+Evaluation backups remain local by user instruction;
 research source is verified remotely. See the master record for current status.
 
 Shared experiment launchers and separate tool integrations for ROSA research.
