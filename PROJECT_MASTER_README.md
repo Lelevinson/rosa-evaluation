@@ -9,6 +9,7 @@ not a substitute for every raw transcript or a claim that every hypothesis worke
 It contains no credentials. Dates are shown without a geographic location.
 
 Start with [current work, progress, gates and next actions](#2-current-verified-status).
+For a compact end-to-end summary, use the [M1–M5 recap](docs/M1_M5_RECAP_2026-10-30.md).
 That section describes where the project stands now. The research history below
 supports current decisions; it does not replace an up-to-date progress report.
 
@@ -119,7 +120,7 @@ The figures are a snapshot, not a continuously refreshed dashboard. Refresh befo
 sharing this document or making a new claim about an active run.
 
 <!-- PROJECT_STATUS_START -->
-Last refreshed: **2026-10-30 01:24:48**. Saved-checkpoint snapshot.
+Last refreshed: **2026-10-30 01:33:25**. Saved-checkpoint snapshot.
 
 ### Current work and next actions
 
