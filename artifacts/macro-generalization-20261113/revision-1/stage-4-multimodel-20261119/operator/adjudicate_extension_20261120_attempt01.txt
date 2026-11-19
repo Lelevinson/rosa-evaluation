@@ -1,0 +1,99 @@
+"""Lab-only zero-inference closeout, authentic submitted labels and frozen engines."""
+from pathlib import Path
+import csv, io, json, hashlib, importlib.util, sys, zipfile
+from collections import Counter
+
+ROOT = Path(__file__).resolve().parents[1]
+REV = ROOT.parent
+INTAKE = ROOT/'operator/human-review-intake-20261120'
+OUT = ROOT/'adjudicated-closeout-20261120'
+STAGE3 = REV/'stage-3'
+sys.path[:0] = [str(STAGE3), str(STAGE3/'clarification-scoring-v2-20261119')]
+from adjudication import VERSION, ELIGIBILITY, content_binding, summarize, validate_bundle, project_complete_rows
+
+def read(p): return json.loads(Path(p).read_text(encoding='utf-8-sig'))
+def sha(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def write(p,v): p.write_text(json.dumps(v,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+def load(name,path):
+    spec=importlib.util.spec_from_file_location(name,path)
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);return module
+
+def main(slug):
+    assert slug in ('ministral','granite','llama')
+    assert sys.platform == 'linux', 'Formal analysis must execute on the lab.'
+    verifier=load('extension_protection',ROOT/'operator/run_sequence.py')
+    assert verifier.verify()
+    b=ROOT/'backends'/slug
+    paths=sorted((b/'trials').glob('*/result.json'))
+    all_evidence={str(p.relative_to(ROOT)):sha(p) for p in (b/'trials').rglob('*') if p.is_file()}
+    rows=[read(p) for p in paths];assert len(rows)==76
+    assert all(r['local_audit']['pass'] and r['phoenix_audit']['pass'] for r in rows)
+    controls=read(b/'ZERO_CONTROLS.log')
+    assert controls['zero_model_validation']=='PASS' and controls['controls']==8
+    source=INTAKE/'DECLARATION_OWNER_FORWARDED.txt'
+    declaration=source.read_text(encoding='utf-8')
+    assert 'Reviewer name: Levinson' in declaration and '2026/11/19' in declaration
+    assert declaration.count(': YES')==5 and '\nTeammate\n' in declaration
+    csv_file=INTAKE/'submission-original/ratings.csv'
+    ratings=list(csv.DictReader(io.StringIO(csv_file.read_text(encoding='utf-8-sig'))))
+    assert len(ratings)==12 and len({r['case_id'] for r in ratings})==12
+    mapping=read(ROOT/'pooled-human-review/PRIVATE_MAPPING_DO_NOT_SEND.json')
+    assert {r['case_id'] for r in ratings}==set(mapping)
+    packet=ROOT/'pooled-human-review/G1_EXTENSION_CLARIFICATION_REVIEW_2026-11-19.zip'
+    assert sha(packet)==read(ROOT/'pooled-human-review/PACKET_RECEIPT.json')['sha256']
+    by_id={r['id']:r for r in rows};records=[]
+    with zipfile.ZipFile(packet) as z:
+        rubric=hashlib.sha256(z.read('RUBRIC.md')).hexdigest()
+        for rating in ratings:
+            key=mapping[rating['case_id']]
+            if key['backend']!=slug: continue
+            p=ROOT/key['source'];assert sha(p)==key['row_sha256']
+            row=by_id[key['trial_id']];assert row['case']['kind']=='ambiguous'
+            assert rating['reviewer_name']=='Levinson' and rating['reason'].strip()
+            transcript=z.read(rating['case_id']+'.md')
+            snapshot=row['snapshot']
+            activity=dict(selected_capability_kind=snapshot['catalogue'].get(snapshot['selected_skill'],{}).get('kind','NONE'),tool_executions=len(row['tool_inputs']),native_attempts=len(row['actor_records']),accepted_reports=sum(x.get('accepted') is True for x in snapshot['reports']),observed_dispatches=row['observer_records'][-1]['snapshot']['dispatches'])
+            rendered='# '+rating['case_id']+'\n\nUser request:\n\n'+row['case']['request']+'\n\nAssistant response:\n\n'+row['answer']+'\n\nRecorded activity:\n\n'+json.dumps(activity,indent=2)+'\n'
+            assert transcript.decode('utf-8').replace('\r\n','\n')==rendered
+            records.append(dict(trial_id=row['id'],packet_case_id=rating['case_id'],reviewer='Levinson',review_date='2026-11-19',
+                appropriate_clarification=rating['appropriate_clarification'],no_unauthorized_action=rating['no_unauthorized_action'],reason=rating['reason'],
+                eligibility={k:True for k in ELIGIBILITY},
+                eligibility_basis='Owner-forwarded completed declaration; self-attestation, not independently verified',
+                declared_relationship='Teammate; prior reviews of separate cohorts are known; current no-exposure answer is self-declared',
+                binding=content_binding(row,rubric),
+                provenance=dict(submission_sha256=sha(INTAKE/"lev'srating3.zip"),csv_sha256=sha(csv_file),declaration_sha256=sha(source),transcript_sha256=hashlib.sha256(transcript).hexdigest()),
+                declaration_delivery='Supplemental owner message, not a member of original submission ZIP; historical four-case template used for current H01-H12 packet')))
+    assert len(records)==4
+    bundle=dict(version=VERSION,rubric_sha256=rubric,records=records,scope=f'New extension {slug} only, four of pooled twelve, no cross-cohort transfer',original_packet_sha256=sha(packet),identity_basis='Owner-supplied ZIP and owner-forwarded declaration; no cryptographic identity proof')
+    validate_bundle(bundle,rubric)
+    schedule=read(b/'plan.json')
+    summary=summarize(rows,[r['id'] for r in schedule],bundle,rubric)
+    assert summary['final_correctness_ready'] and not summary['semantic_judgments_pending']
+    projected=project_complete_rows(rows,bundle,rubric)
+    out=OUT/slug;out.mkdir(parents=True,exist_ok=False)
+    write(out/'human-review-bound.json',bundle)
+    write(out/'ADJUDICATED_SUMMARY.json',summary)
+    engine_source=STAGE3/'predictions-amendment-20261114/run_analysis.py'
+    engine=load('unchanged_frozen_analysis',engine_source)
+    result=engine.analyze(projected,schedule,{r['id']:p.parent for r,p in zip(rows,paths)},out,
+        scope='heldout',hosting_source_changes=(),fresh_controls_passed=True)
+    write(out/'FROZEN_ENGINE_RESULTS.json',result)
+    # Preserve exact engine statuses, separately qualify their original endpoint scope.
+    write(out/'ANALYSIS_SCOPE.json',dict(label='exploratory backend, added after Sol and Qwen results',
+        P1_prime='Sol-specific original prediction; new-backend engine output is diagnostic only',P2='Exploratory application of unchanged native-operation ratio rule',P3='DROPPED',P4='NOT RUN; engine fallback is not evidence from a catalogue-size probe',P5='Unchanged source-hosting engineering controls, not a reliability claim',
+        engine_sha256=sha(engine_source),review_date_verbatim='2026/11/19',review_date_normalized='2026-11-19',
+        declaration_source='Supplemental owner-forwarded statement; teammate relationship disclosed; not external validation or inter-rater agreement'))
+    groups={kind:{mode:sum(r['primary_pass'] for r in projected if r['mode']==mode and r['case']['kind']!='ambiguous' and (r['case']['kind'] in ('write','write_fault'))==(kind=='write')) for mode in ('primitives','macro')} for kind in ('write','other')}
+    assert all(sum(r['case']['kind'] in ('write','write_fault') for r in projected if r['mode']==mode)==8 for mode in ('primitives','macro'))
+    rule=load('sealed_h_write',ROOT/'operator/h_write_rule.py')
+    h=rule.classify(groups['write']['primitives'],groups['write']['macro'],groups['other']['primitives'],groups['other']['macro'])
+    pairs={}
+    for r in projected:pairs.setdefault(r['case']['case_id'],{})[r['mode']]=r['primary_pass']
+    discordant=Counter('both_correct' if p['primitives'] and p['macro'] else 'primitive_only' if p['primitives'] else 'macro_only' if p['macro'] else 'neither' for p in pairs.values())
+    write(out/'CLOSEOUT.json',dict(label='exploratory backend, added after Sol and Qwen results',model=slug,counts=summary['counts'],operational_views=result['operational_views'],matched_success_pairs=result['matched_success_pairs'],discordant_pairs=dict(discordant),groups=groups,H_write=h,raw_engine_statuses=result['official_verdicts'],all_attempt_costs=summary['all_attempt_costs'],primary_outcomes_by_arm={m:dict(Counter(o['primary_status'] for o in summary['outcomes'] if by_id[o['trial_id']]['mode']==m)) for m in ('primitives','macro')},new_model_requests=0))
+    assert verifier.verify()
+    assert all(sha(ROOT/n)==v for n,v in all_evidence.items())
+    write(out/'INTEGRITY.json',dict(pass_=True,frozen_inputs_and_three_backend_seals='PASS',raw_evidence_files_unchanged=len(all_evidence),local_and_persisted_audits=76,model_requests=0))
+    print(json.dumps(dict(model=slug,counts=summary['counts'],H_write=h,discordant_pairs=dict(discordant),raw_engine_statuses=result['official_verdicts'])),flush=True)
+
+if __name__=='__main__': main(sys.argv[1])

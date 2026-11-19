@@ -1,0 +1,127 @@
+"""Lab-only report, living-state update and local evidence archive; zero inference."""
+from pathlib import Path
+from datetime import datetime,timezone
+import json,hashlib,zipfile,shutil,runpy
+
+ROOT=Path(__file__).resolve().parents[1]
+REPO=ROOT.parents[3]
+OUT=ROOT/'adjudicated-closeout-20261120'
+ORDER=['ministral','granite','llama']
+LABEL='Exploratory backend, added after Sol and Qwen results'
+def read(p):return json.loads(p.read_text(encoding='utf-8-sig'))
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def write(p,v):p.write_text(json.dumps(v,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+def main():
+    assert runpy.run_path(str(ROOT/'operator/run_sequence.py'))['verify']()
+    assert all((OUT/s/'INTEGRITY.json').exists() for s in ORDER)
+    data={s:read(OUT/s/'CLOSEOUT.json') for s in ORDER}
+    formal={s:read(OUT/s/'FROZEN_ENGINE_RESULTS.json') for s in ORDER}
+    receipt=read(ROOT/'operator/human-review-intake-20261120/INTAKE_RECEIPT.json')
+    declaration=ROOT/'operator/human-review-intake-20261120/DECLARATION_OWNER_FORWARDED.txt'
+    supplemental=dict(received_date='2026-11-20',reviewer='Levinson',review_date_verbatim='2026/11/19',review_date_normalized='2026-11-19',
+        declaration_sha256=sha(declaration),original_zip_sha256=receipt['submission_sha256'],actual_ratings=12,
+        delivery='Owner-forwarded declaration in chat; separately preserved transcription, not a replacement ZIP',
+        eligibility='Five affirmative self-attestations; not independently verified',relationship='Teammate; prior separate cohort reviews known',
+        template_scope='Historical four-case template; current message explicitly resolves the missing declaration for pooled H01-H12, twelve-case packet',
+        original_blank_declaration_retained=True,external_blind_validation=False,inter_rater_agreement_established=False,
+        old_intake_block_superseded=True,model_requests=0,trial_replays=0)
+    write(OUT/'DECLARATION_SUPPLEMENT_RECEIPT.json',supplemental)
+    rule=runpy.run_path(str(ROOT/'operator/h_write_rule.py'))
+    h={s:data[s]['H_write'] for s in ORDER};overall=rule['overall'](list(h.values()))
+    write(OUT/'H_WRITE_RESULTS.json',dict(per_model=h,overall=overall,denominator=3,groups={s:data[s]['groups'] for s in ORDER},frozen_rule_sha256=sha(ROOT/'operator/h_write_rule.py'),interpretation='Each model hits an explicit write-arm floor or ceiling; override precedes raw-difference comparisons. This is not evidence supporting or refuting concentration.'))
+    lines=['# G1 multi-model extension: adjudicated closeout','', 'Date: **2026-11-20**. '+LABEL+'.', '',
+        '**T6 complete.** The 12 real submitted ratings are bound to their exact transcripts and unchanged trial records. All 228 attempts are resolved; none is censored or pending. The unchanged frozen engine ran on the lab, with 10,000 whole-template-group bootstrap draws (seed 20261113) separately per model. Zero additional model requests or trial replays.', '',
+        '## Final correctness and measured costs','',
+        'All-task correctness includes appropriate clarification. Known-goal correctness excludes the two ambiguous cases per arm. Each condition has 38 attempts, including failures. Times are measured task time; the campaign also includes auditing and bookkeeping. Do not pool rates across models.', '',
+        '| Model | All tasks P → M | Known goal P → M | Calls P → M | Mean seconds P → M | Native operations P → M |',
+        '|---|---:|---:|---:|---:|---:|']
+    table=[]
+    for s in ORDER:
+        c=data[s];a=c['all_attempt_costs'];v=c['operational_views'];g=c['groups']
+        p=v['primitives']['V2_correct'];m=v['macro']['V2_correct']
+        known={mode:g['write'][mode]+g['other'][mode] for mode in ['primitives','macro']}
+        lines.append(f"| {s} | {p}/38 → {m}/38 | {known['primitives']}/36 → {known['macro']}/36 | {a['primitives']['calls']} → {a['macro']['calls']} | {a['primitives']['task_seconds']/38:.2f} → {a['macro']['task_seconds']/38:.2f} | {a['primitives']['native_operations']} → {a['macro']['native_operations']} |")
+        table.append(dict(model=s,all_task_correctness={k:v[k]['V2_correct'] for k in v},all_task_denominator=38,known_goal_correctness=known,known_goal_denominator=36,direction_all_tasks='better' if m>p else 'worse' if m<p else 'equal',direction_known_goal='better' if known['macro']>known['primitives'] else 'worse' if known['macro']<known['primitives'] else 'equal',costs=a))
+    write(OUT/'CROSS_MODEL_TABLE.json',table)
+    lines += ['', 'Ministral has the strongest observed new-backend result: macro reduces all-attempt calls by 46.1% and task time by 40.3%, while native operations rise from 102 to 127. Its 28 matched-success pairs use 111 versus 59 calls, 144.43 versus 92.62 task seconds, and 85 versus 87 native operations. This supports an observed orchestration-efficiency benefit in these fixtures; it does not establish general reliability improvement or parity with Sol.', '',
+        'Granite produces no recognized native tool calls and performs no native operations. Its sole final pass is appropriate clarification, not execution of a known-goal task. Llama has one known-goal macro pass, many invalid attempts and budget endings. Neither has a matched successful pair. Short failure times do not demonstrate useful efficiency. These are results of the tested frozen integrations, not intrinsic model-capability rankings.', '',
+        '## Human review and provenance','',
+        'Levinson submitted four YES/YES and eight NO/NO label pairs for H01–H12. His declaration was initially missing from the ZIP, then forwarded by Martin in chat. The ZIP and blank declaration remain unchanged. The supplemental statement gives 2026/11/19, normalized only in binding metadata to 2026-11-19, five YES eligibility answers and “Teammate”. The historical template says four cases; the issued packet already explained its reuse and this follow-up resolves the current twelve-case submission. No declaration answers, ratings or review dates were invented.', '',
+        'Eligibility is self-attested, not independently verified. The reviewer is a teammate with known prior reviews of separate cohorts. This is not external blind validation or evidence of inter-rater agreement. Packet identities and earlier scores were withheld when issued. No assistant generated replacement human labels. No submitted label or reason was changed. Favorable human judgments cannot override native activity, skill selection, dispatch, report or runner bounds.', '',
+        '| Model | Clarification judgments YES/YES | Final ambiguous passes P → M |', '|---|---:|---:|']
+    for s in ORDER:
+        summary=read(OUT/s/'ADJUDICATED_SUMMARY.json');bundle=read(OUT/s/'human-review-bound.json')
+        yes=sum(r['appropriate_clarification']==r['no_unauthorized_action']=='YES' for r in bundle['records'])
+        byid={r['trial_id']:r for r in summary['outcomes']}
+        count={mode:sum(byid[r['trial_id']]['primary_status']=='PASS' for r in bundle['records'] if r['trial_id'].endswith('-'+mode)) for mode in ['primitives','macro']}
+        lines.append(f"| {s} | {yes}/4 | {count['primitives']} → {count['macro']} |")
+    lines += ['', 'Qwen Batch B remains separate: its four semantic ratings are still outstanding. No labels from this packet were transferred to Qwen, Sol, development or M4.', '',
+        '## Frozen analysis and H-write','',
+        'H-write is **Uninformative for each model and overall** under the sealed rule. Write-bearing counts P/M are Ministral 4/8 vs 8/8, Granite 0/8 vs 0/8, Llama 0/8 vs 1/8. Each hits the predefined 0/8 or 8/8 override. Other known-goal counts are 24/28 vs 25/28, 0/28 vs 0/28, 0/28 vs 0/28. The denominator remains all three models. The favorable Ministral point pattern cannot bypass its ceiling.', '',
+        'The engine outputs are retained exactly. Original P1′ is Sol-specific; new-backend P1′ values are diagnostic applications of the same rule. P3 remains DROPPED; P4 catalogue-size probing was NOT RUN. The engine’s no-probe Uninformative fallback must not be described as an observed catalogue-size result.', '',
+        '| New backend | P1′ diagnostic | P2 native rule | P5 engineering gate | H-write |', '|---|---|---|---|---|']
+    for s in ORDER:
+        v=data[s]['raw_engine_statuses'];lines.append(f"| {s} | {v['P1_prime']} | {v['P2']} | {v['P5']} | {h[s]} |")
+    lines += ['', 'P2 is Against for Ministral and Llama: at least one domain/depth cell exceeds the frozen ±25% native-operation band. Granite is Uninformative because it acquires no native evidence. V2 and V3 agree since no extension attempt is censored. P5 confirms unchanged source hosting and controls, not runtime success. P6 remains descriptive; per-domain inspection/write costs, pair gaps, cell values, sequences and bootstrap intervals are in each FROZEN_ENGINE_RESULTS.json.', '',
+        'Uncertainty remains substantial: the cases are AI-authored and reused, new backends were chosen after earlier outcomes, and there are few template groups. Bootstrap empty draws and degenerate cells are retained, not replaced by zero. Floor failures make many Granite/Llama statistics undefined. No broad model generality, independent case generalization, physical-robot transfer or superiority to stock ROSA is established.', '',
+        '## Integrity, limitations and next step','',
+        'All 228 local and 228 persisted Phoenix audits pass. Frozen inputs, original Sol/Qwen evidence, three backend seals and all retained new trial files reverify before and after analysis. The original 710 charged requests remain unchanged (Ministral 240, Granite 79, Llama 391). No new ROS/Gazebo action, OAuth, download, consent, Git commit/push or experiment occurred.', '',
+        'The declaration-only intake finishes the authorized extension closeout. It does not authorize model-specific template repairs, a model switch or another study. Preserve Granite/Llama integration failures; a fair adapter investigation would need separately authorized prospective work. Retain the simpler bounded macro as scoped engineering, with correctness and native-work costs reported alongside call savings. Finish Qwen’s separate review before its own formal closeout.', '',
+        'Earlier report corrections remain explicit: preflight display metadata, a host/container reporting invocation error and the corrected eight-case write-bearing membership. The analysis driver’s first lab syntax check caught an extra closing parenthesis before any analysis; the failed source and correction receipt are retained. Frozen source, protocol and raw scores were unchanged.', '',
+        'The prior full execution report below is retained as historical detail. Its pending-review statements describe the earlier checkpoint and are superseded above.', '', '---', '', (REPO/'G1_MULTIMODEL_REPORT_2026-11-19.md').read_text(encoding='utf-8')]
+    report=REPO/'G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md';report.write_text('\n'.join(lines)+'\n',encoding='utf-8')
+    master=REPO/'PROJECT_MASTER_README.md';shutil.copy2(master,OUT/'PROJECT_MASTER_BEFORE_ADJUDICATION.md')
+    current=master.read_text(encoding='utf-8');pos=current.index('**Current review checkpoint')
+    new='''**Current closeout - 2026-11-20: extension T6 COMPLETE.** Levinson’s 12 actual
+ratings are bound after Martin forwarded the completed declaration (review date
+2026-11-19; five affirmative self-attestations; teammate relationship disclosed).
+The original ZIP and blank declaration are retained; the supplemental statement
+is separately attributed. Eligibility is self-attested, not external validation.
+All 228 extension attempts now have final outcomes. Primitives versus macro:
+Ministral **29/38 vs 35/38**, Granite **1/38 vs 0/38**, Llama **0/38 vs 1/38**.
+Known-goal results remain **28/36 vs 33/36**, **0/36 vs 0/36**, **0/36 vs 1/36**.
+Granite’s single pass is clarification, not native task execution.
+
+The frozen analysis ran on the lab with 10,000 whole-template-group bootstrap
+draws per model (seed 20261113); all new-backend outputs remain exploratory.
+H-write is **Uninformative for each model and overall**, because all three hit
+the predefined write-arm floor/ceiling override. P2’s ±25% native-operation
+rule is Against for Ministral/Llama and Uninformative for Granite. P1′ outputs
+on new backends are diagnostics of the originally Sol-specific endpoint; P3
+is dropped and P4 catalogue probing was not run. P5 is an engineering gate.
+
+Ministral uses **154→83 calls**, **5.32→3.18 seconds per task** and **102→127
+native operations** over all attempts. Its 28 matched successful pairs use
+**111→59 calls**, **144.43→92.62 task seconds** and **85→87 native operations**.
+Granite/Llama still have no matched successful pair. Their short failure times
+are not evidence of useful efficiency. No generic reliability or model parity
+claim follows. All raw evidence, frozen inputs/backend seals and 228 local plus
+228 persisted audits verify. **Zero new model requests**; the 710 charged total
+is unchanged. No experiment, runtime change or Git publication occurred.
+
+The [adjudicated report](G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md) supersedes
+earlier pending extension checkpoints below. Qwen Batch B’s separate four-case
+human review remains pending; no extension labels were transferred to it.
+
+'''
+    master.write_text(current[:pos]+new+current[pos:],encoding='utf-8')
+    status=ROOT/'STATUS.md';shutil.copy2(status,OUT/'STATUS_BEFORE_ADJUDICATION.md')
+    status.write_text('# G1 extension final closeout — 2026-11-20\n\n'+ '\n'.join(f'- **T{x}: PASS** — '+msg for x,msg in enumerate(['Adopted factual definitions preserved; earlier mistaken labeling corrected separately.','Combined preflight and actual owner acknowledgment retained.','24 scripted controls with local/persisted audits.','228 attempts preserved; 228 local/persisted audits; hashes verified.','12-response neutral packet issued and actual ratings received.','Supplemental owner-forwarded declaration accepted; authentic ratings bound; frozen per-model analysis and H-write complete.'],1))+'\n\nExploratory backends added after Sol/Qwen results. No new model requests or Git actions. Qwen Batch B stays pending. See ../../../../G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md (evaluation-root report); raw outcomes and older archives unchanged.\n',encoding='utf-8')
+    write(OUT/'FINAL_STATUS.json',dict(status='T1_T6_COMPLETE',counts={s:data[s]['counts'] for s in ORDER},H_write_overall=overall,known_qwen_review='PENDING_SEPARATE_BATCH_B',model_requests=0,raw_results_modified=False,report_sha256=sha(report),master_sha256=sha(master)))
+    assert runpy.run_path(str(ROOT/'operator/run_sequence.py'))['verify']()
+    files=[p for p in OUT.rglob('*') if p.is_file()]+[p for p in (ROOT/'operator/human-review-intake-20261120').rglob('*') if p.is_file()]
+    files += [report,master,status,ROOT/'operator/adjudicate_extension_20261120.py',ROOT/'operator/adjudicate_extension_20261120_attempt01.txt',ROOT/'operator/package_adjudicated_20261120.py',ROOT/'operator/ANALYSIS_DRIVER_SYNTAX_CORRECTION.json',ROOT/'operator/ADJUDICATION_20261120.log',ROOT/'G1_MULTIMODEL_COMPLETED_20261119.zip',ROOT/'operator/h_write_rule.py']
+    archive=ROOT/'G1_MULTIMODEL_ADJUDICATED_20261120.zip'
+    manifest={p.relative_to(REPO).as_posix():sha(p) for p in files}
+    with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED) as z:
+        for p in files:z.write(p,p.relative_to(REPO).as_posix())
+        z.writestr('ADJUDICATED_PACKAGE_MANIFEST.json',json.dumps(manifest,indent=2)+'\n')
+        z.writestr('READ_FIRST.md','Start with G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md. Earlier full completed ZIP is unchanged and contains superseded derived reports; the current adjudicated report and closeout directory supersede pending statuses and six/30 subgroup tables. This owner evidence archive contains private reviewer mappings inside historical evidence; do not send it to a blinded reviewer. No credentials or model weights are included.\n')
+    with zipfile.ZipFile(archive) as z:
+        assert z.testzip() is None
+        assert all(hashlib.sha256(z.read(n)).hexdigest()==h for n,h in manifest.items())
+    verify=dict(status='PASS',archive_sha256=sha(archive),manifest_entries_verified=len(manifest),frozen_inputs_and_backend_seals='PASS',model_requests=0,original_archive_unchanged_sha256=sha(ROOT/'G1_MULTIMODEL_COMPLETED_20261119.zip'))
+    write(ROOT/'ADJUDICATED_PACKAGE_VERIFICATION.json',verify)
+    print(json.dumps(verify),flush=True)
+
+if __name__=='__main__':main()
