@@ -1559,7 +1559,7 @@ inference or Git publication. Local commits on `member/martin` after the publish
 |---|---|---|
 | G1 three-model extension (Ministral, Granite, Llama) | **Closed, adjudicated.** 228 attempts; known-goal P→M Ministral 28/36→33/36, Granite 0/36→0/36, Llama 0/36→1/36. H-write Uninformative for all. Granite/Llama are tool-call integration failures | [adjudicated report](G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md) |
 | G1 Sol | Closed: 73 PASS, 3 censored; P1′ Support, P2 Uninformative, P5 Support | [Sol report](G1_SOL_ADJUDICATED_REPORT_2026-11-19.md) |
-| G1 Qwen Batch B review | Levinson's 4 ratings received 2026-11-20 (H01 NO/YES, H02 NO/NO, H03 YES/YES, H04 NO/YES). Declaration item 5 was mis-entered in the file; his YES was relayed by Martin and recorded as a separate supplemental statement. **Binding and the unchanged frozen analysis still need to run on the lab (zero inference).** Qwen formal closeout remains withheld until then | [intake](artifacts/macro-generalization-20261113/revision-1/stage-4-qwen-lab-20261119/operator/human-review-intake-20261120/INTAKE_STATUS.md), [supplemental](artifacts/macro-generalization-20261113/revision-1/stage-4-qwen-lab-20261119/operator/human-review-intake-20261120/SUPPLEMENTAL_DECLARATION_2026-11-20.md) |
+| G1 Qwen (Batch B closeout) | **Closed, adjudicated 2026-11-20 on the lab, zero inference.** All-task P→M 26/38→31/38; known-goal 26/36→30/36; ambiguous 0/2→1/2. 57 PASS / 19 FAIL, none censored. Calls 123→75 (all attempts), 87→52 (25 matched pairs); native operations 100→106. P1′ Uninformative (diagnostic), **P2 Against** (depth-1 cells), P5 Support, P4 not run; H-write not tested on Qwen (post-hoc origin). Ratings H01 NO/YES, H02 NO/NO, H03 YES/YES, H04 NO/YES; declaration item 5 relayed by Martin, recorded separately. Attempt 01 of the driver stopped on a hash-method assertion before writing; retained | [Qwen report](G1_QWEN_ADJUDICATED_REPORT_2026-11-20.md), [intake](artifacts/macro-generalization-20261113/revision-1/stage-4-qwen-lab-20261119/operator/human-review-intake-20261120/INTAKE_STATUS.md) |
 | Prediction label map | Three label systems exist (stopped Stage 0, revision 1, frozen P1′–P6 amendment). **P1′ was Support for Sol**, not Against; only Ministral's diagnostic P1′ was Against. The refuted "savings grow with depth" idea was Stage 0 P1, replaced before testing | [label map](docs/PREDICTION_LABEL_MAP_2026-11-20.md) |
 | Novelty / related work | **Mechanism well covered; a narrow evaluation niche remains.** AWO meta-tools, PyRUA-Lean, BT-Agent, LLMCompiler and SayCan cover the mechanism. MetaTool/ROS and ROSClaw already compare against stock ROSA. Our **missing stock-ROSA baseline** is the main exposed weakness (new runs would be needed; not authorized) | [novelty doc](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md) |
 | F1 step 0 (Qwen length stops) | 12 length stops (M4 5, G1 7): **8 A** (after a wrong selection or blocked action), **4 C** (first-call deliberation that had already named the correct skill). All 12 are selection-related; 0 on inspection tasks. 3 M4 stops hit the 2,048 task budget, not the 1,024 per-call cap. Source check: movement macros read the target's current state before writing, but not the readiness checks, and the catalogue never says so. Candidate F1 hypothesis (descriptions + clarification route) recorded, **not designed or run** | [F1 doc](docs/F1_STEP0_LENGTH_STOPS_2026-11-20.md), [script](tools/f1/length_stops.py) |
@@ -1569,10 +1569,10 @@ inference or Git publication. Local commits on `member/martin` after the publish
 them below, and in the historical sections, resolve on this laptop only and are broken on
 GitHub. They have not been committed, pending the owner's decision.
 
-Next authorized actions: Qwen Batch B binding and frozen analysis on the lab (needs SSH run
-by Martin or approved key-based access). Everything else, including F1 candidate testing, a
-stock-ROSA baseline, a Granite/Llama tool-call smoke test and the P4 catalogue probe, needs
-separate authorization.
+All five G1 backends are now adjudicated. Key-based SSH from the laptop to the lab was set
+up 2026-11-20 with owner approval. No further action is currently authorized. F1 candidate
+testing, a stock-ROSA baseline, a Granite/Llama tool-call smoke test and the P4 catalogue
+probe each need separate authorization.
 
 ### Historical G1 checkpoint — 2026-11-16 (superseded by the 2026-11-20 entry above; retained unedited below)
 
