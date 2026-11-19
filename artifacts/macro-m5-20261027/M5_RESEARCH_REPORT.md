@@ -15,6 +15,11 @@ Available history through research b13df0f and evaluation b5e94bf was restored a
 verified locally with shallow-history metadata. Evaluation off-machine protection
 remains deferred; no upload or new experiment was performed.
 
+**Post-closeout discussion review · 2026-10-30:** [Assessment, raw excerpts and label-sensitivity illustration](../../docs/M5_EXTERNAL_DISCUSSION_ASSESSMENT_2026-10-30.md).
+This corrects the external recovery narrative against existing first-call text;
+it is retrospective analysis, not another experiment. M6 remains proposed and
+unauthorized. Original scores, PDFs and ZIPs are unchanged.
+
 We implemented bounded robotic skill macros within a repaired ROSA framework and evaluated them against model-managed primitive execution. On the tested catalogue, macros reduced LLM orchestration overhead while producing mixed correctness outcomes. Sol passed all20 tasks in each condition; Qwen passed15/20 with primitives and14/20 with macros. Five accepted, evidence-grounded reports failed the requested goal. The results support efficiency benefits in this environment, without establishing general reliability improvement or superiority to unmodified ROSA.
 
 | Backend | Correct: primitive / macro | Calls | Mean task seconds |
@@ -169,7 +174,9 @@ These four cases distinguish Qwen’s conditions: both primitive cases pass and 
 
 Both conditions show a readiness-first initial tool request. The primitive pre-selection rejection leaves the skill choice open; the macro selection commits it. Both modes later request the correct park_right skill. Thus the records do not support an absolute claim that Qwen could not identify the movement goal. They expose different action/feedback paths under the shared one-skill rule.
 
-The select_skill description itself is identical across modes. There is no first-call prose in the macro choices demonstrating a belief that inspection was cheaper/safer. Later model explanations are observable text, not privileged causal access. Wording and execution/commitment interaction are plausible hypotheses; these records do not isolate why the first actions differed.
+The select_skill description itself is identical across modes. The condition sentence is the only difference in the decoded first-call prompts/schemas; serving settings are fixed and the two repetitions within each condition match in first visible content and tool name/arguments. First-turn generation precedes tool execution, making wording the strongest observed explanation for this request's first-action difference. M4 compares execution mode together with its mode-specific instruction: the condition effect on selection cannot be separated from condition wording. These records do not isolate a causal interaction between selection and execution implementation or establish generality. There is no first-call prose in the macro choices demonstrating a belief that inspection was cheaper/safer; later explanations are visible outputs, not privileged causal access.
+
+The later commitment restriction is a separate observation: both macro runs request park_right on call two and are rejected by the shared single-selection rule. One ends in accepted readiness SUCCESS and the other in a response-length stop. See the [follow-up clarification](../../docs/M5_CONDITION_WORDING_CLARIFICATION_2026-10-30.md). No probe or runtime intervention was performed.
 
 Changing selection/commitment policy could change permissions and replay risk. No runtime repair was made and no additional diagnostic was run. Exact decoded prompts, schemas, call sequences, tool feedback and source trace hashes accompany PARTIAL_COMMAND_FORENSIC_REVIEW.md and partial-command-forensics.json.
 

@@ -1,6 +1,6 @@
 # M4 final efficiency and timing
 
-Date: **2026-10-30**. Derived from saved trial rows; no new inference.
+Date: **2026-11-05**. Derived from saved trial rows; no new inference.
 
 Positive reduction means less resource use or time in macro mode. Correctness and
 review completeness must be considered alongside savings. Partial runs are not final results.

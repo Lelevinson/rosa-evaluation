@@ -268,11 +268,16 @@ def pages(data):
           'records do not support an absolute claim that Qwen could not identify the '
           'movement goal. They expose different action/feedback paths under the shared '
           'one-skill rule.'),
-        P('The select_skill description itself is identical across modes. There is no '
-          'first-call prose in the macro choices demonstrating a belief that inspection '
-          'was cheaper/safer. Later model explanations are observable text, not privileged '
-          'causal access. Wording and execution/commitment interaction are plausible '
-          'hypotheses; these records do not isolate why the first actions differed.'),
+        P('The select_skill description is identical across modes. The condition sentence '
+          'is the only difference in decoded first-call prompts/schemas; fixed-serving '
+          'repetitions match in first visible content and tool name/arguments. Before '
+          'tool execution, wording is the strongest observed explanation for this '
+          'request\'s first-action difference. M4 compares execution mode together with '
+          'its mode-specific instruction: the condition effect on selection cannot be '
+          'separated from condition wording. This does not isolate a causal interaction '
+          'between selection and execution implementation or establish generality. '
+          'Macro first selections contain no prose proving a cheaper/safer belief; '
+          'later explanations are visible outputs, not privileged causal access.'),
         P('Changing selection/commitment policy could change permissions and replay risk. '
           'No runtime repair was made and no additional diagnostic was run. Exact decoded '
           'prompts, schemas, call sequences, tool feedback and source trace hashes accompany '

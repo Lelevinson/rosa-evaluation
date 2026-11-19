@@ -1,5 +1,10 @@
 # Stage 4 results and evidence
 
+For current development priorities, see the separate
+[post-Stage 4 engineering milestone](docs/POST_STAGE4_ENGINEERING_MILESTONE_2026-10-22.md).
+It takes priority over future work in the historical roadmap; the closed
+campaign's evidence and acceptance findings below are unchanged.
+
 The planned simplified campaign finished all **160 live attempts**. Neither
 backend met the batching retention screen. This closes the agreed experiment
 and analysis with a documented audit exception; it is not a robot-readiness pass.

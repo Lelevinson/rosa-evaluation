@@ -7,6 +7,19 @@ Updated: **2026-11-20**. Maintained project context, decision history and eviden
 
 
 
+**Publication - 2026-11-20.** The owner explicitly approved the full public 22-commit
+payload; evaluation `member/martin` was pushed to **8f961b5**, verified on GitHub, with
+`main` unchanged. That approval covers the published payload, not arbitrary future
+uploads. Later documentation commits are local until separately approved for push.
+Operational lab-access details are kept in a private local handoff, not in this
+repository. The lab root Git checkout is older; the actual G1 execution mirror is a
+separate source/evidence snapshot, not a Git checkout. Do not blindly synchronize one
+over the other. The lab GPU is shared with another project; recheck and coordinate
+before any future model load, and never stop the other project's work.
+Historical checkpoints below preserve earlier status; the newest dated blocks
+and final reports take precedence. In particular, the old Stage3-blocked wording
+is superseded: Sol and the three-model extension are closed; Qwen BatchB is pending.
+
 **Current closeout - 2026-11-20: extension T6 COMPLETE.** Levinson’s 12 actual
 ratings are bound after Martin forwarded the completed declaration (review date
 2026-11-19; five affirmative self-attestations; teammate relationship disclosed).
@@ -1536,9 +1549,32 @@ historical point; the M1–M5 priorities below reflect subsequent decisions.
 
 ## 2. Current verified status
 
+### 2026-11-20 — current status (read this first)
 
+Documentation and evidence-inspection work only. No model requests, trials, lab
+inference or Git publication. Local commits on `member/martin` after the published
+`8f961b5`; not pushed.
 
-### Current G1 checkpoint — updated 2026-11-16
+| Item | State | Record |
+|---|---|---|
+| G1 three-model extension (Ministral, Granite, Llama) | **Closed, adjudicated.** 228 attempts; known-goal P→M Ministral 28/36→33/36, Granite 0/36→0/36, Llama 0/36→1/36. H-write Uninformative for all. Granite/Llama are tool-call integration failures | [adjudicated report](G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md) |
+| G1 Sol | Closed: 73 PASS, 3 censored; P1′ Support, P2 Uninformative, P5 Support | [Sol report](G1_SOL_ADJUDICATED_REPORT_2026-11-19.md) |
+| G1 Qwen Batch B review | Levinson's 4 ratings received 2026-11-20 (H01 NO/YES, H02 NO/NO, H03 YES/YES, H04 NO/YES). Declaration item 5 was mis-entered in the file; his YES was relayed by Martin and recorded as a separate supplemental statement. **Binding and the unchanged frozen analysis still need to run on the lab (zero inference).** Qwen formal closeout remains withheld until then | [intake](artifacts/macro-generalization-20261113/revision-1/stage-4-qwen-lab-20261119/operator/human-review-intake-20261120/INTAKE_STATUS.md), [supplemental](artifacts/macro-generalization-20261113/revision-1/stage-4-qwen-lab-20261119/operator/human-review-intake-20261120/SUPPLEMENTAL_DECLARATION_2026-11-20.md) |
+| Prediction label map | Three label systems exist (stopped Stage 0, revision 1, frozen P1′–P6 amendment). **P1′ was Support for Sol**, not Against; only Ministral's diagnostic P1′ was Against. The refuted "savings grow with depth" idea was Stage 0 P1, replaced before testing | [label map](docs/PREDICTION_LABEL_MAP_2026-11-20.md) |
+| Novelty / related work | **Mechanism well covered; a narrow evaluation niche remains.** AWO meta-tools, PyRUA-Lean, BT-Agent, LLMCompiler and SayCan cover the mechanism. MetaTool/ROS and ROSClaw already compare against stock ROSA. Our **missing stock-ROSA baseline** is the main exposed weakness (new runs would be needed; not authorized) | [novelty doc](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md) |
+| F1 step 0 (Qwen length stops) | 12 length stops (M4 5, G1 7): **8 A** (after a wrong selection or blocked action), **4 C** (first-call deliberation that had already named the correct skill). All 12 are selection-related; 0 on inspection tasks. 3 M4 stops hit the 2,048 task budget, not the 1,024 per-call cap. Source check: movement macros read the target's current state before writing, but not the readiness checks, and the catalogue never says so. Candidate F1 hypothesis (descriptions + clarification route) recorded, **not designed or run** | [F1 doc](docs/F1_STEP0_LENGTH_STOPS_2026-11-20.md), [script](tools/f1/length_stops.py) |
+
+**Dead-link flag:** `docs/CLAUDE_QWEN_ROADMAP_LIVE.md` and
+`docs/QWEN_SERVING_PHASE1_REPORT_2026-11-13.md` exist locally but are **untracked**. Links to
+them below, and in the historical sections, resolve on this laptop only and are broken on
+GitHub. They have not been committed, pending the owner's decision.
+
+Next authorized actions: Qwen Batch B binding and frozen analysis on the lab (needs SSH run
+by Martin or approved key-based access). Everything else, including F1 candidate testing, a
+stock-ROSA baseline, a Granite/Llama tool-call smoke test and the P4 catalogue probe, needs
+separate authorization.
+
+### Historical G1 checkpoint — 2026-11-16 (superseded by the 2026-11-20 entry above; retained unedited below)
 
 
 
@@ -1715,95 +1751,50 @@ sharing this document or making a new claim about an active run.
 
 
 <!-- PROJECT_STATUS_START -->
-
 Last refreshed: **2026-11-05 15:39:42**. Saved-checkpoint snapshot.
-
-
 
 ### Current work and next actions
 
-
-
 | Progress item | Current evidence / action |
-
 |---|---|
-
 | Current milestone | M5: TECHNICAL_DELIVERY_COMPLETE_EVALUATION_LOCAL_BY_USER_CHOICE. M5 technical delivery complete. Post-closeout discussion assessed using exact existing traces and retrospective label scenarios; M6 remains proposed, not authorized. Local backups are verified through their pinned revisions; evaluation off-machine protection remains deferred and frozen-criterion independent human adjudication was not obtained. |
-
 | M4 recorded execution | 80/80 trial rows; 0 cells without a recorded result, including any in-flight trial. |
-
 | M4 operator clarification review | 8/8 valid operator reviews recorded; 0 still required. This is not independent human adjudication. |
-
 | Current decision | Retain bounded module as optional engineering capability; Sol positive, Qwen failed reliability-preserving retention. No unqualified cross-model recommendation. |
-
 | Next actions | Use the delivered report, claim ledger, video and installation guide. Retain local backups; off-machine evaluation backup and frozen-criterion independent human adjudication remain unfulfilled and unscheduled. Use concise explicit wording for future known-goal tasks. No new studies, runtime changes or GitHub uploads are scheduled. |
-
 | Open gates / blockers | M5.1_backup: LOCAL_RESTORE_VERIFIED: research b13df0f and evaluation b5e94bf; shallow boundaries preserved. Research b13df0f separately verified remotely. Evaluation off-machine backup deferred by user.; M5.2_existing_evidence: TRACE_REVIEW_COMPLETE; STAKEHOLDER_FEEDBACK_CLOSED_8_RATINGS; FROZEN_CRITERION_INDEPENDENT_HUMAN_ADJUDICATION_NOT_OBTAINED; FROZEN_SCORES_UNCHANGED; M5.3_research_consolidation: COMPLETE: family table, paired outcomes, both cost views, exploratory family-aware uncertainty,10-page report and1-page ledger.; M5.4_deliverables: COMPLETE_LOCAL: validated wheel, two-backend Gazebo video,10-page report,1-page ledger,898-file verified delivery ZIP.. Eight ratings submitted by martin on2026-10-29 (four pass, four fail). Outcome-oriented owner preference clarified2026-10-30; stakeholder review closed. Frozen-criterion independent human adjudication was not obtained. Prior aggregate-result exposure is disclosed. |
 
-
-
 | Backend | Saved status | Recorded / scheduled | Local + Phoenix audited | Reserved requests / cap |
-
 |---|---|---:|---:|---:|
-
 | Sol | COMPLETE | 40/40 | 40 | 106 / 323 |
-
 | Qwen | COMPLETE | 40/40 | 40 | 144 / 323 |
-
-
 
 M5 separately used **4 presentation inference requests** and **0 new research trials**. Human-review status: Eight ratings submitted by martin on2026-10-29 (four pass, four fail). Outcome-oriented owner preference clarified2026-10-30; stakeholder review closed. Frozen-criterion independent human adjudication was not obtained. Prior aggregate-result exposure is disclosed. The [eight-case packet](artifacts/macro-m5-20261027/ROSA_M5_HUMAN_REVIEW_PACKET.zip) is retained. The eight operator ratings above do not count as human review.
 
-
-
 Recorded rows can include a row awaiting its audit. Reserved requests can include
-
 an in-flight or failed request; they are not generated-token totals. Unfinished
-
 cells are not assumed to pass. These counts do not establish process liveness.
 
-
-
 - **Sol:** clarification reviews passed 4/4; failed 0; recorded answers pending/invalid review 0. Answers for unrecorded cells remain unreviewed.
-
 - **Qwen:** clarification reviews passed 0/4; failed 4; recorded answers pending/invalid review 0. Answers for unrecorded cells remain unreviewed.
 
-
-
 | Backend / condition | Audited automatic passes / recorded | Recorded requests | Native operations |
-
 |---|---:|---:|---:|
-
 | Sol / primitives | 20/20 | 68 | 38 |
-
 | Sol / macro | 20/20 | 38 | 40 |
-
 | Qwen / primitives | 15/20 | 91 | 50 |
-
 | Qwen / macro | 14/20 | 53 | 48 |
-
-
 
 Supervisor's saved phase: `EXECUTION_FINISHED_REVIEW_REQUIRED`. Frozen source check: 62 files; 0 mismatches.
 
-
-
 The automatic primary-pass count is separate from required clarification review.
-
 A final M4 decision also requires the frozen paired analysis and limits/audit checks.
-
 Refresh with `python -m tools.project_context --refresh`; narrative sections still
-
 need review when the study or roadmap changes.
 
-
-
 The supervisor phase above is its preserved pre-review checkpoint. Final closure
-
 is recorded in `closeout.json` and the [final M4 report](artifacts/macro-m4-20261027/FINAL_REPORT_FOR_CHATGPT.md).
-
 Completed review includes four failed Qwen clarification cases; eight reviews does not mean eight passes.
-
 <!-- PROJECT_STATUS_END -->
 
 
@@ -3348,9 +3339,7 @@ date is not an instruction to suspend current work until that date.
 
 G1 numbering is distinct from M1–M5, the historical six stages and the completed
 
-Qwen serving Phase 0/1. Its current state is the Stage 3 blocked checkpoint in
-
-Section 2. The initial stopped Stage 0 design and the revision-1 design are
+Qwen serving Phase 0/1. Its current state is completed Sol and three-model extension analysis, with the separate Qwen Batch B review still pending. Read the newest top-of-file status and dated handoff first. The initial stopped Stage 0 design and the revision-1 design are
 
 separate retained records; do not combine their counts or interpret old pending
 
@@ -4038,23 +4027,18 @@ Consult its verification file before claiming final-package integrity.
 
 
 
-**Current handoff:** read the G1 Stage 3 checkpoint first. Its failed scorer-review
-
-gate and unmet instrumentation/human-review requirements prevent a final freeze.
-
-No G1 held-out backend launch is authorized. The M4 commands below are historical
-
-operational guidance, not current launch instructions. A future G1 preflight must
-
-be restore-only with zero experimental inference and no new login, distinguish
-
-local credential presence from provider validity, and state quota UNKNOWN. The
-
-owner reads that record before separately authorizing Stage 4. Resume only
-
-unstarted cells under still-valid authorization and cumulative budgets; preserve
-
-failed/censored attempts and document external pauses.
+**Current handoff (2026-11-20):** start from the dated entry at the top of section 2.
+Lab-access details are in a private local handoff, not in this repository. G1 Stage3 was subsequently resolved through documented owner decisions, review,
+freeze and launch acknowledgments. Sol held-out and the three-model extension
+are now closed; Qwen execution is complete but its separate BatchB four-response
+human review is pending. No new backend/study launch is authorized by this note.
+The latest evaluation commit was explicitly approved and pushed to member/martin;
+main was unchanged. Old M4/G1 launch commands below are historical references,
+not instructions to rerun completed directories. All future tests and formal
+analysis execute on the lab via SSH. Preserve raw evidence and cumulative budgets;
+never replay failed/censored or uncertain actions. A genuinely new launch still
+needs its applicable protocol and owner acknowledgment. Recheck the lab execution
+mirror, authorization boundaries and current shared GPU occupancy before any run.
 
 
 
