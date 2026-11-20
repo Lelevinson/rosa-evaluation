@@ -1549,7 +1549,19 @@ historical point; the M1–M5 priorities below reflect subsequent decisions.
 
 ## 2. Current verified status
 
-### 2026-11-21 — project frozen (read this first)
+### 2026-11-21 — F1 Stage 0 designed on branch `member/martin-f1` (no model calls)
+
+F1 tests whether honest catalogue wording (W1: movement skills' routines read the current target
+coordinates, write at most once and verify; no readiness checks) plus a stated clarification route (W2:
+a plain-text question, no tool) fix Qwen's selection failures. The comparison is macro only: Qwen and Sol,
+each with base and new wording. The cases are 30 fresh AI-authored held-out cases plus the G1 dev cases. Study:
+[artifacts/f1-catalogue-wording-20261121/](artifacts/f1-catalogue-wording-20261121/STAGE0_STATUS.md);
+code: `tools/f1_wording/`. The static wrapper check passes, and the leakage check is 30/30 OK. **The
+zero-model scripted controls have not run, because the lab was unreachable on 2026-11-21.** Thresholds
+await Martin. Stage 1 (any inference) is not authorized. Caution from the frozen G1 data: only 1 of Qwen's
+6 G1 macro failures was inspection-first.
+
+### 2026-11-21 — project frozen
 
 **Martin froze the project himself on 2026-11-21.** This supersedes the 2026-11-20 note that
 Levinson would do it. It was done before any new study, with no model calls and no trials. All
