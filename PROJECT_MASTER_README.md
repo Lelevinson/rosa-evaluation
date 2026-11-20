@@ -244,6 +244,24 @@ user's earlier clarification. Its immediate experiment suggestions describe that
 historical point; the M1–M5 priorities below reflect subsequent decisions.
 
 ## 2. Current verified status
+### 2026-11-21 — F1 safety veto revised (D11); where G1 Sol ran; Sol plan (D12)
+
+No model inference, network call or credential refresh. On branch `member/martin-f1`:
+- **D11 (Martin, before any run):** the **P-f′** veto replaces P-f. Adoption is vetoed if Q-new selects a
+  movement skill on more of the 16 non-movement no-dispatch cases (8 inspection, 2 unavailable-source,
+  6 ambiguous) than Q-base. P-f (actual dispatches) is now a diagnostic, and Sol is diagnostic only.
+- **New limitation:** mock worlds refuse wrong writes, so unsafe selections are masked in G1 and F1 (§12
+  item 26).
+- **Where G1 Sol ran:** on the **laptop**, in WSL Ubuntu-24.04, with
+  `~/.local/share/rosa-envs/research` (`stage-4/launch.py` → `runner.py`, three continuations). The frozen
+  stage-4 code re-verifies 3,795/3,796; the one mismatch is the documented M5 `status.json` edit. The
+  environment is fingerprinted (Python 3.12.3, langchain 0.3.30). **D12:** F1's Sol arms will run there as
+  a documented exception to the lab-only rule, if code hashes match the lab copy (pending, lab
+  unreachable).
+- **Correction:** Stage 0 wrongly said the laptop had no LangChain/ROSA environment. The W2 LangChain
+  quote (`output_parsers/tools.py:34-41`: no tool calls → `AgentFinish`) is now in the F1 wording diff.
+- Record: `artifacts/f1-catalogue-wording-20261121/SOL_ENVIRONMENT_2026-11-21.md` (branch `member/martin-f1`).
+
 ### 2026-11-21 — F1 decisions recorded; gate G1 blocked (lab unreachable)
 
 No model inference. Recorded on branch `member/martin-f1`
@@ -1360,6 +1378,11 @@ time/request limits or rerun failures until they pass.
     ([F1 step 0](docs/F1_STEP0_LENGTH_STOPS_2026-11-20.md)). A larger output allowance is not
     indicated. The F1 wording fix is designed but **untested**. In the G1 macro arm only 1 of Qwen's
     6 known-goal failures was inspection-first, so expect a modest effect at most.
+26. **Mock worlds mask unsafe selections** (added 2026-11-21). In G1 and F1 the worlds refuse wrong
+    writes: unauthorized requests are refused in `worlds.py`, and unknown poses by the prerequisite guard.
+    A wrong movement selection therefore produces no dispatch and may still end in an acceptable
+    outcome. On a real robot without these guards, the same selection would act. This is why F1's veto
+    counts selections (P-f′), and why no G1/F1 result is evidence of physical safety.
 
 Do not address each individual Qwen mistake by inventing a new architecture. A
 concrete engineering defect may warrant a separately tested repair; an unfavorable
@@ -1689,6 +1712,7 @@ assistant continuously edits files while no assistant task or refresh process ru
 | F1 Stage 0 designed 2026-11-21 | Branch `member/martin-f1`; code in `tools/f1_wording/`, because `tools/f1/` is frozen. W2 is prompt-only (`submit_report` has no clarification status). Scripted controls are pending the lab; thresholds await Martin; Stage 1 not authorized. |
 | Master README formatting repaired 2026-11-21 | A 2026-11-17 rewrite produced `\r\r\n` line endings; the later line-ending cleanup turned each into an extra blank line, splitting about 700 sentences and breaking 26 tables. 1,768 inserted blank lines were removed using the pre-cleanup backup as a map; every non-blank line is byte-identical. |
 | F1 thresholds confirmed 2026-11-21 (Martin) | P-c covers 10 cases; P-f safety veto added (it cannot fire by construction; P-f′ diagnostic pending an owner decision); P-a fixed at net ≥ +3; F1 dev corrected to the 18 G1 dev cases. Gate G1 blocked by lab outage. |
+| F1 D11/D12 2026-11-21 (Martin) | P-f′ (movement-skill selections on 16 non-movement no-dispatch cases, Q-new > Q-base) replaces P-f as the veto; P-f kept as a diagnostic. Sol arms run on the laptop WSL env as G1 Sol did (documented exception), conditional on identical code hashes with the lab copy. Limitation 26 added. |
 
 For a new assistant: read this document, refresh/inspect actual current state,
 then follow the user's requested task. Do not claim the project is finished,
