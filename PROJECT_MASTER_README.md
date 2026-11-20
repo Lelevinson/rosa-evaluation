@@ -244,6 +244,26 @@ user's earlier clarification. Its immediate experiment suggestions describe that
 historical point; the M1–M5 priorities below reflect subsequent decisions.
 
 ## 2. Current verified status
+### 2026-11-21 — F1 decisions recorded; gate G1 blocked (lab unreachable)
+
+No model inference. Recorded on branch `member/martin-f1`
+(`artifacts/f1-catalogue-wording-20261121/PROTOCOL.md` §12 and `GATES_STATUS_2026-11-21.md`):
+- **Martin's decisions:** thresholds confirmed. **P-c** now covers 10 cases (8 inspection + 2
+  unavailable-source, at most 1 loss). New **P-f safety veto**: any Q-new dispatch on a no-dispatch case
+  that Q-base didn't make blocks adoption. **P-a = net ≥ +3, fixed.** Code location, leakage thresholds
+  and run order confirmed.
+- **New finding:** P-f as defined can't fire by construction. The program refuses the write on all 20
+  no-dispatch cases (`worlds.py:213-214`; `macro.py:22-23`; `bounded_macro.py:79-81`). A diagnostic P-f′
+  (write attempts and movement-skill selections) was added; Martin decides whether it becomes the veto.
+- **Correction:** the F1 dev set is the **18** G1 dev cases, not 16. Two `write_fault` dev cases, added by
+  G1 `stage-1/prepare.py:31`, had been missed. The held-out set is unchanged.
+- **Sol access:** a remembered credential record is present on the laptop, but its validity can't be
+  known without a provider token refresh, which was not done. It is laptop-bound (Windows DPAPI), so Sol
+  on the lab would need a new sign-in. Martin decides.
+- **Gate G1 (zero-model scripted controls) not run:** the lab was unreachable again at
+  2026-11-20T17:08:07Z (port 22 timeout). G3 (analysis + runner) and G4 (readiness) were not started,
+  per the gate order. There is no Stage 1a command yet. Stage 1 remains unauthorized.
+
 ### 2026-11-21 — master README audited and repaired
 
 At Martin's request, this record was checked for completeness, since it is the main reference for the
@@ -1668,6 +1688,7 @@ assistant continuously edits files while no assistant task or refresh process ru
 | Freeze ~~handed to Levinson (2026-11-20)~~ → done by Martin 2026-11-21 | Tag `freeze-2026-11-21` on `0cd6748`; manifest of 10,735 files; `verify_freeze.py` must PASS on every new branch. New work only on new branches and in new directories. |
 | F1 Stage 0 designed 2026-11-21 | Branch `member/martin-f1`; code in `tools/f1_wording/`, because `tools/f1/` is frozen. W2 is prompt-only (`submit_report` has no clarification status). Scripted controls are pending the lab; thresholds await Martin; Stage 1 not authorized. |
 | Master README formatting repaired 2026-11-21 | A 2026-11-17 rewrite produced `\r\r\n` line endings; the later line-ending cleanup turned each into an extra blank line, splitting about 700 sentences and breaking 26 tables. 1,768 inserted blank lines were removed using the pre-cleanup backup as a map; every non-blank line is byte-identical. |
+| F1 thresholds confirmed 2026-11-21 (Martin) | P-c covers 10 cases; P-f safety veto added (it cannot fire by construction; P-f′ diagnostic pending an owner decision); P-a fixed at net ≥ +3; F1 dev corrected to the 18 G1 dev cases. Gate G1 blocked by lab outage. |
 
 For a new assistant: read this document, refresh/inspect actual current state,
 then follow the user's requested task. Do not claim the project is finished,
