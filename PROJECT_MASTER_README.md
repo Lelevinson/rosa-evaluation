@@ -1084,6 +1084,8 @@ results and interpretations.
 
 ## Contents
 
+- [Results at a glance (all studies)](#results-at-a-glance-all-studies)
+
 1. [Goals and research question](#1-goals-and-research-question)
 2. [Current verified status](#2-current-verified-status)
 3. [Repositories and evidence authority](#3-repositories-and-evidence-authority)
@@ -1101,6 +1103,57 @@ results and interpretations.
 15. [Operational handoff](#15-operational-handoff)
 16. [Maintenance and user preferences](#16-maintenance-and-user-preferences)
 17. [Decision log and corrections](#17-decision-log-and-corrections)
+
+## Results at a glance (all studies)
+
+Added 2026-11-21. One row per study and backend. **P → M** is model-managed primitives → bounded macro
+within the same backend. Correctness and costs are **as reported in the linked source**. Every figure
+in this table was checked mechanically against that file when the table was built (each row has
+literal source strings that must match). Denominators differ between studies, and settings, cases
+and hardware differ too. **Do not pool rows or compare across studies**; see the claims ledger below and §12.
+F1 Stage 0 (2026-11-21) is design only, with no trials, so it has no row.
+
+| Study (date) | Setting | Backend | Denominator | Correctness | Cost | Source |
+|---|---|---|---|---|---|---|
+| Stage 4 batching (2026-10-21) | mock + Gazebo, 4 arms | Sol | 80 attempts | 6 failures / 80 | — | [FINAL_REPORT_FOR_CHATGPT.md](artifacts/stage4-batching-completion-20261021/FINAL_REPORT_FOR_CHATGPT.md) |
+|  |  | Qwen | 80 attempts | 72 failures / 80; retention screen not met for either backend | — | [FINAL_REPORT_FOR_CHATGPT.md](artifacts/stage4-batching-completion-20261021/FINAL_REPORT_FOR_CHATGPT.md) |
+| Reliability v1 (2026-10-22) | mock 4 arms (A–D) + Gazebo A/D | Sol | mock 8 per arm; Gazebo 2 per arm | every arm 8/8 (mock), 2/2 (Gazebo) | 164 model calls | [REPORT_FOR_CHATGPT.md](artifacts/reliability-v1-20261022/REPORT_FOR_CHATGPT.md) |
+|  |  | Qwen | same | every arm 8/8 (mock), 2/2 (Gazebo) | mock calls 43 (A) → 38 (D) | [REPORT_FOR_CHATGPT.md](artifacts/reliability-v1-20261022/REPORT_FOR_CHATGPT.md) |
+| Reliability v2 + UR5e (2026-10-22) | mock 4 arms, validation, Gazebo UR5e | Sol | 96 live trials (both backends) | mock 32/32; Gazebo 4/4 per arm | retention screen not met | [REPORT_FOR_CHATGPT.md](artifacts/reliability-v2-ur5e-review-20261022/REPORT_FOR_CHATGPT.md) |
+|  |  | Qwen | same | mock 28/32 (A 6/8, B 8/8, C 8/8, D 6/8); Gazebo 1/4 per arm | retention screen not met | [REPORT_FOR_CHATGPT.md](artifacts/reliability-v2-ur5e-review-20261022/REPORT_FOR_CHATGPT.md) |
+| Qwen output budget (2026-10-22) | UR5e, 5 conditions × 8 | Qwen | 40/40 trials | L256 2/8, L512 3/8, L1024 5/8, C256 1/8, R256 2/8; no candidate retained | — | [REPORT_FOR_CHATGPT.md](artifacts/output-budget-v1-resume-20261022/REPORT_FOR_CHATGPT.md) |
+| Workflow live (2026-10-22) | mock, 6 cases | Sol | 6 per condition | model 6/6, program 6/6 | calls 29 → 15 | [REPORT_FOR_CHATGPT.md](artifacts/workflow-live-v1-20261022/REPORT_FOR_CHATGPT.md) |
+|  |  | Qwen | 6 per condition | model 6/6, program 5/6; progression gate False | calls 35 → 28 | [REPORT_FOR_CHATGPT.md](artifacts/workflow-live-v1-20261022/REPORT_FOR_CHATGPT.md) |
+| Report reference + UR5e (2026-10-22) | mock + Gazebo, 4 cases each | Sol | 4 per cell | all 4/4 | Gazebo calls 19 → 8 | [REPORT_FOR_CHATGPT.md](artifacts/workflow-reference-v1-20261022/REPORT_FOR_CHATGPT.md) |
+|  |  | Qwen | 4 per cell | mock 4/4 both; Gazebo model 3/4, program 4/4 | Gazebo calls 18 → 14 | [REPORT_FOR_CHATGPT.md](artifacts/workflow-reference-v1-20261022/REPORT_FOR_CHATGPT.md) |
+| Macro transfer (2026-10-23) | Gazebo UR5e, 6 cases × 3 conditions | Sol | 6 per condition | model / macro / workflow 6/6 each | calls 29 / 14 / 14 | [COMBINED_REPORT_FOR_CHATGPT.md](artifacts/macro-transfer-v1-resume-r1-20261023/COMBINED_REPORT_FOR_CHATGPT.md) |
+|  |  | Qwen | 6 per condition | model 4/6, macro 5/6, workflow 5/6 | calls 39 / 22 / 21 | [COMBINED_REPORT_FOR_CHATGPT.md](artifacts/macro-transfer-v1-resume-r1-20261023/COMBINED_REPORT_FOR_CHATGPT.md) |
+| Prompt-contract validation (2026-10-26) | known cases, 3 conditions | Sol | 9 scoreable (1 censored) | 9/9 | calls 16 / 8 / 8 (model / macro / workflow) | [COMBINED_VALIDATION_REPORT.md](artifacts/prompt-contract-v1-live-resume-r2-20261026/COMBINED_VALIDATION_REPORT.md) |
+|  |  | Qwen | 9 | 9/9 | 34 requests | [COMBINED_VALIDATION_REPORT.md](artifacts/prompt-contract-v1-live-resume-r2-20261026/COMBINED_VALIDATION_REPORT.md) |
+| Macro-focus pilot (2026-10-26) | 6 cases × 2 reps × 3 conditions | Sol | 12 per condition | model / macro / workflow 12/12 each | calls 60 / 32 / 32 | [REPORT.md](artifacts/macro-focus-v2-20261026/REPORT.md) |
+|  |  | Qwen | 33 of 36 rows (stopped) | model 8/11, macro 9/11, workflow 7/11; no retention claim | calls 61 / 31 / 34 | [REPORT.md](artifacts/macro-focus-v2-20261026/REPORT.md) |
+| M1 reusable module (2026-10-27) | engineering acceptance | — | no live trials | accepted | 0 live model requests | [M1_ACCEPTANCE_REPORT.md](artifacts/macro-module-v1-20261027/M1_ACCEPTANCE_REPORT.md) |
+| M2 / M3 (2026-10-27) | Gazebo UR5e | deterministic / Sol / Qwen | M2 10 cases; M3 3 per backend | M2 10/10; M3 deterministic 3/3, Sol 3/3, Qwen 2/3 | — | [M2_M3_COMBINED_REPORT_2026-10-27.md](docs/M2_M3_COMBINED_REPORT_2026-10-27.md) |
+| **M4** (2026-10-27) | Gazebo UR5e, 10 families × 2 reps | Sol | 20 per condition | primitives 20/20 → macro 20/20 | requests 68 → 38; mean task s 16.42 → 9.73 | [FINAL_REPORT_FOR_CHATGPT.md](artifacts/macro-m4-20261027/FINAL_REPORT_FOR_CHATGPT.md) |
+|  |  | Qwen | 20 per condition | primitives 15/20 → macro 14/20 | requests 91 → 53; mean task s 133.49 → 85.18 | [FINAL_REPORT_FOR_CHATGPT.md](artifacts/macro-m4-20261027/FINAL_REPORT_FOR_CHATGPT.md) |
+| Qwen serving Phase 1 (2026-11-13) | replay of M4 inputs, no tools | Qwen A vs B | 11 unique inputs | tool-call agreement 7/10 (9/10 required); B not retained | median gen tok/s 8.388 vs 8.082 | [QWEN_SERVING_PHASE1_REPORT_2026-11-13.md](docs/QWEN_SERVING_PHASE1_REPORT_2026-11-13.md) |
+| Lab local-model replication (2026-11-17) | lab Gazebo, M4 families, 40 per condition | Qwen3.5 9B | 36 known-goal per condition | primitives 27/36 → macro 28/36 | calls 188 → 98 | [DETAILED_COMPARISON_REPORT.md](artifacts/lab-multimodel-20261117/evidence/DETAILED_COMPARISON_REPORT.md) |
+|  |  | Ministral 3 8B | same | 28/36 → 28/36 | calls 156 → 82 | [DETAILED_COMPARISON_REPORT.md](artifacts/lab-multimodel-20261117/evidence/DETAILED_COMPARISON_REPORT.md) |
+|  |  | Llama 3.1 8B | same | 0/36 → 0/36 (integration failure) | calls 211 → 193 | [DETAILED_COMPARISON_REPORT.md](artifacts/lab-multimodel-20261117/evidence/DETAILED_COMPARISON_REPORT.md) |
+|  |  | Granite 3.3 8B | same | 0/36 → 0/36 (integration failure) | calls 40 → 40 | [DETAILED_COMPARISON_REPORT.md](artifacts/lab-multimodel-20261117/evidence/DETAILED_COMPARISON_REPORT.md) |
+| Qwen lab repeat (2026-11-17) | second run of the replication | Qwen3.5 9B | 36 known-goal per condition | primitives 26/36 → macro 28/36 | calls 185 → 97 | [QWEN_LAB_REPEAT_COMPARISON_REPORT.md](artifacts/qwen-lab-repeat-20261117/evidence/QWEN_LAB_REPEAT_COMPARISON_REPORT.md) |
+| Llama/Granite integration diagnosis (2026-11-17) | native-call probes, no robot | Llama, Granite | 48 requests | template/interface defects found (see report) | 48 requests | [INTEGRATION_FINDINGS_2026-11-17.md](artifacts/lab-integration-20261117/evidence/INTEGRATION_FINDINGS_2026-11-17.md) |
+| Integration repair rerun (2026-11-17) | lab Gazebo, M4 families, repaired profile | Llama 3.1 8B | 36 known-goal per condition | primitives 21/36 → macro 28/36 | calls 190 → 113 | [INTEGRATION_RERUN_COMPLETE_REPORT_2026-11-17.md](artifacts/integration-rerun-20261117-r1/evidence/INTEGRATION_RERUN_COMPLETE_REPORT_2026-11-17.md) |
+|  |  | Granite 3.3 8B | same | primitives 5/36 → macro 9/36 | calls 210 → 193 | [INTEGRATION_RERUN_COMPLETE_REPORT_2026-11-17.md](artifacts/integration-rerun-20261117-r1/evidence/INTEGRATION_RERUN_COMPLETE_REPORT_2026-11-17.md) |
+| G1 Stage 2 dev (2026-11-14) | G1 mock arm/base, dev | Sol | 18 per condition | primitives 17/18 → macro 18/18 | inference attempts 60 → 34 | [STAGE2_RESULTS_AND_PROBLEMS_2026-11-14.md](artifacts/macro-generalization-20261113/revision-1/STAGE2_RESULTS_AND_PROBLEMS_2026-11-14.md) |
+| **G1 held-out** (2026-11-19/20) | G1 mock arm/base, held-out, 38 per condition | Sol | 38 per condition; 3 primitive attempts censored | V2 35/35 → 38/38; V3 35/38 → 38/38 | calls 126 → 74; mean task s 13.273 → 8.361 | [G1_SOL_ADJUDICATED_REPORT_2026-11-19.md](G1_SOL_ADJUDICATED_REPORT_2026-11-19.md) |
+|  |  | Qwen3.5 9B | 38 per condition (36 known-goal + 2 ambiguous) | all 26/38 → 31/38; known-goal 26/36 → 30/36; ambiguous 0/2 → 1/2 | calls 123 → 75; mean task s 8.48 → 6.31 | [G1_QWEN_ADJUDICATED_REPORT_2026-11-20.md](G1_QWEN_ADJUDICATED_REPORT_2026-11-20.md) |
+|  |  | Ministral 3 8B | same | all 29/38 → 35/38; known-goal 28/36 → 33/36 | calls 154 → 83; mean task s 5.32 → 3.18 | [G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md](G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md) |
+|  |  | Granite 3.3 8B | same | all 1/38 → 0/38; known-goal 0/36 → 0/36 | calls 38 → 38 | [G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md](G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md) |
+|  |  | Llama 3.1 8B | same | all 0/38 → 1/38; known-goal 0/36 → 1/36 | calls 203 → 185 | [G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md](G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md) |
+| F1 step 0 (2026-11-20) | trace classification, no runs | Qwen | 116 trials scanned (M4 40 + G1 76) | 12 length stops: 8 class A, 4 class C | — | [F1_STEP0_LENGTH_STOPS_2026-11-20.md](docs/F1_STEP0_LENGTH_STOPS_2026-11-20.md) |
+
+Source checks: 100 literal strings across 37 rows, all found.
 
 ## 1. Goals and research question
 
