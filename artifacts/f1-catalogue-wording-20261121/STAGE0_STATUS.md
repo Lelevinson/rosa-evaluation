@@ -23,11 +23,15 @@ Code: `tools/f1_wording/` (`wording.py`, `build_cases.py`, `leakage_check.py`, `
 ## What could not be done, and why
 
 - **Scripted controls C1–C3 did not run.** Owner rule: tests run on the lab only. The lab didn't
-  answer on 2026-11-21 (`ssh lab-rosa` timed out on port 22 twice; ping 100% loss). The laptop has no
-  LangChain/ROSA environment, so `controls.py` has also **not been executed anywhere**. Its first lab run is
+  answer on 2026-11-21 (`ssh lab-rosa` timed out on port 22 twice; ping 100% loss). ~~The laptop has no
+  LangChain/ROSA environment~~ **(Corrected 2026-11-21: wrong. I had checked only Windows Python and the default
+  WSL distro. The laptop's Ubuntu-24.04 WSL distro has the research env `~/.local/share/rosa-envs/research`,
+  where G1 Sol ran; see `SOL_ENVIRONMENT_2026-11-21.md`.)** Per the lab-only rule, `controls.py` has
+  **not been executed anywhere**. Its first lab run is
   its first test. Commands are in LAB_PLAN §1–2.
-- **The LangChain source quote for W2** (the no-tool reply → `AgentFinish`) is not in the doc yet: that
-  package isn't installed on the laptop. Recorded trials stand in for it (WORDING_DIFF, W2 table).
+- **The LangChain source quote for W2** (the no-tool reply → `AgentFinish`) ~~is not in the doc yet: that
+  package isn't installed on the laptop.~~ **Added 2026-11-21** from the laptop WSL research env
+  (WORDING_DIFF, W2 table); the lab-env copy is still to be compared.
 - **Code location deviates from the brief:** it is `tools/f1_wording/`, not `tools/f1/`. `tools/f1/` is
   frozen, so any new file there makes `verify_freeze.py` fail as "added".
 - `analysis.py` and the Stage 1 live runner are not written. They are pre-freeze gates (PROTOCOL §9 and §11).

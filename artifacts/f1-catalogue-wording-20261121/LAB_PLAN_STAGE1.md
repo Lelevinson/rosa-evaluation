@@ -40,6 +40,17 @@ trials, about 1 minute of CPU and **zero model requests**. Outputs go to `contro
 `controls/CONTROL_SUMMARY.json`, which are copied back and committed with a run report. Expected: all
 pass; C1 identical program behaviour in ~~46/46~~ 48/48; C2 no-tool route OK in 8/8 ambiguous (2 dev + 6 held-out).
 
+## 2a. Code/env identity with the laptop Sol environment (D12; zero model)
+
+```bash
+ssh lab-rosa 'docker exec -e PYTHONDONTWRITEBYTECODE=1   -w /work/preparation/f1-catalogue-wording-20261121/f1 marvel-g1-extension-20261119   /work/runtime/envs/research/bin/python -I -B tools/f1_wording/env_fingerprint.py   --workspace /work/preparation/g1-sol-review-and-lab-replication-20261119/workspace   --out artifacts/f1-catalogue-wording-20261121/controls/ENV_FINGERPRINT_lab_container.json'
+```
+
+Copy the file back and compare it with `controls/ENV_FINGERPRINT_laptop_wsl_2026-11-21.json`. The group
+hashes `rosa_reliability`, `g1_frozen_inputs`, `f1_code` and `f1_cases` must be identical, and
+`g1_frozen_inputs_match_on_this_host` must be true. Package and `langchain_output_parsers_tools_sha256`
+differences are reported (see SOL_ENVIRONMENT_2026-11-21.md).
+
 ## 3. Stage 1 readiness check (read-only; run just before Stage 1a, after authorization)
 
 | Check | Command (host unless noted) | Pass condition |
