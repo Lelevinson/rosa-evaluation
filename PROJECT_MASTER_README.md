@@ -1551,9 +1551,10 @@ historical point; the M1–M5 priorities below reflect subsequent decisions.
 
 ### 2026-11-20 — current status (read this first)
 
-Documentation and evidence-inspection work only. No model requests, trials, lab
-inference or Git publication. Local commits on `member/martin` after the published
-`8f961b5`; not pushed.
+No model requests and no new trials. Lab work today was read-only checks plus one
+zero-inference formal analysis (the Qwen closeout). Git: `37a7e19` (review, F1 and M4/M5
+corrections) was pushed to `member/martin` with owner approval. `8a85af0` (Qwen closeout) and the
+later docs are local until approved.
 
 | Item | State | Record |
 |---|---|---|
@@ -1563,6 +1564,8 @@ inference or Git publication. Local commits on `member/martin` after the publish
 | Prediction label map | Three label systems exist (stopped Stage 0, revision 1, frozen P1′–P6 amendment). **P1′ was Support for Sol**, not Against; only Ministral's diagnostic P1′ was Against. The refuted "savings grow with depth" idea was Stage 0 P1, replaced before testing | [label map](docs/PREDICTION_LABEL_MAP_2026-11-20.md) |
 | Novelty / related work | **Mechanism well covered; a narrow evaluation niche remains.** AWO meta-tools, PyRUA-Lean, BT-Agent, LLMCompiler and SayCan cover the mechanism. MetaTool/ROS and ROSClaw already compare against stock ROSA. Our **missing stock-ROSA baseline** is the main exposed weakness (new runs would be needed; not authorized) | [novelty doc](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md) |
 | F1 step 0 (Qwen length stops) | 12 length stops (M4 5, G1 7): **8 A** (after a wrong selection or blocked action), **4 C** (first-call deliberation that had already named the correct skill). All 12 are selection-related; 0 on inspection tasks. 3 M4 stops hit the 2,048 task budget, not the 1,024 per-call cap. Source check: movement macros read the target's current state before writing, but not the readiness checks, and the catalogue never says so. Candidate F1 hypothesis (descriptions + clarification route) recorded, **not designed or run** | [F1 doc](docs/F1_STEP0_LENGTH_STOPS_2026-11-20.md), [script](tools/f1/length_stops.py) |
+| Lab container check (read-only) | Two running containers: ours, `marvel-g1-extension-20261119`, and another project's, `rosa-exam-main`. Both use host networking, ROS domains 0 vs 220, and no GPU attachment. **Two host Ollama servers share the one GPU** (ours v0.40.6 :11439, theirs v0.40.16 :11435) with no coordination. No ROS 2 or Gazebo process runs anywhere; Phoenix :6006 is ours alone. Root disk 98% full. **Completed runs:** G1 used mock worlds + Ollama only (no ROS/Gazebo, confirmed from code). Qwen ran before the other project started. The multi-model runs overlapped it, but 393 telemetry samples show no foreign GPU process, so correctness has no plausible exposure; timing interference is not proven absent. The ROS cross-talk test did not run (`ros2` not on PATH); can't tell | [check](docs/LAB_CONTAINER_CHECK_2026-11-20.md), [raw output](artifacts/lab-container-check-20261120/lab_check_20261120.txt) |
+| Repository completeness and freeze | **Selection decided 2026-11-20 (owner delegated the choice).** Of 10,666 untracked files (1.16 GB): **commit about 7,935 (216 MB)**, i.e. everything current conclusions and reruns depend on (reports, protocols, code, configs, per-trial results and scores, analyses, review intakes, one canonical evidence archive per study). **Out-of-git backup with a SHA-256 list:** raw span trace dumps (732 MB), duplicate delivery packages, the repo git bundle, the G1 exact-inputs tarball, pre-update snapshots and the teammate repo snapshot. **Local only:** the private chat handoff and scratch. Lab vs laptop hashes for G1 `revision-1`: 4,901/4,905 match (4 lab logs grew after copy-back). Freeze manifest, tag, backup and the hand-off doc for Levinson follow the commit | to be recorded in the freeze manifest |
 
 **Dead-link flag:** `docs/CLAUDE_QWEN_ROADMAP_LIVE.md` and
 `docs/QWEN_SERVING_PHASE1_REPORT_2026-11-13.md` exist locally but are **untracked**. Links to
@@ -1572,7 +1575,28 @@ GitHub. They have not been committed, pending the owner's decision.
 All five G1 backends are now adjudicated. Key-based SSH from the laptop to the lab was set
 up 2026-11-20 with owner approval. No further action is currently authorized. F1 candidate
 testing, a stock-ROSA baseline, a Granite/Llama tool-call smoke test and the P4 catalogue
-probe each need separate authorization.
+probe each need separate authorization. Levinson's new trials will be a separate study, run on
+his own branch and output roots.
+
+### Working on the lab — operational summary (public-safe)
+
+This replaces the private local handoff for everyday use. Host address, account and VPN
+details are deliberately not recorded here. Verified 2026-11-20 unless marked otherwise.
+
+| Topic | Current facts |
+|---|---|
+| Access | SSH alias `lab-rosa` from Martin's laptop (key-based since 2026-11-20). The campus VPN is needed off campus. All tests, trials and formal analysis run **on the lab**; the laptop is for editing and read-only evidence inspection |
+| Hardware | NVIDIA RTX 4080 SUPER 16,376 MiB, driver 570.195.03 (CUDA compatibility 12.8), host Python 3.13.3 (verified today); Ubuntu 25.04 host (per the 2026-11-20 handoff inventory) |
+| Project root | `/media/naeem/d1/marvel proj` (quote the space; the symlink `marvel-proj` also exists). Models are in `models/`, the Ollama binary in `runtime/bin/ollama`, Python envs in `runtime/envs/{research,phoenix}` |
+| G1 execution mirror | `preparation/g1-sol-review-and-lab-replication-20261119/workspace/rosa-evaluation/…/revision-1`. **Not a Git checkout.** The lab's root `rosa-evaluation` checkout is older (`ec42ee7`); don't sync one over the other |
+| Container | `marvel-g1-extension-20261119`, image `sha256:306205ffce29…`, ROS 2 Jazzy, host network, project root mounted at `/work` (rw), `ROS_DOMAIN_ID=0`, `ROS_LOCALHOST_ONLY=1` (verified today). Per the handoff inventory: research venv Python 3.12.3; inside the container, ROS needs `source /opt/ros/jazzy/setup.bash`. The earlier Qwen container (started 2026-11-17 per run telemetry; image `sha256:472fb430…` per handoff) no longer exists |
+| Ollama (ours) | Host process `runtime/bin/ollama serve`, **v0.40.6**, `127.0.0.1:11439`. Installed tags: `qwen3.5:9b`, `ministral-3:8b-instruct-2512-q4_K_M`, `granite3.3:8b`, `llama3.1:8b-instruct-q4_K_M` (Q4_K_M; digests in each backend's `MODEL_CONFIG.json`/`freeze.json`) |
+| Frozen serving settings (G1) | Taken from a recorded Qwen request: `num_ctx 8192`, `num_predict 1024`, temperature 0, seed 42, `use_mmap true`, `think false`, API `stream true`. Per the preflight records (not re-verified today): flash attention on, f16 KV cache, all layers on the GPU (Qwen 33/33, Ministral 35/35, Granite 41/41, Llama 33/33) |
+| Phoenix (ours) | `127.0.0.1:6006`, running inside our container from the extension's `operator/phoenix_server.py` |
+| Shared with another project | `rosa-exam-main` container and its own Ollama v0.40.16 on `:11435` share the GPU. **Do not stop, reuse or reconfigure it.** Check `nvidia-smi` and coordinate GPU time before any model load |
+| Safe read-only checks | `docker ps`, `nvidia-smi`, `curl 127.0.0.1:11439/api/ps` (and `/api/version`), `curl 127.0.0.1:6006/healthz`. A model load or generation **is** a charged request; never do one casually |
+| Verify frozen G1 inputs (zero inference) | In the mirror's `stage-4-multimodel-20261119`: `python3 -B -c "import runpy;assert runpy.run_path('operator/run_sequence.py')['verify']()"`. Never run `run_sequence.py --execute`, `launch.py` or completed analysis drivers as checks |
+| Disk | Root `/` is 98% full; write outputs under `/media/naeem/d1` (386 GB free) |
 
 ### Historical G1 checkpoint — 2026-11-16 (superseded by the 2026-11-20 entry above; retained unedited below)
 
