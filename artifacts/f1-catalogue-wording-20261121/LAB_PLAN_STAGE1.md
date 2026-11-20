@@ -33,12 +33,12 @@ ssh lab-rosa 'docker exec marvel-g1-extension-20261119 /work/runtime/envs/resear
    print(inspect.getsource(t.parse_ai_message_to_tool_action))"'
 ```
 
-`controls.py` first re-checks the 25 frozen-input hashes in `controls/FROZEN_INPUTS.json`, which were
+`controls.py` first re-checks the ~~25~~ 26 frozen-input hashes in `controls/FROZEN_INPUTS.json`, which were
 recorded on the laptop with CRLF normalized to LF. It stops on any mismatch. The lab mirror's
-`rosa_reliability` must equal `rosa-research` `8713f9b`. Then 46 cases × 2 wordings = 92 scripted macro
+`rosa_reliability` must equal `rosa-research` `8713f9b`. Then ~~46~~ 48 cases (18 dev + 30 held-out) × 2 wordings = ~~92~~ 96 scripted macro
 trials, about 1 minute of CPU and **zero model requests**. Outputs go to `controls/CONTROL_ROWS.json` and
 `controls/CONTROL_SUMMARY.json`, which are copied back and committed with a run report. Expected: all
-pass; C1 identical program behaviour in 46/46; C2 no-tool route OK in 8/8 ambiguous (2 dev + 6 held-out).
+pass; C1 identical program behaviour in ~~46/46~~ 48/48; C2 no-tool route OK in 8/8 ambiguous (2 dev + 6 held-out).
 
 ## 3. Stage 1 readiness check (read-only; run just before Stage 1a, after authorization)
 

@@ -21,7 +21,8 @@ WORKSPACE = REPO.parent
 OUT = REPO / 'artifacts/f1-catalogue-wording-20261121/controls'
 RESEARCH_COMMIT = '8713f9b205033a25f8ed8d9549610e9ad0b8bfde'
 G1 = 'rosa-evaluation/artifacts/macro-generalization-20261113/revision-1/'
-FROZEN = [G1 + n for n in ('worlds.py', 'catalogue.py', 'stage-2/scoring.py', 'prompt-contract.json', 'cases.json')]
+FROZEN = [G1 + n for n in ('worlds.py', 'catalogue.py', 'stage-2/scoring.py', 'prompt-contract.json', 'cases.json',
+                           'stage-1/cases.json')]
 FORBIDDEN = ('ollama', 'langchain_ollama', 'langchain_openai', 'openai', 'rosa_auth', 'requests', 'httpx',
              'urllib.request', 'socket', 'http.client')
 

@@ -143,17 +143,21 @@ def main():
     assert len(heldout) == 30 and len({c['request'] for c in heldout}) == 30
     for c in heldout:
         c['case_sha256'] = sha({k: v for k, v in c.items() if k != 'case_sha256'})
-    g1 = json.loads((G1 / 'cases.json').read_text(encoding='utf-8-sig'))
-    dev = [{'case_id': c['case_id'], 'source': 'artifacts/macro-generalization-20261113/revision-1/cases.json',
+    # Dev = all 18 G1 dev cases as run in G1 Stage 2. stage-1/cases.json is revision-1/cases.json (identical shared
+    # entries) plus the two write_fault dev cases added by stage-1/prepare.py:31 (G1r1-dev-partial-arm/-base).
+    g1 = json.loads((G1 / 'stage-1/cases.json').read_text(encoding='utf-8-sig'))
+    dev = [{'case_id': c['case_id'], 'source': 'artifacts/macro-generalization-20261113/revision-1/stage-1/cases.json',
             'kind': c['kind'], 'domain': c['domain'], 'template_group': c['template_group'],
             'g1_case_sha256': sha(c)} for c in g1 if c['split'] == 'dev']
     groups = {}
     for c in heldout:
         groups.setdefault(c['template_group'], []).append(c['case_id'])
     write(OUT / 'heldout.json', heldout)
-    write(OUT / 'dev.json', {'note': 'F1 dev = the 16 frozen G1 dev cases, run in the macro condition only. '
+    write(OUT / 'dev.json', {'note': 'F1 dev = the 18 frozen G1 dev cases (as run in G1 Stage 2), macro condition only. '
                              'Used to iterate W1/W2 wording (at most 2 revisions); never counted in conclusions.',
-                             'g1_cases_json_sha256': hashlib.sha256((G1 / 'cases.json').read_bytes()).hexdigest(),
+                             'g1_stage1_cases_json_sha256': hashlib.sha256((G1 / 'stage-1/cases.json').read_bytes()).hexdigest(),
+                             'revision_note': '2026-11-21: was 16 (read revision-1/cases.json, which lacks the two write_fault dev '
+                                              'cases added by stage-1/prepare.py:31); corrected to all 18 G1 dev cases.',
                              'cases': dev})
     write(OUT / 'template-groups.json', {'unit': 'whole template group (bootstrap resampling unit)',
                                          'groups': groups})

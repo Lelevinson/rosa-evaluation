@@ -2,8 +2,8 @@
 
 Decisions come from ScriptedCaller (adapted from the frozen G1 controls runner,
 revision-1/stage-3/controls-rerun-20261114/runner.py). It drives the real frozen public adapters,
-worlds and scorer. Three controls, macro condition only, for every F1 dev case (16, the G1 dev
-set) and every F1 held-out case (30), under both wordings:
+worlds and scorer. Three controls, macro condition only, for every F1 dev case (18: the G1 dev set as run in
+G1 Stage 2) and every F1 held-out case (30), under both wordings:
 
   C1 W1 equivalence: base (frozen MacroROSA) and new (F1MacroROSA) must produce identical program
      behaviour: normalized snapshot (routine, guards, operations, observations, verification,
@@ -140,13 +140,13 @@ def main():
                 'messages': model.seen, 'catalogue': invocation.catalogue, 'query': query}
 
     heldout = json.loads((STUDY / 'cases/heldout.json').read_text(encoding='utf-8'))
-    g1_cases = {c['case_id']: c for c in json.loads((g1 / 'cases.json').read_text(encoding='utf-8-sig'))}
+    g1_cases = {c['case_id']: c for c in json.loads((g1 / 'stage-1/cases.json').read_text(encoding='utf-8-sig'))}
     dev_ids = [c['case_id'] for c in json.loads((STUDY / 'cases/dev.json').read_text(encoding='utf-8'))['cases']]
     dev = []
     for cid in dev_ids:
         c = deepcopy(g1_cases[cid])
         c['f1_type'] = {'ladder': 'inspection_control', 'write': 'direct_movement',
-                        'missing_prerequisite': 'movement_prerequisite'}.get(c['kind'], c['kind'])
+                        'missing_prerequisite': 'movement_prerequisite'}.get(c['kind'], c['kind'])  # write_fault stays write_fault
         dev.append(c)
 
     started = time.monotonic()
