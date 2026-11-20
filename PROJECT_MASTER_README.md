@@ -1549,7 +1549,20 @@ historical point; the M1–M5 priorities below reflect subsequent decisions.
 
 ## 2. Current verified status
 
-### 2026-11-20 — current status (read this first)
+### 2026-11-21 — project frozen (read this first)
+
+**Martin froze the project himself on 2026-11-21.** This supersedes the 2026-11-20 note that
+Levinson would do it. It was done before any new study, with no model calls and no trials. All
+frozen material is pinned by the annotated tag `freeze-2026-11-21` on `member/martin`. Its
+SHA-256 manifest, `FREEZE_MANIFEST_2026-11-21.json`, covers the tracked files under `artifacts/`,
+`docs/`, `tools/` and the root reports. `python -I -B tools/freeze/verify_freeze.py` must pass on
+any later branch. **New work goes on a new branch and into new output directories only**; see
+[FREEZE.md](FREEZE.md). The untracked raw traces and duplicates are in an out-of-git backup
+archive with a git bundle and SHA-256 lists, which Martin will copy to an external drive. The
+push of the freeze commit and tag awaits Martin. A designed-but-unstarted F1 Stage 0
+(catalogue wording) was paused for the freeze; nothing for it was written.
+
+### 2026-11-20 — current status
 
 No model requests and no new trials. Lab work today was read-only checks plus one
 zero-inference formal analysis (the Qwen closeout). Git: `37a7e19` (review, F1 and M4/M5
@@ -1565,12 +1578,11 @@ later docs are local until approved.
 | Novelty / related work | **Mechanism well covered; a narrow evaluation niche remains.** AWO meta-tools, PyRUA-Lean, BT-Agent, LLMCompiler and SayCan cover the mechanism. MetaTool/ROS and ROSClaw already compare against stock ROSA. Our **missing stock-ROSA baseline** is the main exposed weakness (new runs would be needed; not authorized) | [novelty doc](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md) |
 | F1 step 0 (Qwen length stops) | 12 length stops (M4 5, G1 7): **8 A** (after a wrong selection or blocked action), **4 C** (first-call deliberation that had already named the correct skill). All 12 are selection-related; 0 on inspection tasks. 3 M4 stops hit the 2,048 task budget, not the 1,024 per-call cap. Source check: movement macros read the target's current state before writing, but not the readiness checks, and the catalogue never says so. Candidate F1 hypothesis (descriptions + clarification route) recorded, **not designed or run** | [F1 doc](docs/F1_STEP0_LENGTH_STOPS_2026-11-20.md), [script](tools/f1/length_stops.py) |
 | Lab container check (read-only) | Two running containers: ours, `marvel-g1-extension-20261119`, and another project's, `rosa-exam-main`. Both use host networking, ROS domains 0 vs 220, and no GPU attachment. **Two host Ollama servers share the one GPU** (ours v0.40.6 :11439, theirs v0.40.16 :11435) with no coordination. No ROS 2 or Gazebo process runs anywhere; Phoenix :6006 is ours alone. Root disk 98% full. **Completed runs:** G1 used mock worlds + Ollama only (no ROS/Gazebo, confirmed from code). Qwen ran before the other project started. The multi-model runs overlapped it, but 393 telemetry samples show no foreign GPU process, so correctness has no plausible exposure; timing interference is not proven absent. The ROS cross-talk test did not run (`ros2` not on PATH); can't tell | [check](docs/LAB_CONTAINER_CHECK_2026-11-20.md), [raw output](artifacts/lab-container-check-20261120/lab_check_20261120.txt) |
-| Repository completeness and freeze | **Selection decided 2026-11-20 (owner delegated the choice).** Of 10,666 untracked files (1.16 GB): **commit about 7,935 (216 MB)**, i.e. everything current conclusions and reruns depend on (reports, protocols, code, configs, per-trial results and scores, analyses, review intakes, one canonical evidence archive per study). **Out-of-git backup with a SHA-256 list:** raw span trace dumps (732 MB), duplicate delivery packages, the repo git bundle, the G1 exact-inputs tarball, pre-update snapshots and the teammate repo snapshot. **Local only:** the private chat handoff and scratch. Lab vs laptop hashes for G1 `revision-1`: 4,901/4,905 match (4 lab logs grew after copy-back). Committed 2026-11-20 as `7260cb8` (evidence) and `fe623b7` (docs), plus `rosa-research` `8713f9b`. **Martin decided the freeze manifest, tag and out-of-git backup will be done by Levinson**, as the single person running the next trials; Martin did not create them | commit `7260cb8` message lists every exclusion |
+| Repository completeness and freeze | **Selection decided 2026-11-20 (owner delegated the choice).** Of 10,666 untracked files (1.16 GB): **commit about 7,935 (216 MB)**, i.e. everything current conclusions and reruns depend on (reports, protocols, code, configs, per-trial results and scores, analyses, review intakes, one canonical evidence archive per study). **Out-of-git backup with a SHA-256 list:** raw span trace dumps (732 MB), duplicate delivery packages, the repo git bundle, the G1 exact-inputs tarball, pre-update snapshots and the teammate repo snapshot. **Local only:** the private chat handoff and scratch. Lab vs laptop hashes for G1 `revision-1`: 4,901/4,905 match (4 lab logs grew after copy-back). Committed 2026-11-20 as `7260cb8` (evidence) and `fe623b7` (docs), plus `rosa-research` `8713f9b`. **Freeze done by Martin on 2026-11-21:** annotated tag `freeze-2026-11-21`, manifest `FREEZE_MANIFEST_2026-11-21.json` (10,735 tracked files under `artifacts/`, `docs/`, `tools/` and root reports; living documents excluded), and an out-of-git backup archive plus a git bundle, each with a SHA-256 list. ~~Martin decided the freeze manifest, tag and out-of-git backup will be done by Levinson, as the single person running the next trials; Martin did not create them~~ (superseded 2026-11-21: Martin did the freeze himself) | [FREEZE.md](FREEZE.md); commit `7260cb8` message lists every exclusion |
 
-**Dead-link flag:** `docs/CLAUDE_QWEN_ROADMAP_LIVE.md` and
-`docs/QWEN_SERVING_PHASE1_REPORT_2026-11-13.md` exist locally but are **untracked**. Links to
-them below, and in the historical sections, resolve on this laptop only and are broken on
-GitHub. They have not been committed, pending the owner's decision.
+~~**Dead-link flag:** `docs/CLAUDE_QWEN_ROADMAP_LIVE.md` and
+`docs/QWEN_SERVING_PHASE1_REPORT_2026-11-13.md` exist locally but are **untracked**.~~
+Resolved: both were committed in `7260cb8` (2026-11-20), so the links now work on GitHub.
 
 All five G1 backends are now adjudicated. Key-based SSH from the laptop to the lab was set
 up 2026-11-20 with owner approval. No further action is currently authorized. F1 candidate
