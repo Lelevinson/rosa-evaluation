@@ -1,9 +1,16 @@
 # Improved ROSA — living progress report and master project record
 
-Updated: **2026-11-20**. Maintained project context, decision history and evidence map.
+Updated: **2026-11-21**. Maintained project context, decision history and evidence map.
 
-
-
+> **Where to start (2026-11-21).** The current state is the dated entries at the top of
+> [section 2](#2-current-verified-status), newest first. **All studies are closed and the project is
+> frozen** at tag `freeze-2026-11-21` (see [FREEZE.md](FREEZE.md)). New work is on branch
+> `member/martin-f1` (F1 Stage 0, design only). The bold-titled blocks between here and the
+> presentation briefing are a **chronological checkpoint archive** (2026-11-17 to 11-20). Words
+> such as "current", "latest", "pending" or "running" in them describe that moment, not today.
+> **Git status 2026-11-21:** `member/martin` on GitHub is at `988cfd8`, pushed by Martin on 11-20.
+> Everything after it is local: the freeze commit `0cd6748`, the tag `freeze-2026-11-21`, the later
+> `member/martin` documentation commits and branch `member/martin-f1`. Pushing them awaits Martin.
 
 **Publication - 2026-11-20.** The owner explicitly approved the full public 22-commit
 payload; evaluation `member/martin` was pushed to **8f961b5**, verified on GitHub, with
@@ -16,7 +23,8 @@ over the other. The lab GPU is shared with another project; recheck and coordina
 before any future model load, and never stop the other project's work.
 Historical checkpoints below preserve earlier status; the newest dated blocks
 and final reports take precedence. In particular, the old Stage3-blocked wording
-is superseded: Sol and the three-model extension are closed; Qwen BatchB is pending.
+is superseded: Sol and the three-model extension are closed; ~~Qwen BatchB is pending~~
+(superseded: Qwen Batch B was closed and adjudicated on 2026-11-20).
 
 **Current closeout - 2026-11-20: extension T6 COMPLETE.** Levinson’s 12 actual
 ratings are bound after Martin forwarded the completed declaration (review date
@@ -607,7 +615,7 @@ Costs above include all40 attempts, including failures and ambiguity. Task laten
 
 The profile and explicit HTTP setting changed together, so their individual effects are not isolated. Primitive/macro mode and its original condition sentence remain coupled; a selection effect cannot be separated from condition wording. Four repetitions of familiar cases do not demonstrate independent generalization or intrinsic model parity. Older Qwen/Ministral serving profiles differ; no new Sol trial was run and no historical hosted comparison was replaced. No global default backend switch, new architecture or further study was authorized by completion of this replication. G1's existing scorer, instrumentation and real human-review gates remain unchanged.
 
-Current evidence: [complete integration-rerun report](artifacts/integration-rerun-20261117-r1/evidence/INTEGRATION_RERUN_COMPLETE_REPORT_2026-11-17.md), [independent raw-data analysis](artifacts/integration-rerun-20261117-r1/evidence/INDEPENDENT_RERUN_ANALYSIS.json), [shareable report and evidence ZIP](artifacts/integration-rerun-20261117-r1/delivery/ROSA_NATIVE_SCHEMA_RERUN_REPORT_AND_EVIDENCE_2026-11-17.zip). The original Qwen lab repeat and first four-model lab study below are preserved reference configurations. Current documentation and evidence are backed up under the owner's lab project; no public upload or Git push was performed.
+Current evidence: [complete integration-rerun report](artifacts/integration-rerun-20261117-r1/evidence/INTEGRATION_RERUN_COMPLETE_REPORT_2026-11-17.md), [independent raw-data analysis](artifacts/integration-rerun-20261117-r1/evidence/INDEPENDENT_RERUN_ANALYSIS.json), [shareable report and evidence ZIP](artifacts/integration-rerun-20261117-r1/delivery/ROSA_NATIVE_SCHEMA_RERUN_REPORT_AND_EVIDENCE_2026-11-17.zip) (kept out of git as a duplicate package; in the off-repo backup). The original Qwen lab repeat and first four-model lab study below are preserved reference configurations. Current documentation and evidence are backed up under the owner's lab project; no public upload or Git push was performed.
 
 **Latest completed investigation - Llama/Granite integration, 2026-11-17.**
 A separate, simulator-free investigation completed **48/48 local requests** (2 Qwen controls, 23 Llama, 23 Granite), with **zero actual tool/robot executions**. Old model digests and all69 frozen source/config hashes matched. No original trial, source, schema acceptance or model installation was changed. The corrected interpretation is that the earlier zero full-task scores describe those tested integrations, not inherent lack of model capability.
@@ -1131,12 +1139,43 @@ method; it is not the project's identity. Episodic memory is optional future wor
 Physical hardware and coordinated dual-arm manipulation are not current completion
 requirements.
 
-The [recorded project vision](../rosa-research/PROJECT_VISION.md) preserves the
+The [recorded project vision](https://github.com/Lelevinson/rosa-research/blob/8713f9b205033a25f8ed8d9549610e9ad0b8bfde/PROJECT_VISION.md) preserves the
 user's earlier clarification. Its immediate experiment suggestions describe that
 historical point; the M1–M5 priorities below reflect subsequent decisions.
 
 ## 2. Current verified status
-### 2026-11-21 — project frozen (read this first)
+### 2026-11-21 — master README audited and repaired
+
+At Martin's request, this record was checked for completeness, since it is the main reference for the
+final report.
+- **Formatting defect fixed.** On 2026-11-17 the file was rewritten with `\r\r\n` line endings, and
+  the later cleanup turned each one into an extra blank line. About 700 sentences were split
+  mid-line and **26 tables did not render**. 1,768 inserted blank lines were removed, using the
+  pre-cleanup backup as a map; the repair changed no non-blank line. Result: 0 broken tables.
+- **Stale statements corrected:** the push status, "Qwen Batch B pending" (now closed), the §15
+  handoff and the G1 roadmap line. The old wording stays visible, struck through or marked superseded.
+  A "where to start" note at the top labels the old bold checkpoint blocks as a chronological
+  archive. A note above the generated M4/M5 block marks it as a 2026-11-05 snapshot.
+- **Integrated the 11-17 to 11-21 findings into the reference sections:**
+  - §12 limitations 20–25: no stock-ROSA baseline, lenient clarification scorer, contextual lab
+    timing, self-attested reviewer, Granite/Llama as integration failures, length stops as selection
+    failures;
+  - §14 evidence rows for every 11-19 to 11-21 report;
+  - §17 decision-log rows for 11-17 to 11-21.
+
+### 2026-11-21 — F1 Stage 0 designed on branch `member/martin-f1` (no model calls)
+
+F1 tests whether honest catalogue wording (W1: movement skills' routines read the current target
+coordinates, write at most once and verify; no readiness checks) plus a stated clarification route (W2:
+a plain-text question, no tool) fix Qwen's selection failures. The comparison is macro only: Qwen and Sol,
+each with base and new wording. The cases are 30 fresh AI-authored held-out cases plus the G1 dev cases. Study (on branch `member/martin-f1`):
+`artifacts/f1-catalogue-wording-20261121/STAGE0_STATUS.md`;
+code: `tools/f1_wording/`. The static wrapper check passes, and the leakage check is 30/30 OK. **The
+zero-model scripted controls have not run, because the lab was unreachable on 2026-11-21.** Thresholds
+await Martin. Stage 1 (any inference) is not authorized. Caution from the frozen G1 data: only 1 of Qwen's
+6 G1 macro failures was inspection-first.
+
+### 2026-11-21 — project frozen
 
 **Martin froze the project himself on 2026-11-21.** This supersedes the 2026-11-20 note that
 Levinson would do it. It was done before any new study, with no model calls and no trials. All
@@ -1153,8 +1192,9 @@ push of the freeze commit and tag awaits Martin. A designed-but-unstarted F1 Sta
 
 No model requests and no new trials. Lab work today was read-only checks plus one
 zero-inference formal analysis (the Qwen closeout). Git: `37a7e19` (review, F1 and M4/M5
-corrections) was pushed to `member/martin` with owner approval. `8a85af0` (Qwen closeout) and the
-later docs are local until approved.
+corrections) was pushed to `member/martin` with owner approval. ~~`8a85af0` (Qwen closeout) and the
+later docs are local until approved.~~ (Superseded the same day: Martin pushed `member/martin` to
+`988cfd8` and `rosa-research` `member/martin` to `8713f9b`; both verified against GitHub.)
 
 | Item | State | Record |
 |---|---|---|
@@ -1287,6 +1327,10 @@ credential records and does not modify experimental inputs or trial results.
 The figures are a snapshot, not a continuously refreshed dashboard. Refresh before
 sharing this document or making a new claim about an active run.
 
+> **Note 2026-11-21:** the generated block below is the **M4/M5 snapshot of 2026-11-05**. Its "Current
+> milestone" and "Next actions" rows are historical. Current next actions are in the dated 2026-11-21
+> entries at the top of this section and in §15.
+
 <!-- PROJECT_STATUS_START -->
 Last refreshed: **2026-11-05 15:39:42**. Saved-checkpoint snapshot.
 ### Current work and next actions
@@ -1373,7 +1417,7 @@ the completed paired comparison, all failures, review decisions and next steps.
   and98.99 for Qwen, including presentation overhead, not a new speed benchmark.
   Waiting is labeled8x; the camera-motion segment is1x. No desktop capture.
 - [Installation acceptance](artifacts/macro-m5-20261027/package/acceptance.json)
-  and [module delivery guide](../rosa-research/docs/M5_MODULE_DELIVERY_README_2026-10-27.md):
+  and [module delivery guide](https://github.com/Lelevinson/rosa-research/blob/8713f9b205033a25f8ed8d9549610e9ad0b8bfde/docs/M5_MODULE_DELIVERY_README_2026-10-27.md):
   offline wheel build, empty target, both public capabilities, installed CLI help,
   no experiment imports. Existing dependencies/ROS retained; not a fresh-OS test.
 - [Backup scan](artifacts/macro-m5-20261027/credential-scan.json),
@@ -1739,7 +1783,7 @@ updates is not itself proof the worker stopped; inspect checkpoints/process iden
 
 Never put credentials, protected records, authorization codes, hinted authorize
 URLs or transport-only private continuation material into logs, Phoenix, reports,
-Git or archives. See the [specific repair/validation record](../rosa-research/docs/REMEMBERED_AUTH_ROTATION_VALIDATION_2026-10-27.md).
+Git or archives. See the [specific repair/validation record](https://github.com/Lelevinson/rosa-research/blob/8713f9b205033a25f8ed8d9549610e9ad0b8bfde/docs/REMEMBERED_AUTH_ROTATION_VALIDATION_2026-10-27.md).
 
 ## 8. Experimental vocabulary and fair attribution
 
@@ -1790,7 +1834,7 @@ and its failures remain frozen. See the [baseline examination](artifacts/histori
 
 ### 9.2 Original JTVR concept and actual policy comparison
 
-The [original specification](../JTVR_Final_Technical_Specification_ID%281%29.md)
+The [original specification](../JTVR_Final_Technical_Specification_ID%281%29.md) (a local workspace file, not in any repository)
 proposed joint deduplicated task/verification evidence obligations, conservative
 validity/invalidation, cost-aware bounded prefix-plus-residual acquisition selection,
 and guarded read-only continuations that can avoid additional inference. The strong
@@ -2094,7 +2138,7 @@ date is not an instruction to suspend current work until that date.
 ### Current separate G1 roadmap
 
 G1 numbering is distinct from M1–M5, the historical six stages and the completed
-Qwen serving Phase 0/1. Its current state is completed Sol and three-model extension analysis, with the separate Qwen Batch B review still pending. Read the newest top-of-file status and dated handoff first. The initial stopped Stage 0 design and the revision-1 design are
+Qwen serving Phase 0/1. Its current state is completed Sol and three-model extension analysis, ~~with the separate Qwen Batch B review still pending~~ and, since 2026-11-20, the adjudicated Qwen closeout. **G1 is closed for all five backends** and frozen at `freeze-2026-11-21`. Read the newest top-of-file status and dated handoff first. The initial stopped Stage 0 design and the revision-1 design are
 separate retained records; do not combine their counts or interpret old pending
 authorship notes as the latest decision.
 
@@ -2292,6 +2336,32 @@ time/request limits or rerun failures until they pass.
 19. Four scorer provenance bypasses in adversarial tests required forged trusted
     internal records. They are defense-in-depth findings, not demonstrated current
     model-accessible exploits. Reassess if the trust boundary changes.
+20. **No stock-ROSA baseline** (added 2026-11-21). Every comparison is primitives vs bounded macro
+    *inside* the modified ROSA. Nearby work (MetaTool/ROS, ROSClaw) compares against unmodified ROSA;
+    this project cannot claim an improvement over original ROSA without new runs
+    ([novelty review](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md)). The mechanism itself (meta-tools,
+    fixed skills, program-run routines) is well covered in the literature; only a narrow evaluation
+    niche is new.
+21. **Clarification scoring is lenient** (added 2026-11-21). The G1 regex
+    (`\?|clarif|which|whether|would you|specif`) passes any text containing those words. Qwen's G1 033
+    "clarification" was deliberation text that passed this way, and the human reviewer failed a
+    comparable case (H04). Ambiguous-case results are only as good as their human rating.
+22. **Lab timing is contextual, not controlled** (added 2026-11-21). Two Ollama servers (ours `:11439`,
+    rosa-exam's `:11435`) share one GPU. The three-model extension overlapped the other project's
+    uptime; 393 telemetry samples show no foreign GPU process, but brief use between 10-second samples
+    can't be excluded ([lab check](docs/LAB_CONTAINER_CHECK_2026-11-20.md)). Correctness is unaffected
+    (mock worlds, temperature 0).
+23. **Reviewer eligibility is self-attested** (added 2026-11-21). Levinson is a teammate. His
+    declarations are retained and the relationship is disclosed, but they are not external
+    validation.
+24. **Granite and Llama results measure tool-call integration, not task reasoning** (added
+    2026-11-21). Their near-zero G1 scores are dominated by tool-call format failures. Don't read
+    them as model capability rankings.
+25. **Qwen's length stops are selection failures** (added 2026-11-21). All 12 (8 class A, 4 class C)
+    were on movement-type requests; none were on inspection tasks
+    ([F1 step 0](docs/F1_STEP0_LENGTH_STOPS_2026-11-20.md)). A larger output allowance is not
+    indicated. The F1 wording fix is designed but **untested**. In the G1 macro arm only 1 of Qwen's
+    6 known-goal failures was inspection-first, so expect a modest effect at most.
 
 Do not address each individual Qwen mistake by inventing a new architecture. A
 concrete engineering defect may warrant a separately tested repair; an unfavorable
@@ -2357,8 +2427,17 @@ An archive's SHA256 sidecar establishes byte identity, not scientific validity.
 
 | Subject | Main readable record |
 |---|---|
+| **Freeze 2026-11-21** | [FREEZE.md](FREEZE.md), [manifest](FREEZE_MANIFEST_2026-11-21.json), [verifier](tools/freeze/verify_freeze.py); out-of-git backup (archive + git bundle + SHA-256 lists) kept off-repo by Martin |
+| **F1 Stage 0 (catalogue wording), design only** | status (`artifacts/f1-catalogue-wording-20261121/STAGE0_STATUS.md`, branch `member/martin-f1`), protocol (`artifacts/f1-catalogue-wording-20261121/PROTOCOL.md`, branch `member/martin-f1`), wording diff (`artifacts/f1-catalogue-wording-20261121/WORDING_DIFF.md`, branch `member/martin-f1`), cases + leakage (`artifacts/f1-catalogue-wording-20261121/cases/README.md`, branch `member/martin-f1`), lab plan (`artifacts/f1-catalogue-wording-20261121/LAB_PLAN_STAGE1.md`, branch `member/martin-f1`); branch `member/martin-f1` |
+| **G1 Qwen (closed 2026-11-20)** | [Adjudicated report](G1_QWEN_ADJUDICATED_REPORT_2026-11-20.md), [lab execution report](G1_QWEN_LAB_REPORT_2026-11-19.md) |
+| **G1 three-model extension (closed 2026-11-20)** | [Adjudicated report](G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md), [execution report](G1_MULTIMODEL_REPORT_2026-11-19.md) |
+| **G1 Sol (closed 2026-11-19)** | [Adjudicated report](G1_SOL_ADJUDICATED_REPORT_2026-11-19.md), [held-out report](G1_SOL_HELDOUT_REPORT_2026-11-19.md) |
+| **Prediction labels across G1 revisions** | [Label map](docs/PREDICTION_LABEL_MAP_2026-11-20.md): Stage 0 / revision 1 / P1′–P6 |
+| **Novelty and related work** | [Review](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md) |
+| **Qwen length stops (F1 step 0)** | [Classification and source check](docs/F1_STEP0_LENGTH_STOPS_2026-11-20.md), [script](tools/f1/length_stops.py) |
+| **Lab container / interference check** | [Check](docs/LAB_CONTAINER_CHECK_2026-11-20.md), [raw output](artifacts/lab-container-check-20261120/lab_check_20261120.txt) |
 | Team-context review | [Review, scope and compatibility](docs/team-context-review-20261116/ROSA_CONTEXTS_REVIEW_2026-11-16.md), [snapshot hashes](docs/team-context-review-20261116/SNAPSHOT_VERIFICATION.json), [offline arithmetic checks](docs/team-context-review-20261116/READ_ONLY_CHECKS.json) |
-| Current G1 gates and decisions | [November 15 Stage 3 status](artifacts/macro-generalization-20261113/revision-1/stage-3/LATEST_STAGE3_STATUS_2026-11-15.md), [source-unchanged disposition](artifacts/macro-generalization-20261113/revision-1/stage-3/owner-decisions-20261115/INSTRUMENTATION_DECISION.md) |
+| G1 gates and decisions (historical, Nov 15) | [November 15 Stage 3 status](artifacts/macro-generalization-20261113/revision-1/stage-3/LATEST_STAGE3_STATUS_2026-11-15.md), [source-unchanged disposition](artifacts/macro-generalization-20261113/revision-1/stage-3/owner-decisions-20261115/INSTRUMENTATION_DECISION.md) |
 | G1 separate-model scorer review | [Astra report](artifacts/macro-generalization-20261113/revision-1/stage-3/scorer-review/astra-review-20261115/REVIEW_REPORT.md), [case results](artifacts/macro-generalization-20261113/revision-1/stage-3/scorer-review/astra-review-20261115/review-summary.json), [verification](artifacts/macro-generalization-20261113/revision-1/stage-3/owner-decisions-20261115/review-verification.json) |
 | G1 prospective endpoints | [Owner-confirmed P1′–P6 amendment](artifacts/macro-generalization-20261113/revision-1/stage-3/predictions-amendment-20261114/PREDICTIONS_AMENDMENT_2026-11-14.md) |
 | G1 development results | [Stage 2 results and problems](artifacts/macro-generalization-20261113/revision-1/STAGE2_RESULTS_AND_PROBLEMS_2026-11-14.md), [audit addendum](artifacts/macro-generalization-20261113/revision-1/stage-3/STAGE2_AUDIT_ADDENDUM.md) |
@@ -2378,8 +2457,8 @@ An archive's SHA256 sidecar establishes byte identity, not scientific validity.
 | Accepted M1–M5 plan | [Decision/roadmap received](artifacts/macro-module-v1-20261027/ROADMAP_RECEIVED.md) |
 | M1 | [Acceptance report](artifacts/macro-module-v1-20261027/M1_ACCEPTANCE_REPORT.md) |
 | M2/M3 | [Current combined report](docs/M2_M3_COMBINED_REPORT_2026-10-27.md) |
-| Public module | [v0.2 README](../rosa-research/docs/MACRO_CAPABILITIES_V2_README.md), [specification](../rosa-research/docs/MACRO_CAPABILITIES_V2_SPEC.md) |
-| OAuth repair | [Live renewal validation](../rosa-research/docs/REMEMBERED_AUTH_ROTATION_VALIDATION_2026-10-27.md) |
+| Public module | [v0.2 README](https://github.com/Lelevinson/rosa-research/blob/8713f9b205033a25f8ed8d9549610e9ad0b8bfde/docs/MACRO_CAPABILITIES_V2_README.md), [specification](https://github.com/Lelevinson/rosa-research/blob/8713f9b205033a25f8ed8d9549610e9ad0b8bfde/docs/MACRO_CAPABILITIES_V2_SPEC.md) |
+| OAuth repair | [Live renewal validation](https://github.com/Lelevinson/rosa-research/blob/8713f9b205033a25f8ed8d9549610e9ad0b8bfde/docs/REMEMBERED_AUTH_ROTATION_VALIDATION_2026-10-27.md) |
 | Completed M4 | [Final report](artifacts/macro-m4-20261027/FINAL_REPORT_FOR_CHATGPT.md), [timing](docs/M4_EFFICIENCY_AND_TIMING_2026-10-27.md), [protocol](docs/M4_MACRO_PROTOCOL_2026-10-27.md), [status entry](MILESTONE_M4_STATUS.md), [freeze](artifacts/macro-m4-20261027/freeze.json) |
 
 Major archives, each with a corresponding `.sha256` sidecar:
@@ -2438,11 +2517,19 @@ Consult its verification file before claiming final-package integrity.
 
 ## 15. Operational handoff
 
-**Current handoff (2026-11-20):** start from the dated entry at the top of section 2.
+**Current handoff (2026-11-21):** start from the dated entries at the top of section 2. All
+studies are closed; the project is frozen at tag `freeze-2026-11-21`. Run
+`python -I -B tools/freeze/verify_freeze.py` (it must PASS) before and after any new work. New work goes
+only on a new branch and into new directories ([FREEZE.md](FREEZE.md)). Open work: F1 Stage 0 on
+`member/martin-f1`. Its zero-model scripted controls are still to be run on the lab
+(plan (`artifacts/f1-catalogue-wording-20261121/LAB_PLAN_STAGE1.md`, branch `member/martin-f1`)); F1 Stage 1 inference is not
+authorized. The paragraph below is the 2026-11-20 handoff, kept for history.
+
+**Handoff (2026-11-20):** start from the dated entry at the top of section 2.
 Lab-access details are in a private local handoff, not in this repository. G1 Stage3 was subsequently resolved through documented owner decisions, review,
 freeze and launch acknowledgments. Sol held-out and the three-model extension
 are now closed; Qwen execution is complete but its separate BatchB four-response
-human review is pending. No new backend/study launch is authorized by this note.
+human review is pending (superseded: closed and adjudicated on 2026-11-20). No new backend/study launch is authorized by this note.
 The latest evaluation commit was explicitly approved and pushed to member/martin;
 main was unchanged. Old M4/G1 launch commands below are historical references,
 not instructions to rerun completed directories. All future tests and formal
@@ -2489,7 +2576,7 @@ cd /mnt/c/Proj/robotics/introtorobotics/rosa-evaluation
 ```
 
 For later module development, source ROS2 Jazzy and use the existing research
-environment. The public [capability README](../rosa-research/docs/MACRO_CAPABILITIES_V2_README.md)
+environment. The public [capability README](https://github.com/Lelevinson/rosa-research/blob/8713f9b205033a25f8ed8d9549610e9ad0b8bfde/docs/MACRO_CAPABILITIES_V2_README.md)
 contains demo commands; **do not run those simulators concurrently with M4**.
 Phoenix's local UI is http://127.0.0.1:6006. Use existing wrappers for its separate
 environment. Do not casually uv-sync/update a frozen environment during a campaign.
@@ -2593,6 +2680,15 @@ assistant continuously edits files while no assistant task or refresh process ru
 | Separate GPT-6 Astra scorer review completed | 41 new cases; six reachable clarification errors prevent G-e clearance. No source repair, live rescoring or human-review substitution. |
 | Sharing checkpoint 2026-11-16 | Master now includes G1 development costs, current failed/blocked gates and prospective endpoints. Historical generated M4/M5 snapshot remains labeled; no new run, commit or upload. |
 | Team-context review closed 2026-11-17 | `rosa-contexts` is a curated coordination mirror. Member-reported results and snapshot provenance checked within documented scope; no runtime integration, local governance replacement, publication or new experiment. G1 blockers unchanged. |
+| Research standards adopted 2026-11-17 | Levinson's research rules govern new work: five-question preflight, evidence labels, fair controls ([adopted rules](docs/research-governance-20261117/ADOPTED_RESEARCH_RULES.md)). Not retroactive. |
+| Execution host policy 2026-11-19 | All trials, tests and formal analysis run on the lab over SSH; laptop work is limited to inspection and documentation. A report is written after every run. |
+| G1 Sol held-out closed 2026-11-19 | 73 PASS, 3 censored; P1′ Support, P2 Uninformative, P5 Support. |
+| G1 Qwen closed 2026-11-20 (zero-inference closeout on the lab) | All tasks P→M 26/38→31/38; known-goal 26/36→30/36. P2 Against, P1′ Uninformative, P5 Support; H-write not tested on Qwen. |
+| G1 three-model extension closed 2026-11-20 | Ministral known-goal 28/36→33/36; Granite/Llama near zero (tool-call integration). H-write Uninformative for all. Exploratory only. |
+| Commit selection 2026-11-20 (owner delegated) | 7,931 evidence/code files committed (`7260cb8`); 2,727 raw traces/duplicates kept out of git in a hashed backup; private handoff local only. Pushed by Martin (`988cfd8`). |
+| Freeze ~~handed to Levinson (2026-11-20)~~ → done by Martin 2026-11-21 | Tag `freeze-2026-11-21` on `0cd6748`; manifest of 10,735 files; `verify_freeze.py` must PASS on every new branch. New work only on new branches and in new directories. |
+| F1 Stage 0 designed 2026-11-21 | Branch `member/martin-f1`; code in `tools/f1_wording/`, because `tools/f1/` is frozen. W2 is prompt-only (`submit_report` has no clarification status). Scripted controls are pending the lab; thresholds await Martin; Stage 1 not authorized. |
+| Master README formatting repaired 2026-11-21 | A 2026-11-17 rewrite produced `\r\r\n` line endings; the later line-ending cleanup turned each into an extra blank line, splitting about 700 sentences and breaking 26 tables. 1,768 inserted blank lines were removed using the pre-cleanup backup as a map; every non-blank line is byte-identical. |
 
 For a new assistant: read this document, refresh/inspect actual current state,
 then follow the user's requested task. Do not claim the project is finished,
