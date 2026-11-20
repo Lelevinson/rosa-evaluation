@@ -337,46 +337,14 @@ details are deliberately not recorded here. Verified 2026-11-20 unless marked ot
 | Verify frozen G1 inputs (zero inference) | In the mirror's `stage-4-multimodel-20261119`: `python3 -B -c "import runpy;assert runpy.run_path('operator/run_sequence.py')['verify']()"`. Never run `run_sequence.py --execute`, `launch.py` or completed analysis drivers as checks |
 | Disk | Root `/` is 98% full; write outputs under `/media/naeem/d1` (386 GB free) |
 
-> **Note 2026-11-21:** the generated block below is the **M4/M5 snapshot of 2026-11-05**. Its "Current
-> milestone" and "Next actions" rows are historical. Current next actions are in the dated 2026-11-21
-> entries at the top of this section and in §15.
+### M4/M5 generated status block — retired 2026-11-21
 
-<!-- PROJECT_STATUS_START -->
-Last refreshed: **2026-11-05 15:39:42**. Saved-checkpoint snapshot.
-### Current work and next actions
-| Progress item | Current evidence / action |
-|---|---|
-| Current milestone | M5: TECHNICAL_DELIVERY_COMPLETE_EVALUATION_LOCAL_BY_USER_CHOICE. M5 technical delivery complete. Post-closeout discussion assessed using exact existing traces and retrospective label scenarios; M6 remains proposed, not authorized. Local backups are verified through their pinned revisions; evaluation off-machine protection remains deferred and frozen-criterion independent human adjudication was not obtained. |
-| M4 recorded execution | 80/80 trial rows; 0 cells without a recorded result, including any in-flight trial. |
-| M4 operator clarification review | 8/8 valid operator reviews recorded; 0 still required. This is not independent human adjudication. |
-| Current decision | Retain bounded module as optional engineering capability; Sol positive, Qwen failed reliability-preserving retention. No unqualified cross-model recommendation. |
-| Next actions | Use the delivered report, claim ledger, video and installation guide. Retain local backups; off-machine evaluation backup and frozen-criterion independent human adjudication remain unfulfilled and unscheduled. Use concise explicit wording for future known-goal tasks. No new studies, runtime changes or GitHub uploads are scheduled. |
-| Open gates / blockers | M5.1_backup: LOCAL_RESTORE_VERIFIED: research b13df0f and evaluation b5e94bf; shallow boundaries preserved. Research b13df0f separately verified remotely. Evaluation off-machine backup deferred by user.; M5.2_existing_evidence: TRACE_REVIEW_COMPLETE; STAKEHOLDER_FEEDBACK_CLOSED_8_RATINGS; FROZEN_CRITERION_INDEPENDENT_HUMAN_ADJUDICATION_NOT_OBTAINED; FROZEN_SCORES_UNCHANGED; M5.3_research_consolidation: COMPLETE: family table, paired outcomes, both cost views, exploratory family-aware uncertainty,10-page report and1-page ledger.; M5.4_deliverables: COMPLETE_LOCAL: validated wheel, two-backend Gazebo video,10-page report,1-page ledger,898-file verified delivery ZIP.. Eight ratings submitted by martin on2026-10-29 (four pass, four fail). Outcome-oriented owner preference clarified2026-10-30; stakeholder review closed. Frozen-criterion independent human adjudication was not obtained. Prior aggregate-result exposure is disclosed. |
-| Backend | Saved status | Recorded / scheduled | Local + Phoenix audited | Reserved requests / cap |
-|---|---|---:|---:|---:|
-| Sol | COMPLETE | 40/40 | 40 | 106 / 323 |
-| Qwen | COMPLETE | 40/40 | 40 | 144 / 323 |
-M5 separately used **4 presentation inference requests** and **0 new research trials**. Human-review status: Eight ratings submitted by martin on2026-10-29 (four pass, four fail). Outcome-oriented owner preference clarified2026-10-30; stakeholder review closed. Frozen-criterion independent human adjudication was not obtained. Prior aggregate-result exposure is disclosed. The [eight-case packet](artifacts/macro-m5-20261027/ROSA_M5_HUMAN_REVIEW_PACKET.zip) is retained. The eight operator ratings above do not count as human review.
-Recorded rows can include a row awaiting its audit. Reserved requests can include
-an in-flight or failed request; they are not generated-token totals. Unfinished
-cells are not assumed to pass. These counts do not establish process liveness.
-- **Sol:** clarification reviews passed 4/4; failed 0; recorded answers pending/invalid review 0. Answers for unrecorded cells remain unreviewed.
-- **Qwen:** clarification reviews passed 0/4; failed 4; recorded answers pending/invalid review 0. Answers for unrecorded cells remain unreviewed.
-| Backend / condition | Audited automatic passes / recorded | Recorded requests | Native operations |
-|---|---:|---:|---:|
-| Sol / primitives | 20/20 | 68 | 38 |
-| Sol / macro | 20/20 | 38 | 40 |
-| Qwen / primitives | 15/20 | 91 | 50 |
-| Qwen / macro | 14/20 | 53 | 48 |
-Supervisor's saved phase: `EXECUTION_FINISHED_REVIEW_REQUIRED`. Frozen source check: 62 files; 0 mismatches.
-The automatic primary-pass count is separate from required clarification review.
-A final M4 decision also requires the frozen paired analysis and limits/audit checks.
-Refresh with `python -m tools.project_context --refresh`; narrative sections still
-need review when the study or roadmap changes.
-The supervisor phase above is its preserved pre-review checkpoint. Final closure
-is recorded in `closeout.json` and the [final M4 report](artifacts/macro-m4-20261027/FINAL_REPORT_FOR_CHATGPT.md).
-Completed review includes four failed Qwen clarification cases; eight reviews does not mean eight passes.
-<!-- PROJECT_STATUS_END -->
+The auto-generated M4/M5 status block (last refreshed 2026-11-05) is **retired**. For results, use
+[Results at a glance](#results-at-a-glance-all-studies): the M4 rows give the final figures, and
+[Confirmed closed checkpoints](#confirmed-closed-checkpoints) below gives the milestone results. The block is kept
+unchanged in [Appendix C](#appendix-c--historical-section-2-checkpoints) (C.3). Its markers were renamed, so
+`python -m tools.project_context --refresh` now stops with an error before writing anything. It can no
+longer overwrite this file, `PROJECT_LIVE_STATUS.json` or the frozen M4 timing report.
 
 ### Confirmed closed checkpoints
 
@@ -1578,7 +1546,8 @@ still protects the current campaign.
 ### Environment access, not system reinstallation
 
 The original setup-robotics.ps1 installs system prerequisites. It is not an
-activation script to rerun every time. In WSL, for read-only documentation refresh:
+activation script to rerun every time. In WSL, for read-only documentation refresh (**retired 2026-11-21**:
+the command below now stops with an error by design; see the retired-block note in section 2):
 
 ```bash
 cd /mnt/c/Proj/robotics/introtorobotics/rosa-evaluation
@@ -2819,3 +2788,50 @@ That block is refreshed from existing files by
 credential records and does not modify experimental inputs or trial results.
 The figures are a snapshot, not a continuously refreshed dashboard. Refresh before
 sharing this document or making a new claim about an active run.
+
+### C.3 Retired generated M4/M5 status block (last refreshed 2026-11-05)
+
+> Retired 2026-11-21 and moved here unchanged, apart from the renamed markers, which disable
+> `tools.project_context --refresh`. Figures are the 2026-11-05 snapshot; use
+> [Results at a glance](#results-at-a-glance-all-studies) instead.
+
+> **Note 2026-11-21:** the generated block below is the **M4/M5 snapshot of 2026-11-05**. Its "Current
+> milestone" and "Next actions" rows are historical. Current next actions are in the dated 2026-11-21
+> entries at the top of this section and in §15.
+
+<!-- PROJECT_STATUS_START: RETIRED 2026-11-21, do not refresh -->
+Last refreshed: **2026-11-05 15:39:42**. Saved-checkpoint snapshot.
+### Current work and next actions
+| Progress item | Current evidence / action |
+|---|---|
+| Current milestone | M5: TECHNICAL_DELIVERY_COMPLETE_EVALUATION_LOCAL_BY_USER_CHOICE. M5 technical delivery complete. Post-closeout discussion assessed using exact existing traces and retrospective label scenarios; M6 remains proposed, not authorized. Local backups are verified through their pinned revisions; evaluation off-machine protection remains deferred and frozen-criterion independent human adjudication was not obtained. |
+| M4 recorded execution | 80/80 trial rows; 0 cells without a recorded result, including any in-flight trial. |
+| M4 operator clarification review | 8/8 valid operator reviews recorded; 0 still required. This is not independent human adjudication. |
+| Current decision | Retain bounded module as optional engineering capability; Sol positive, Qwen failed reliability-preserving retention. No unqualified cross-model recommendation. |
+| Next actions | Use the delivered report, claim ledger, video and installation guide. Retain local backups; off-machine evaluation backup and frozen-criterion independent human adjudication remain unfulfilled and unscheduled. Use concise explicit wording for future known-goal tasks. No new studies, runtime changes or GitHub uploads are scheduled. |
+| Open gates / blockers | M5.1_backup: LOCAL_RESTORE_VERIFIED: research b13df0f and evaluation b5e94bf; shallow boundaries preserved. Research b13df0f separately verified remotely. Evaluation off-machine backup deferred by user.; M5.2_existing_evidence: TRACE_REVIEW_COMPLETE; STAKEHOLDER_FEEDBACK_CLOSED_8_RATINGS; FROZEN_CRITERION_INDEPENDENT_HUMAN_ADJUDICATION_NOT_OBTAINED; FROZEN_SCORES_UNCHANGED; M5.3_research_consolidation: COMPLETE: family table, paired outcomes, both cost views, exploratory family-aware uncertainty,10-page report and1-page ledger.; M5.4_deliverables: COMPLETE_LOCAL: validated wheel, two-backend Gazebo video,10-page report,1-page ledger,898-file verified delivery ZIP.. Eight ratings submitted by martin on2026-10-29 (four pass, four fail). Outcome-oriented owner preference clarified2026-10-30; stakeholder review closed. Frozen-criterion independent human adjudication was not obtained. Prior aggregate-result exposure is disclosed. |
+| Backend | Saved status | Recorded / scheduled | Local + Phoenix audited | Reserved requests / cap |
+|---|---|---:|---:|---:|
+| Sol | COMPLETE | 40/40 | 40 | 106 / 323 |
+| Qwen | COMPLETE | 40/40 | 40 | 144 / 323 |
+M5 separately used **4 presentation inference requests** and **0 new research trials**. Human-review status: Eight ratings submitted by martin on2026-10-29 (four pass, four fail). Outcome-oriented owner preference clarified2026-10-30; stakeholder review closed. Frozen-criterion independent human adjudication was not obtained. Prior aggregate-result exposure is disclosed. The [eight-case packet](artifacts/macro-m5-20261027/ROSA_M5_HUMAN_REVIEW_PACKET.zip) is retained. The eight operator ratings above do not count as human review.
+Recorded rows can include a row awaiting its audit. Reserved requests can include
+an in-flight or failed request; they are not generated-token totals. Unfinished
+cells are not assumed to pass. These counts do not establish process liveness.
+- **Sol:** clarification reviews passed 4/4; failed 0; recorded answers pending/invalid review 0. Answers for unrecorded cells remain unreviewed.
+- **Qwen:** clarification reviews passed 0/4; failed 4; recorded answers pending/invalid review 0. Answers for unrecorded cells remain unreviewed.
+| Backend / condition | Audited automatic passes / recorded | Recorded requests | Native operations |
+|---|---:|---:|---:|
+| Sol / primitives | 20/20 | 68 | 38 |
+| Sol / macro | 20/20 | 38 | 40 |
+| Qwen / primitives | 15/20 | 91 | 50 |
+| Qwen / macro | 14/20 | 53 | 48 |
+Supervisor's saved phase: `EXECUTION_FINISHED_REVIEW_REQUIRED`. Frozen source check: 62 files; 0 mismatches.
+The automatic primary-pass count is separate from required clarification review.
+A final M4 decision also requires the frozen paired analysis and limits/audit checks.
+Refresh with `python -m tools.project_context --refresh`; narrative sections still
+need review when the study or roadmap changes.
+The supervisor phase above is its preserved pre-review checkpoint. Final closure
+is recorded in `closeout.json` and the [final M4 report](artifacts/macro-m4-20261027/FINAL_REPORT_FOR_CHATGPT.md).
+Completed review includes four failed Qwen clarification cases; eight reviews does not mean eight passes.
+<!-- PROJECT_STATUS_END: RETIRED 2026-11-21 -->
