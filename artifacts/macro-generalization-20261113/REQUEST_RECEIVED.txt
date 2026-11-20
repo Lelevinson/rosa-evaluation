@@ -1,0 +1,89 @@
+Date: 2026-11-13. Scope: a new, separate study. It does not revise M1-M5, the timing probe or Phase 1.
+Context (informational, not authorization). M4 showed that bundling cut model requests by about 42-44% on a four-skill, short-horizon, single-arm catalogue. We want to know whether that result generalizes along three axes: bundling depth, a second domain, and catalogue size. The study should be able to come out against us. Nothing beyond Stage 0 starts without the user’s confirmation.
+Ground rules
+- No edits to artifacts/macro-m4-20261027/, the M4 freeze, qwen-timing-probe-20261112/, qwen-serving-phase1-20261112/, frozen sources, or the M1-M5 and Phase 0/1 reports.
+- All outputs go in artifacts/macro-generalization-20261113/. New domain code lives there too.
+- The module is used through its public API (SkillRegistry/StateSkill/CapabilityRegistry/InspectionSkill). Do not modify src/rosa or src/rosa_reliability. If a new domain cannot be hosted without changing them, stop and report the required diff. Do not patch silently. That outcome is itself prediction P5.
+- Before any live request, write a pre-run note with these rules and the frozen design, and record its hash.
+- Report anything not recorded as “not recorded”. Do not estimate missing values.
+- Don’t advance a stage until the user confirms. The thresholds below are defaults for the user to confirm or change before Stage 1.
+- Every attempted request counts. Failed trials are preserved. No trial is replaced or silently rerun.
+- Use existing protected OAuth state only. Never start a new login. If authorization is missing, stop and preserve progress. No credentials in any output.
+- No Git push or upload. No local commit unless the user asks.
+0.1 Domains.
+- A: arm (mock). Use the existing isolated stateful mock world, not Gazebo. State which existing mock you reuse and confirm it has a separate observer. Gazebo is out of scope for G1.
+- B: mobile base (mock, new). Nodes could include battery, localization validity, path clear and map-lock state, with a goto write and a pose verification. Codex may propose different sources, but B must not be a reskinned arm. Its nodes, units and fault types must differ in kind.
+0.2 Catalogue, per domain (6 skills).
+- Read-only ladder, four skills. These inspect d = 1, 2, 4, 6 distinct nodes, one separately metered source per node. Native depth = d.
+- Write anchors, two skills. Each is a state change with p prerequisite reads, one conditional write and one fresh verification, with p = 1 and p = 3 (native depth 3 and 5).
+- Use the same catalogue schema as M4. Do not add plain-language descriptions, which would be a separate intervention. Skill IDs must not hint at depth.
+0.3 Per-skill depth table (record before freeze). For each skill record:
+- native depth, meaning the number of metered operations on the nominal macro path
+- minimum primitive model calls assuming full batching of reads, and maximum assuming one node per call
+- whether the reads are independent or dependent
+0.4 Cases (held-out about 64, dev about 32).
+- Ladder cells: 5 held-out cases per domain-depth cell, which is 40.
+- Write anchors: 3 held-out cases per anchor skill, which is 12.
+- Non-depth cases: 12 held-out, per domain 2 missing-prerequisite, 2 ambiguous and 2 fault cases (ineffective or partial write, unavailable source).
+- Include correct-inspection and correct-movement requests, with paraphrases.
+- Split dev and held-out by request template group, never by individual case. Paraphrases of one template stay together. No case reuses an M4 template.
+- At least one third of cases are authored by the teammate, blind to all results. Record each case’s author.
+- Ambiguous cases are scored under the M4 frozen rubric (clarify) and separately under the alternative “inspection acceptable” view. Neither enters the depth analysis.
+0.5 Budgets (common to both arms, frozen).
+- Model calls per task: nominal primitive path (maximum calls) + 4. Native operations: nominal depth + 4. Tool attempts: calls × 2. Corrections: 3. At most 1 movement dispatch. Wall time 360 s.
+- Keep M4’s Qwen settings unchanged: context 8192, 1024 tokens per call, temperature 0, seed 42, thinking off, and the 2048 observed-output gate.
+- Codex proposes final numbers. The user confirms them.
+- Endings caused by budget exhaustion are labeled separately from wrong decisions.
+0.6 Conditions. Primitives and macro, with the same system prompt and condition sentences as M4. The condition-wording confound carries over, so state it. Do not reword anything.
+0.7 Scoring columns (kept separate).
+- selection correct (first accepted skill, or a valid clarification)
+- execution correct (the right operations, fresh verification, no dispatch violation)
+- report correct (the status matches observed state, the observation is task-local)
+- primary pass (the full frozen contract)
+- budget-exhaustion flag and length-stop flag
+- per primitive run: reads per read_state call (batching)
+- Evidence truth and goal correctness are scored independently, as in M4.
+0.8 Predictions and decision rule. Each outcome is Support, Against or Uninformative. A ceiling is Uninformative, not Support.
+Analysis rules:
+- Per-depth and per-domain tables, with discordant-pair counts.
+- Bootstrap intervals resample case clusters (template groups), with no pooled p-values.
+- Report all-attempt and matched-success costs side by side.
+- Note that depth is confounded with horizon and context length, and that independent versus dependent reads is a separate factor.
+- With about 10 cases per depth, say outright that only large effects are visible.
+0.9 Resource ceilings. Compute and propose the request ceilings for the Sol dev pass, Sol held-out and Qwen held-out, with an infrastructure reserve. Reuse M4’s retry rules unchanged (HTTP 502/503/504 only, one retry per logical call, a separate reserve). The user confirms the ceilings.
+Stage 0 deliverable: the pre-run note with its hash, the skill and depth table, the case list with authors and split, the budget formula, and the prediction table with thresholds.
+Gate: wait for the user to confirm the thresholds, budgets and ceilings.
+- Scripted reference paths, one primitive-style and one macro-style per skill, pass all cases.
+- Fault controls confirm that missing-prerequisite and ineffective-write cases are exercised as intended.
+- The observer is independent: separate state, transport and records.
+- Local trace audits pass, and persisted Phoenix audits match span IDs, as in M4.
+- Confirm that no source change was needed (P5).
+Gate: all controls pass. Otherwise stop and report.
+- One run per dev case per arm, with counterbalanced pair order as in M4.
+- The purpose is to check solvability, scorers and budgets. No tuning of prompts, guards or conditions.
+- Fixing a case or scorer defect is allowed. Record each fix as a dated amendment before the freeze. One revision cycle at most.
+Gate: the user reviews the dev results and the amendments.
+Hash the sources, cases, scorers, budgets and thresholds. Verify there are no mismatches. The user confirms.
+- All held-out cases, both arms, paired and counterbalanced.
+- Single run. No reruns of failures.
+- Preflight review before launch: reserve ledgers, authorization status, simulator or mock state. Review the output before starting (the hardware-04 ordering failure must not recur).
+- First-turn selection only, with no tool execution.
+- Use the held-out requests with catalogues of 3 (the target plus 2 distractors), 6 (the domain) and 12 (both domains).
+- Run for Sol and for Qwen.
+- Same cases as Stage 4.
+- Use the original serving profile A (flash attention as originally configured, f16 KV cache). No q8, smaller context or other serving change.
+- Preflight GPU idle gate, reviewed before launch: close the browser and other GPU users, confirm three consecutive idle samples, and record the offload split. Do not launch with unresolved GPU activity.
+- The user may defer this stage to the lab computer. If so, record the hardware as a different configuration.
+- Apply the frozen decision rule per prediction (Support, Against or Uninformative).
+- Include per-depth tables, discordant pairs and the independent-versus-dependent breakdown.
+- Include a batching table: reads per read_state call, by model and arm.
+- Include the budget-exhaustion share and length-stop share per arm, plus the ambiguity cases under both rubrics.
+- List every amendment and deviation.
+- Label the study “exploratory generalization study G1”. State that two mock domains and two models don’t establish generality across robots, hardware or other models.
+Stop conditions: a source change is needed (stop and report), authorization is lost, the budget or ceiling would be exceeded, a protected-file hash mismatches, or the model digest differs. In any of these, stop and report. Do not extend limits.
+Please state explicitly: any step you can’t complete and why, any place the data contradict a prediction, and any design choice that you think biases the study toward a favorable result.
+- The thresholds in 0.8. They are defaults. Change them now, because they can’t change after Stage 1.
+- Teammate authorship. Ask your teammate to write at least a third of the cases before Stage 0 closes. Otherwise the cases are written by us, and the study loses its main protection against case selection bias.
+- When Qwen runs. Stage 5 is about 2.5 to 3.5 hours at M4 speed and a rough guess for deeper tasks. It could wait for the lab computer.
+- Sol quota. M4 used 106 of 323 Sol requests. Ask Codex whether G1’s proposed ceiling fits what remains.
+When Codex returns the Stage 0 deliverable, bring me the depth table, the case split, the budget formula and the ceilings. I can check whether the design would let each prediction fail, which matters more than whether it looks tidy.

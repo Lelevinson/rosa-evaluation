@@ -1,0 +1,87 @@
+--- preserved-stage-2/runner.py
++++ new-stage-4/runner.py
+@@ -1,4 +1,4 @@
+-"""Authorized Sol dev, public adapters and fresh mock worlds. No task replay."""
++"""Authorized Sol held-out, public adapters and fresh mock worlds. No task replay."""
+ from copy import deepcopy
+ from datetime import datetime,timezone
+ import json
+@@ -14,6 +14,7 @@
+ from tracing import Meter,trace_check,audit
+ from recovery import Campaign,LoggedGate,RecoverableSiwc
+ from authorization import restore_only,check_models,MODEL
++from runtime_support import journal_progress, freeze_raw_result, evaluate_progress
+ from rosa_auth.oauth import SafeError
+ from rosa_backends.chat_siwc import ChatSiwc
+ from rosa_reliability.macro_agent import MacroROSA,InferenceLimits
+@@ -28,6 +29,7 @@
+     case=item['case'];started=time.monotonic()
+     world,actor,observer=create_world(case['domain'],**case['world_configuration'])
+     record_start=len(model.request_records)
++    metadata_start=len(transport.error_metadata_records)
+     row={'id':item['id'],'mode':item['mode'],'case':case,'backend':'siwc','model':MODEL,
+          'expected_scripted_turns':item['expected_turns'],'expected_scripted_native':item['expected_native'],
+          'primary_pass':False,'error':None,'decision_actor':'live_model'}
+@@ -35,7 +37,7 @@
+     inv=gate=meter=None
+     def expired(signum,frame):
+         timeout['fired']=True
+-        raise TimeoutError('g1_dev_external_task_deadline')
++        raise TimeoutError('g1_heldout_external_task_deadline')
+     try:
+         with trace_check(folder/'trace.json',{'id':item['id'],'backend':'siwc','decision_actor':'live_model'}) as tracer:
+             meter=Meter(observer,tracer);meter.observe('before_agent')
+@@ -44,8 +46,7 @@
+             agent=MacroROSA(model,inv,backend='siwc',callbacks=[meter])
+             gate=LoggedGate(inv,backend='siwc',limits=InferenceLimits(),campaign=campaign,
+                 release=transport.release_transient_failure,
+-                journal=lambda value:(folder/'inference-progress.json').write_text(json.dumps(
+-                    {'inference':value,'snapshot':inv.snapshot()},indent=2)+'\n'))
++                journal=lambda value:journal_progress(folder, value, inv, meter, actor, transport, metadata_start, timeout))
+             agent.inference_budget=agent.completion_gate=gate
+             contract=read(REV/'prompt-contract.json')
+             assert bounded_contract(REQUIRED_TOOLS)==contract['system']
+@@ -53,7 +54,7 @@
+                 contract['condition_sentences'][item['mode']]+contract[case['domain']+'_suffix']+case['request'])
+             row['query']=query
+             remaining=28800-(time.monotonic()-campaign.started)
+-            if remaining<=0:raise ControlledStop('g1_dev_backend_deadline')
++            if remaining<=0:raise ControlledStop('g1_heldout_backend_deadline')
+             signal.signal(signal.SIGALRM,expired);signal.setitimer(signal.ITIMER_REAL,min(360,remaining))
+             try:answer=agent.invoke(query)
+             except Exception as error:
+@@ -110,12 +111,13 @@
+         if inv is not None:row.setdefault('snapshot',inv.snapshot())
+         if gate is not None:row.setdefault('inference',gate.snapshot())
+         row['trial_total_seconds']=time.monotonic()-started
++        freeze_raw_result(row,folder,transport,metadata_start)
+         (folder/'result.json').write_text(json.dumps(row,indent=2)+'\n')
+ 
+ def main():
+     assert not (ROOT/'RUN_ONCE').exists(),'Do not replay or replace this frozen campaign.'
+     verify();(ROOT/'RUN_ONCE').write_text('No automatic task replacement or consent.\n')
+-    status={'status':'STARTING','planned':36,'completed':0,'live_model_requests':0,
++    status={'status':'STARTING','planned':76,'completed':0,'live_model_requests':0,
+         'current_trial':None,'started_utc':datetime.now(timezone.utc).isoformat(),'later_stages_started':False}
+     def checkpoint(budget):
+         status['campaign']=budget;status['live_model_requests']=budget['reserved_requests'];write('status.json',status)
+@@ -124,7 +126,7 @@
+     try:
+         with restore_only(auth_status) as active:
+             check_models(active,auth_status);write('launch-authorization-status.json',auth_status)
+-            transport=RecoverableSiwc(token_provider=active.access_token,request_budget=291)
++            transport=RecoverableSiwc(token_provider=active.access_token,request_budget=611)
+             model=ChatSiwc(model=MODEL,backend=transport)
+             status['status']='RUNNING'
+             for item in read(ROOT/'plan.json'):
+@@ -132,8 +134,8 @@
+                 status['current_trial']=item['id'];checkpoint(campaign.snapshot())
+                 row=trial(item,model,transport,campaign)
+                 status['completed']+=1;status['current_trial']=None;checkpoint(campaign.snapshot())
+-                print(json.dumps({'done':status['completed'],'planned':36,'id':item['id'],
+-                    'primary_pass':row['primary_pass'],'calls':row['actual_turns'],
++                print(json.dumps({'done':status['completed'],'planned':76,'id':item['id'],
++                    'legacy_diagnostic_pass':row['primary_pass'], 'effective_status':evaluate_progress(row)['primary_status'],'calls':row['actual_turns'],
+                     'scripted_expected':item['expected_turns'],'native':len(row['actor_records']),
+                     'charged_total':campaign.requests}),flush=True)
+                 transport.raise_if_unavailable()

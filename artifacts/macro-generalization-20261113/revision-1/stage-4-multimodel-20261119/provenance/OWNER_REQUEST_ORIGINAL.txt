@@ -1,0 +1,76 @@
+REQUEST TO CODEX: G1 MULTI-MODEL EXTENSION (3 additional local models)
+Date: 2026-11-19. Scope: an extension of exploratory study G1 revision 1, run on the lab machine. It does not revise the Sol or Qwen batches, M1-M5, M4, or any earlier stage.
+
+CONTEXT (informational, not authorization)
+The Sol and Qwen held-out batches are complete. The owner wants to see whether the primitives-versus-macro pattern holds across additional local models. These backends are being added AFTER the Sol and Qwen results were seen, so every result here is EXPLORATORY and must be labeled that way. The same 38 frozen AI-authored cases are used in both conditions (76 attempts per model). The Qwen3.5 9B batch is complete and is NOT rerun.
+
+OWNER INPUTS (the owner fills these in before sending)
+- MODELS, in this fixed run order:
+  1. Ministral 3 8B (about 6.02 GB)
+  2. Granite 3.3 8B (about 4.94 GB)
+  3. Llama 3.1 8B Instruct (about 4.92 GB)
+  Use the exact Ollama tags installed on the lab machine. Record each tag, digest, quantization, parameter count, context length, family and capabilities as reported by the local server.
+- CLARIFICATION_REVIEWER: [NAME]
+- THINKING: off for every model. If a model has no think control, record that it was not applicable.
+
+GROUND RULES
+- Preserve everything unchanged: the frozen G1 inputs (3,796 files), the Sol and Qwen batches and their reports, the frozen analysis script, scorer (SHA-256 90b0edd6d898ac749d121de29197a669593e022160503414413e0126766e8e4d), cases, prompts, budgets and thresholds. Verify these hashes before and after.
+- Put all new outputs in artifacts/macro-generalization-20261113/revision-1/stage-4-multimodel-20261119/, with one sealed backend assembly per model, as was done for Qwen. Do not edit src/rosa, src/rosa_reliability or src/rosa_auth.
+- No prompt tuning, per-model prompt changes, template workarounds, case changes or scorer changes for any model. If a model's chat template or tool-call format causes failures, record them as results. Do not repair them.
+- No new model download. No model other than the three listed. No model is dropped or replaced after any run starts.
+- No Sol requests, no OAuth, no Gazebo, no catalogue-size probe, no optional first-turn replay.
+- Report anything not recorded as "not recorded". Do not estimate missing values.
+- Every attempt counts. Failed or censored trials are preserved. Nothing is rerun or replaced.
+- No Git commit, push or upload unless the owner asks.
+
+FROZEN SETTINGS (identical for every model, unchanged from the Qwen batch)
+- Context 8192, output 1024 per call, task output gate 2048, temperature 0, seed 42, thinking off, use_mmap true, client cache false, server prompt cache as-is. Use the same ConfiguredChatOllama adapter and wire settings, and record that actual API streaming is true.
+- Budgets per task: 8 calls, 360 s, 10 native operations, 16 tool attempts, 3 corrections, at most 1 dispatch.
+- Budgets per model batch: 611 total charged requests (608 ordinary plus the unchanged HTTP 502/503/504 reserve of 3), with an 8-hour live window. The three models total at most 1,833 and each model has its own counters. Count any empty-prompt load request toward its model's ceiling.
+- Retry and censoring rules are unchanged: only HTTP 502/503/504 qualify for the reserve, and the A3 classes INFRA_CENSORED_PRE_OUTPUT and INFRA_CENSORED_POST_ACTION apply. For local failures (timeouts, CUDA out-of-memory, connection reset, container restart), capture whatever detail is available and classify them as censored. Do not retry them.
+
+PRE-REGISTERED SELECTION RULE (decided before any run)
+- A model is eligible if the local server reports tool-calling capability for it and it loads with 100% of layers on the GPU at context 8192. Check capabilities with the local model listing and show output. This costs no inference.
+- A model that fails eligibility is recorded as "NOT RUN, ineligible" with the reason, and the remaining models still run. Eligibility is decided from the listing and load check only, never from benchmark results.
+- A model that is eligible but fails every tool call is reported as is. It is not excluded.
+- Models run one at a time. Before each, confirm no other model is resident, unload the previous model, and record the GPU idle gate (three consecutive idle samples) and the offload split.
+
+PRE-REGISTERED EXPLORATORY HYPOTHESIS (write this into the pre-run note and hash it before any run)
+H-write: the macro's pass advantage is concentrated in write-bearing tasks. Observed in Qwen only: write-bearing held-out cases (arm and base write, plus arm and base partial-write fault: 8 cases) primitives 2 of 8 vs macro 6 of 8; remaining 28 known-goal cases 24 of 28 in both arms. This was a post-hoc split with p about 0.13 and is not a finding.
+- Status per new model, using known-goal evaluable cases only:
+  - Support: macro passes more write-bearing cases than primitives, and its pass difference (macro minus primitive) in the write-bearing group exceeds its difference in the remaining 28.
+  - Against: primitives pass at least as many write-bearing cases as macro.
+  - Uninformative: otherwise, including a floor or ceiling in either arm, or any censored or pending trial in the write-bearing group that prevents the comparison.
+- Overall: Support if at least 2 of the 3 new models are Support. Against if at least 2 of 3 are Against. Otherwise Uninformative.
+- These are descriptive statuses with 8 cases per model. They are not frozen P-predictions.
+- Also report, per model and without thresholds: known-goal pass counts by arm, discordant pairs, calls, tokens, time, native operations, invalid attempts, length stops, and whether the macro direction (better, equal, worse) matches Sol and Qwen.
+
+TASKS
+
+T1. Corrections to the Qwen report, as a separate dated addendum (do not edit the original):
+ - The report says "P3 is dropped" and calls the catalogue probe "P4". In the frozen definitions, P3 is catalogue size (not run) and P4 is the depth contrast. Correct this.
+ - Add the per-group split above (write-bearing 8, remaining 28) as a descriptive table with its post-hoc label.
+
+T2. One combined preflight record covering all three models, for the owner to read before launch (zero inference, restore-only). Include for each model:
+ - tag, digest, size, quantization, parameter count, context length, family, capabilities;
+ - eligibility result;
+ - measured offload on load (layers on GPU), flash attention, KV type;
+ - the six Ollama timing fields expected per call, and a note on whether the server returns prompt_eval_cached_count;
+ - serialized request body comparison against the frozen adapter for at least a few cases, by hash, with zero inference;
+ - GPU driver, CUDA compatibility, container image digest, restart policy, GPU contention notes (record other processes seen in the compute list), and the keep-alive setting;
+ - a fresh GPU idle gate.
+ Also include: the run order, the per-model budget, the expected request count, the telemetry plan (GPU utilization, clocks, temperature, model residency samples, as for Qwen), detached execution with a scoped sleep inhibitor, and the resumption rules (continue only unstarted cells under cumulative counters). Do not launch. The owner acknowledges the record once for the three-model batch. Any failed gate stops the sequence.
+
+T3. Zero-model controls per model: the frozen 8 scripted controls with local and persisted audits, using each model's sealed backend assembly. No inference.
+
+T4. After the owner's acknowledgment only: run the models one at a time in the fixed order, each as a single uninterrupted detached batch. After each, run the frozen analysis script and the descriptive report helpers, verify audits (76 local and 76 persisted per model), and verify that all frozen hashes are unchanged. Stop the sequence on any stop condition.
+
+T5. Review kit. Build ONE pooled, shuffled, anonymized kit of the new ambiguous transcripts (4 per model, up to 12) for CLARIFICATION_REVIEWER, with model identity, condition, scorer verdicts and prior ratings withheld, plus the unchanged rubric, a blank ratings CSV and an honest eligibility declaration. Keep the private mapping out of the kit. This is separate from the Sol batch and from the Qwen "Batch B" kit. Do not combine counts across kits. Ambiguous trials stay PENDING until real ratings are bound. No ratings are generated by any assistant. The frozen structural checks stay automatic (no skill selected, no native operation, no dispatch, no accepted report).
+
+T6. After ratings: bind them and run the unchanged frozen analysis separately for each model. Label every output "exploratory backend, added after Sol and Qwen results". Do not pool pass rates across models. Produce one descriptive cross-model table (direction of the macro effect per model, with denominators) and the H-write statuses.
+
+DELIVERABLES: a status file with PASS, FAIL or BLOCKED per task; the Qwen addendum; the pre-run note with its hash (including H-write); the combined preflight record; per-model sealed backend assemblies and controls; per-model reports in the same format as the Qwen report; the pooled review kit; the cross-model descriptive table; and a protected-file hash check before and after.
+
+STOP CONDITIONS: a hash mismatch on any frozen or sealed file; a model digest or tag mismatch; an ineligible model (record it, do not substitute another); unresolved GPU contention; a required source edit; an unexpected request count; a ceiling that would be exceeded; or a missing reviewer name. Stop and report. Do not extend limits.
+
+PLEASE STATE EXPLICITLY: any step you could not complete and why; any model-specific behavior (chat template, tool-call format, parallel tool calls, text-formatted tool JSON) that affects comparability; any place where this request conflicts with a frozen earlier rule; and any design choice that favors macros or produces a ceiling or floor.

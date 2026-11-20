@@ -1,0 +1,192 @@
+PAGE 1
+IDEA 1
+
+PAGE 2
+1.PROJECT OVERVIEW
+Improving ROSA's robotic task execution
+Improve how ROSA uses existing LLMs to execute and verify robot tasks.
+Let the LLM choose a permitted skill; Python handles predictable execution steps.
+Compare correctness and overhead with local Qwen3.5 9B and hosted Sol.
+LLM selects skill
+→
+Python runs bounded steps
+→
+Fresh state is checked
+
+PAGE 3
+2.PROGRESS
+Working prototype; lower overhead, mixed correctness
+Gazebo UR5e · 80 trials · Primitives vs. bounded macro
+Backend Correct tasks
+Primitives →  macro
+Model calls Mean task time
+Hosted Sol 20/20 →  20/20 68 →  38 16.42 →  9.73 s
+Local Qwen3.5 9B 15/20 →  14/20 91 →  53 133.49 →  85.18 s
+*Macros reduced LLM calls, but a general reliability improvement was not established (YET).
+
+PAGE 4
+3.NEXT STEPS
+What comes next?
+01 Keep the bounded macro as an option. It saves model calls, but correctness is still
+mixed.
+02 Improve skill selection, especially for Qwen, and sort out the evaluation
+issues.
+03 Once the checks pass, test focused changes on fresh tasks against
+primitives.
+*G1 held-out testing is paused until scoring and error-logging checks are resolved.
+
+PAGE 5
+IDEA 2
+
+PAGE 6
+What we proposed
+ Names not final
+Goal: small local models give more correct, source-backed answers with ROSA's robot tools, at
+no extra cost.
+Problem: small models make small slips, and original ROSA ends the whole run on a slip.
+Main: steady loop
+Four small fixes around ROSA's
+agent loop, so a slip does not end
+the run.
+Add-on: list sweep
+After two reads from a list, the
+system reads the rest of it.
+Add-on: name fix
+The system corrects short names in
+the final answer.
+Tried and dropped: answer check, list arguments. We do not claim these ideas are new; we compare with related work later.
+
+PAGE 7
+Our main method: the steady loop
+Wraps ROSA, ROSA code untouched
+Short menu
+ Model picks a
+tool
+ Pre-check
+ Tool runs
+ Soft errors
+ Finish tool
+Each result goes back to the model, and the loop repeats until the model calls the finish tool. Highlighted boxes are our four hook points.
+BEFORE EACH REQUEST
+Short menu
+12 read-only ROS tools
+instead of 47. Write tools
+blocked. Main reason
+tokens roughly halved.
+BEFORE A TOOL RUNS
+Pre-check
+Checks arguments
+against the tool's
+schema. Explains the
+problem, never auto-
+fixes.
+AFTER A TOOL RUNS
+Soft errors
+A failing tool's error goes
+back to the model as a
+message, so it retries.
+Original ROSA crashed
+24 times; 17 were one
+argument error.
+AT THE END
+Finish tool
+The answer goes through
+one tool, and the run
+ends at once.
+
+PAGE 8
+Add-on 1: List sweep
+ Tested: works when it fires; rare
+List nodes
+ Read /a
+ Read /b
+ System reads /c, /d,
+/e
+ Model answers
+After two same-kind reads from one list, the system reads the rest (up to 20 names) and attaches the results.
+When it fires (practice tasks)
+Model re-asked: 15% (vs 65% without)
+1.6 fewer requests per firing
+14% fewer tokens after firing
+No wrong answers caused
+Limits
+Rare: 17–20 firings, mostly 2 tasks
+Smallest model: no gain
+Whole-run totals unchanged
+Final exam: room on only 2 of 48 tasks. A small side
+finding, not a main claim.
+Why it matters: a list option the model had to use itself was used in 4 of 80 runs. When the system acts, the model uses
+the result.
+
+PAGE 9
+Add-on 2: Name fix
+ Tested in recording mode only
+Model answers "zircon"
+ One seen name ends with it:
+/e1h/basalt/zircon
+ Answer says /e1h/basalt/zircon
+The system keeps the full names seen in tool results. At the final answer, a short name that matches exactly one full name is replaced.
+Safe by design
+Two matches, or a name never seen: left alone.
+Never invents a name.
+Round 2 (recorded, not applied)
+0 of 296 answers harmed
+2 fixed (same task)
+Small: the final exam has room for it on about half the tasks. Not yet tested live.
+
+PAGE 10
+How it went
+ Tasks we built on
+80 runs each (10 tasks × 4 models × 2 repeats). The final test on new tasks is the real proof.
+Original ROSA
+40/80
+runs correct and backed by tool
+results
+3.74M tokens
+Forge
+55/80
+runs correct and backed by tool
+results
+2.22M tokens
+Ours: steady loop
+67–70/80
+runs correct and backed by tool
+results
+1.68–2.00M tokens
+
+PAGE 11
+Test tasks
+ Practice vs final exam
+Practice: 10 tasks
+Method built on these. Fake robot setups, read-only questions.
+4 multi-step: trace data backwards · follow a setting to the
+next program · check a program's inputs and senders · find
+who provides a service
+6 traps for harmful "fixes": same short name in two places
+(2) · a program that isn't running while a look-alike is (2) · a
+value that changes mid-task (2)
+Final exam: 48 tasks
+Never seen. Run once. Same style, different tasks.
+24 robot-graph: 8 question types × 3
+24 turtlesim: real simulator, but 18 of 24 need one lookup
+4 models (lfm3 1.7B, bonsai 4B, qwen3.5 9B, gpt-oss 20B; 3 families) × 2 runs each (models are random) = 80 runs per
+method.
+Next: a realistic robot task set (TurtleBot3 + Nav2).
+
+PAGE 12
+What is next
+Next steps
+1.Fairness test: original ROSA with only soft
+errors added. Near 67–70: our claim shrinks.
+Near 45: our other parts matter.
+2.Switch off each part of our method, one at a
+time
+3.Test design: more model families, Nav2 tasks,
+which methods to compare
+4.Lock the method, then run the final exam (lock
+date not set)
+Asks
+1.Feedback on the evaluation plan
+2.Access to a lab computer
+The final exam needs about 55–107 GPU hours.
+(Two full passes: all tasks × all models × all methods.)

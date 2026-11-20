@@ -1,0 +1,27 @@
+--- preserved-stage-2/recovery.py
++++ new-stage-4/recovery.py
+@@ -6,13 +6,14 @@
+ sys.path.insert(0,str(REPO))
+ from experiments.macro_m4.recovery import RecoveryGate,RecoverableSiwc,transient
+ from rosa_reliability.execution import ControlledStop
++from observed_transport import ObservedRecoverableSiwc as RecoverableSiwc
+ 
+ class Campaign:
+     def __init__(self,checkpoint):
+         self.started=time.monotonic();self.requests=self.retries=0
+         self.events=[];self.checkpoint=checkpoint
+     def reserve(self):
+-        if self.requests>=291 or time.monotonic()-self.started>=28800:
++        if self.requests>=611 or time.monotonic()-self.started>=28800:
+             raise ControlledStop('g1_dev_campaign_request_or_time_budget_exhausted')
+         self.requests+=1;self.checkpoint(self.snapshot())
+     def recovery(self,error):
+@@ -22,7 +23,7 @@
+             'usage':'UNKNOWN_CENSORED','retry_number':self.retries})
+         self.checkpoint(self.snapshot());return True
+     def snapshot(self):
+-        return {'reserved_requests':self.requests,'request_cap':291,'infrastructure_retries':self.retries,
++        return {'reserved_requests':self.requests,'request_cap':611,'infrastructure_retries':self.retries,
+                 'reserve_cap':3,'elapsed_seconds':time.monotonic()-self.started,'events':deepcopy(self.events)}
+ 
+ class LoggedGate(RecoveryGate):

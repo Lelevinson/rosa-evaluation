@@ -1,0 +1,322 @@
+{
+  "inference": {
+    "calls": 4,
+    "known_input_tokens": 5445,
+    "known_output_tokens": 87,
+    "output_upper_bound": 87,
+    "usage_complete": true,
+    "events": [
+      {
+        "call": 1,
+        "status": "RETURNED",
+        "requested_output_allowance": 1024,
+        "usage": {
+          "input_tokens": 1503,
+          "output_tokens": 21,
+          "total_tokens": 1524
+        },
+        "finish_reason": "stop",
+        "physical_request_index": 1
+      },
+      {
+        "call": 2,
+        "status": "RETURNED",
+        "requested_output_allowance": 1024,
+        "usage": {
+          "input_tokens": 1234,
+          "output_tokens": 21,
+          "total_tokens": 1255
+        },
+        "finish_reason": "stop",
+        "physical_request_index": 2
+      },
+      {
+        "call": 3,
+        "status": "RETURNED",
+        "requested_output_allowance": 1024,
+        "usage": {
+          "input_tokens": 1314,
+          "output_tokens": 20,
+          "total_tokens": 1334
+        },
+        "finish_reason": "stop",
+        "physical_request_index": 3
+      },
+      {
+        "call": 4,
+        "status": "RETURNED",
+        "requested_output_allowance": 1024,
+        "usage": {
+          "input_tokens": 1394,
+          "output_tokens": 25,
+          "total_tokens": 1419
+        },
+        "finish_reason": "stop",
+        "physical_request_index": 4
+      }
+    ],
+    "decision_calls": 4,
+    "infrastructure_failures": 0,
+    "returned_usage_valid": true
+  },
+  "snapshot": {
+    "module_version": "0.2.0",
+    "mode": "macro",
+    "limits": {
+      "native_operations": 10,
+      "tool_attempts": 16,
+      "corrections": 3,
+      "seconds": 360.0,
+      "tolerance": 0.025
+    },
+    "catalogue": {
+      "arm.cedar": {
+        "kind": "read_only_inspection",
+        "subject": "/g1_arm/checks",
+        "required_checks": {
+          "guard": [
+            "guard_closed"
+          ]
+        },
+        "max_writes": 0,
+        "success_means": "every required readiness check freshly observed true",
+        "evidence_encoding": "true=1.0, false=0.0, unavailable=null"
+      },
+      "arm.quartz": {
+        "kind": "read_only_inspection",
+        "subject": "/g1_arm/checks",
+        "required_checks": {
+          "guard": [
+            "guard_closed"
+          ],
+          "joint_sample": [
+            "joint_sample_fresh"
+          ]
+        },
+        "max_writes": 0,
+        "success_means": "every required readiness check freshly observed true",
+        "evidence_encoding": "true=1.0, false=0.0, unavailable=null"
+      },
+      "arm.ember": {
+        "kind": "read_only_inspection",
+        "subject": "/g1_arm/checks",
+        "required_checks": {
+          "guard": [
+            "guard_closed"
+          ],
+          "joint_sample": [
+            "joint_sample_fresh"
+          ],
+          "brake": [
+            "brake_released"
+          ],
+          "thermal": [
+            "temperature_safe"
+          ]
+        },
+        "max_writes": 0,
+        "success_means": "every required readiness check freshly observed true",
+        "evidence_encoding": "true=1.0, false=0.0, unavailable=null"
+      },
+      "arm.lumen": {
+        "kind": "read_only_inspection",
+        "subject": "/g1_arm/checks",
+        "required_checks": {
+          "guard": [
+            "guard_closed"
+          ],
+          "joint_sample": [
+            "joint_sample_fresh"
+          ],
+          "brake": [
+            "brake_released"
+          ],
+          "thermal": [
+            "temperature_safe"
+          ],
+          "workspace": [
+            "workspace_clear"
+          ],
+          "tool_mount": [
+            "tool_mount_locked"
+          ]
+        },
+        "max_writes": 0,
+        "success_means": "every required readiness check freshly observed true",
+        "evidence_encoding": "true=1.0, false=0.0, unavailable=null"
+      },
+      "arm.cobalt": {
+        "kind": "state_change",
+        "targets": {
+          "/g1_arm/joints": {
+            "yaw": -0.18,
+            "pitch": 0.11
+          }
+        },
+        "max_writes": 1
+      }
+    },
+    "events": [
+      {
+        "type": "tool",
+        "call_index": 1,
+        "name": "select_skill",
+        "input": {
+          "skill_id": "arm.cobalt"
+        },
+        "status": "RETURNED",
+        "span_id": "869e4582d85ac788",
+        "actor": "model"
+      },
+      {
+        "type": "workflow_transition",
+        "state": "SELECTED",
+        "reason": "model_selected_authorized_skill",
+        "actor": "model"
+      },
+      {
+        "type": "tool",
+        "call_index": 2,
+        "name": "read_state",
+        "input": {
+          "nodes": [
+            "/g1_arm/joints"
+          ]
+        },
+        "status": "RETURNED",
+        "span_id": "93cbc4b43f1d1f56",
+        "actor": "program"
+      },
+      {
+        "type": "tool",
+        "call_index": 3,
+        "name": "write_state",
+        "input": {
+          "node_name": "/g1_arm/joints",
+          "values": {
+            "yaw": -0.18,
+            "pitch": 0.11
+          }
+        },
+        "status": "RETURNED",
+        "span_id": "25f1d072b4f525e0",
+        "actor": "program"
+      },
+      {
+        "type": "validation",
+        "code": "write_prerequisite_rejected",
+        "details": {
+          "reason": "movement is not authorized for this request"
+        },
+        "attempt": 1,
+        "native_dispatch_for_rejected_call": false
+      },
+      {
+        "type": "workflow_transition",
+        "state": "NEEDS_DECISION",
+        "reason": "prerequisite_rejected_no_automatic_retry",
+        "actor": "program"
+      },
+      {
+        "type": "tool",
+        "call_index": 4,
+        "name": "read_state",
+        "input": {
+          "subject": "/g1_arm/checks"
+        },
+        "status": "RETURNED",
+        "span_id": "441b344831c9b2b8",
+        "actor": "model"
+      },
+      {
+        "type": "validation",
+        "code": "schema_validation",
+        "details": [
+          {
+            "field": "nodes",
+            "reason": "missing"
+          },
+          {
+            "field": "subject",
+            "reason": "extra_forbidden"
+          }
+        ],
+        "attempt": 2,
+        "native_dispatch_for_rejected_call": false
+      },
+      {
+        "type": "tool",
+        "call_index": 5,
+        "name": "read_state",
+        "input": {
+          "subject": "/g1_arm/checks"
+        },
+        "status": "RETURNED",
+        "span_id": "053e4f5f5880dab9",
+        "actor": "model"
+      },
+      {
+        "type": "validation",
+        "code": "schema_validation",
+        "details": [
+          {
+            "field": "nodes",
+            "reason": "missing"
+          },
+          {
+            "field": "subject",
+            "reason": "extra_forbidden"
+          }
+        ],
+        "attempt": 3,
+        "native_dispatch_for_rejected_call": false
+      }
+    ],
+    "operations": [
+      {
+        "operation_id": 1,
+        "kind": "read",
+        "actor": "program",
+        "status": "RETURNED",
+        "started": 4535930.961647764,
+        "result": {
+          "pitch": 0.0,
+          "yaw": 0.0
+        },
+        "finished": 4535930.961712513
+      }
+    ],
+    "observations": [
+      {
+        "observed_values": {
+          "/g1_arm/joints": {
+            "pitch": 0.0,
+            "yaw": 0.0
+          }
+        },
+        "evidence": [
+          {
+            "node": "/g1_arm/joints",
+            "operation_id": 1,
+            "after_write": 0,
+            "acquired_monotonic": 4535930.961732156,
+            "actor": "program",
+            "unavailable": null
+          }
+        ],
+        "observation_id": "obs-d8886ab30e1a-1"
+      }
+    ],
+    "reports": [],
+    "verification": null,
+    "last_write": 0,
+    "validation_errors": 3,
+    "tool_calls": 5,
+    "selected_skill": "arm.cobalt",
+    "workflow_state": "NEEDS_DECISION",
+    "program_managed": true,
+    "base_macro_version": "0.1.0",
+    "selected_max_writes": 1
+  },
+  "error_metadata": []
+}

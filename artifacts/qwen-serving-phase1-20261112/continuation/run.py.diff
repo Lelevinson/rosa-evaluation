@@ -1,0 +1,98 @@
+--- original/run.py
++++ continuation/run.py
+@@ -12,12 +12,16 @@
+ import threading
+ import time
+ 
++import sys
++CODE=Path(__file__).resolve().parent
++sys.path.insert(0,str(CODE.parent))
+ from report import comparison, render, results
+-
+-ROOT=Path(__file__).resolve().parent
++from runtime_evidence import fa_enabled
++
++ROOT=CODE.parent
+ WORKSPACE=ROOT.parents[2]
+ OPENER=build_opener(ProxyHandler({}))
+-STARTED=time.monotonic()
++STARTED=time.monotonic()-(time.time()-(ROOT/'RUN_ONCE').stat().st_ctime)
+ CONFIG=json.loads((ROOT/'protocol.json').read_text())
+ STATE={'status':'PREPARING','profile':None,'ordinal':None,'charged_requests':0,
+        'known_input_tokens':0,'known_output_tokens':0,'unreturned_output_upper_bound':0,
+@@ -40,6 +44,9 @@
+ 
+ 
+ def verify():
++    recovery=json.loads((CODE/'freeze.json').read_text())
++    for name,digest in recovery['files'].items():
++        assert hashlib.sha256((CODE/name).read_bytes()).hexdigest()==digest,'continuation_source_changed:'+name
+     frozen=json.loads((ROOT/'freeze.json').read_text())
+     for name,digest in frozen['probe_files'].items():
+         assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==digest,'frozen_source_changed:'+name
+@@ -79,7 +86,7 @@
+ def validate_runtime(folder,profile,endpoint):
+     log=(folder/'server-stderr.log').read_text(encoding='utf-8',errors='replace')
+     precision=CONFIG['profiles'][profile]['kv_type']
+-    assert 'Flash Attention enabled' in log,'effective_FA_not_enabled'
++    assert fa_enabled(log),'effective_FA_not_enabled'
+     assert f'K ({precision})' in log and f'V ({precision})' in log,'effective_KV_type_mismatch'
+     loaded=get(endpoint,'/api/ps')
+     model=next(m for m in loaded['models'] if m['name']=='qwen3.5:9b')
+@@ -93,8 +100,8 @@
+     (folder/'ollama-ps.txt').write_text(ps.stdout,encoding='utf-8')
+     offload=re.findall(r'offloaded (\d+)/(\d+) layers to GPU',log)
+     kv=re.findall(r'CUDA0 KV buffer size\s*=\s*([\d.]+) MiB',log)
+-    first=json.loads((folder/'00/result.json').read_text())
+-    save(folder/'hardware.json',{'offload_layers':list(map(int,offload[-1])) if offload else None,
++    first=json.loads((ROOT/'B/recovery-warmup/result.json').read_text())
++    save(ROOT/'B/hardware.json',{'offload_layers':list(map(int,offload[-1])) if offload else None,
+         'gpu_KV_mib':float(kv[-1]) if kv else None,'loaded_model':model,
+         'physical_gpu_reading':gpu.stdout,'ollama_ps':ps.stdout,'effective_FA':True,
+         'effective_KV':precision,'warmup_load_seconds':first['metadata']['load_duration']/1e9})
+@@ -103,7 +110,8 @@
+ 
+ 
+ def profile_run(profile,gateway):
+-    folder=ROOT/profile;folder.mkdir(exist_ok=False)
++    assert profile=='B'
++    folder=ROOT/'B-continuation';folder.mkdir(exist_ok=False)
+     STATE.update(profile=profile,ordinal=None,status='PROFILE_PREFLIGHT');checkpoint()
+     gpu_gate(folder/'pre-server-gpu.json')
+     endpoint=f'http://{gateway}:11437'
+@@ -135,7 +143,7 @@
+         model=next(m for m in tags['models'] if m['name']=='qwen3.5:9b')
+         assert model['digest']==CONFIG['digest'],'pinned_digest_mismatch'
+         save(folder/'verified-version-model.json',{'version':version,'model':model})
+-        linux='/mnt/c/Proj/robotics/introtorobotics/rosa-evaluation/artifacts/qwen-serving-phase1-20261112/worker.py'
++        linux='/mnt/c/Proj/robotics/introtorobotics/rosa-evaluation/artifacts/qwen-serving-phase1-20261112/continuation/worker.py'
+         worker_env=os.environ.copy()
+         for k in ('HTTP_PROXY','HTTPS_PROXY','ALL_PROXY'):worker_env.pop(k,None)
+         worker=subprocess.Popen(['wsl.exe','--distribution','Ubuntu-24.04','--user','martin','--exec',
+@@ -182,7 +190,7 @@
+ 
+ 
+ def main():
+-    with (ROOT/'RUN_ONCE').open('x') as f:f.write('No automatic resume or replay.\n')
++    with (CODE/'RUN_ONCE').open('x') as f:f.write('No automatic resume or replay.\n')
+     verify();checkpoint()
+     try:
+         ps=subprocess.run(['wsl.exe','--distribution','Ubuntu-24.04','--user','martin','--exec','/usr/bin/ps','-eo','pid,comm'],capture_output=True,text=True,timeout=30)
+@@ -192,15 +200,14 @@
+         route=subprocess.run(['wsl.exe','--distribution','Ubuntu-24.04','--user','martin','--exec','/usr/sbin/ip','-4','route','show','default'],capture_output=True,text=True,timeout=30)
+         assert route.returncode==0 and 'via ' in route.stdout,'WSL_gateway_unavailable'
+         gateway=route.stdout.split('via ',1)[1].split()[0]
+-        for profile in ('A','B'):
++        for profile in ('B',):
+             if profile=='B':
+                 STATE['status']='UNLOADED_COOLDOWN';checkpoint();time.sleep(30)
+             profile_run(profile,gateway)
+         screen=comparison('B')
+         save(ROOT/'stage1-decision.json',screen)
+         if screen['candidate']:
+-            STATE['status']='CONDITIONAL_C_COOLDOWN';checkpoint();time.sleep(30)
+-            profile_run('C',gateway)
++            save(ROOT/'stage2-decision.json',{'C_run':False,'reason':'B passed, but the declared infrastructure warm-up leaves only 14 of the original 45 slots; a full C block needs 15. Deferred without increasing budget.'})
+         else:save(ROOT/'stage2-decision.json',{'C_run':False,'reason':'B did not pass all predefined candidate gates; no Phase 0 context bottleneck established.'})
+         STATE.update(status='COMPLETE',profile=None,ordinal=None)
+     except BaseException as exc:

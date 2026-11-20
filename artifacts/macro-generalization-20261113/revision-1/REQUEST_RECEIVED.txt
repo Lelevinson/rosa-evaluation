@@ -1,0 +1,81 @@
+Context (informational, not authorization). Your Stage 0 report found that a primitive inspection acquires all source groups in one read_state call, so the primitive path is select, read, report (3 calls) at every native depth, and the macro path should be select, report (2 calls). The owner has decided to narrow G1 to the existing public API, not build an acquisition-policy extension, and to fix the mock observer inside the G1 harness. The revised hypothesis is that macro savings come from removing model decision turns, not from bundling native work. The study must be able to come out against that hypothesis.
+Ground rules
+- Preserve the stopped Stage 0 package unchanged, including STOPPED_INTERFACE_INCOMPATIBLE. Put all revision outputs in artifacts/macro-generalization-20261113/revision-1/, with a dated amendment note linking to the old files.
+- No edits to src/rosa, src/rosa_reliability, experiments.reliability_v2.cases, or any file protected in earlier checks (M4, timing probe, Phase 1, M1-M5 reports). If the narrowed design still cannot be hosted through the public API, stop and report the exact diff. That outcome is prediction P5.
+- Before any live request, write a pre-run note with these rules and the frozen design, and record its hash.
+- Report anything not recorded as “not recorded”. Don’t estimate missing values.
+- Don’t advance a stage until the user confirms. All thresholds and counts below are defaults for the user to confirm or change before Stage 1.
+- Every attempted request counts. Failed trials are preserved. No trial is replaced or silently rerun.
+- Use existing protected OAuth state only. Never start a login. If authorization is missing, stop and preserve progress. Checking local credential presence is allowed, and it must be described as presence only, not provider validity. No credentials in any output.
+- No Git push, upload or commit unless the user asks.
+0.1 G1 mock worlds with separate observers (both domains).
+- Write new mock worlds in the G1 directory. Don’t reuse the old oracle that copies the actor’s state.
+- The actor transport and the observer must hold separate state objects, use separate transports, and write separate record streams. The observer reads ground truth through its own interface.
+- Prove separation with a test. Inject a fault where the actor-side view is stale or wrong (for example a dropped write acknowledgement or a corrupted read), and show that the observer still reports the true world state. Also show that mutating actor-side objects cannot change the observer’s records.
+- State what “independent” means here: separate state, transport and records. It does not mean independent authorship or a different sensing technology.
+- Domain A (arm-like): numeric joint-style targets, reads and tolerances in radians, as in M4.
+- Domain B (mobile base): units in metres and fractions, with sources and fault kinds that differ in kind from A. Suggested sources are localization validity, map-lease state, battery fraction and path clear, with faults such as translation-versus-heading error, lost localization and an expired lease. Codex may propose other sources if B stays genuinely different from A.
+- If either world can’t be hosted through the public API unchanged, stop (see the ground rules).
+0.2 Catalogue per domain (use only what the API supports).
+- Read-only ladder, four skills. These inspect d = 1, 2, 4 and 6 distinct sources, one separately metered group per source. Native depth = d.
+- One write skill. This is a single-target state change as the existing StateSkill supports (conditional write, fresh check).
+- No p=3 write anchor. It is out of API scope. Record it under G2.
+- Same catalogue schema as M4. No plain-language descriptions, which would be a separate intervention. Skill IDs must not hint at depth.
+- Each domain has 5 skills, so catalogue size is 5 per domain and 10 in the combined catalogue.
+0.3 Skill and depth table. For each skill record:
+- native depth on the nominal macro path
+- expected primitive model calls and expected macro model calls, which the Stage 1 controls will verify
+- the tool sequence for each arm
+0.4 Cases.
+- Held-out target of about 38 cases (about 76 trials per model). 
+  - Ladder: 3 per domain-depth cell, which is 24 cases and 6 per depth.
+  - Write skill: 3 per domain, which is 6.
+  - Non-depth: 4 per domain, which is 8. One each for missing prerequisite, ambiguous request, partial or ineffective write, and unavailable source.
+- Dev target of about 16 cases.
+- Codex may adjust each count by about 10%, with the arithmetic shown.
+- Ladder requests are inspections and the write cases are movements, so both correct choices appear in the mix. Include paraphrases.
+- Split dev and held-out by template group, never by case. Report the number of distinct template groups per split. Aim for at least 8 distinct held-out template groups, and report the number actually reached. Last time it was five shared across everything.
+- No case reuses an M4 template, and nothing is a close paraphrase of one.
+- Teammate authorship gate: at least one third of cases, including held-out cases, written blind to all results. Record each case’s author. Codex may check schema compliance and format only, and must log any edit to a teammate’s case. If the teammate cases don’t exist when Stage 0 closes, the gate fails and the study can’t advance. Codex should not fill the gap by writing the cases itself.
+- Ambiguous cases are scored under the M4 rubric (clarify) and separately under the “inspection acceptable” view. Neither enters the depth analysis.
+0.5 Budgets (common to both arms).
+- Use M4’s limits unchanged: 8 model calls, 2048 observed output tokens, 10 native operations, 16 tool attempts, 3 corrections, at most 1 movement dispatch, 360 s. Depth 6 (6 native) and the write skill fit inside these.
+- Qwen: serving profile A unchanged (context 8192, 1024 tokens per call, temperature 0, seed 42, thinking off, original flash-attention policy, f16 KV cache).
+- Prompt text: use M4’s system prompt, rules text and condition sentences unchanged. For domain B only, replace the joint-tolerance sentence with a metres-and-fraction tolerance sentence. Declare this as a domain-specific suffix applied identically to both arms, with the exact text recorded. The condition-wording confound carries over, so state it.
+- Label endings caused by budget exhaustion separately from wrong decisions.
+0.6 Scoring columns (kept separate, as in M4). Selection correct, execution correct, report correct, primary pass, budget-exhaustion flag, length-stop flag. Evidence truth and goal correctness are scored independently. Record per-call tool names and arguments for every run.
+0.7 Predictions and decision rule. Each outcome is Support, Against or Uninformative. A ceiling effect is Uninformative.
+Analysis rules:
+- Per-depth and per-domain tables, with discordant-pair counts.
+- Bootstrap intervals resample template groups. No pooled p-values.
+- All-attempt and matched-success costs side by side.
+- State that each depth has about 6 cases per arm per model, so only large effects are visible. Matched-success n per depth may be smaller, and the report must say so.
+- State that depth is confounded with context length.
+0.8 Resource ceilings. Compute the ordinary logical cap and the infrastructure reserve for:
+- the Sol dev pass
+- Sol held-out
+- Qwen held-out
+- the Stage 4b probe
+Show the arithmetic, and also an expected-consumption estimate from M4 per-task averages, labeled as an estimate. Reuse M4’s retry rules unchanged. Record Sol authorization presence from local state. State that provider quota is not knowable from local records and that M4’s 106/323 was a local cap.
+Stage 0 deliverable: the pre-run note with its hash, the revised skill and depth table, the case list with authors, splits and template groups, the observer-separation design, the budgets and suffix text, the prediction table, and the ceilings.
+Gate: the user confirms the thresholds, counts, suffix and ceilings. The teammate gate must be met.
+- Structural check first. Scripted primitive-style and macro-style paths on each skill, using the real adapters and fake transports. Report the actual model-turn counts per path. If these contradict the 3-call and 2-call hypothesis, stop and report. Predictions may then be revised only by a dated amendment before Stage 2.
+- The scripted paths pass all cases, including fault cases that are exercised as intended.
+- Observer-separation tests pass in both domains.
+- Local trace audits and persisted Phoenix audits pass, as in M4.
+- Confirm that no source change was needed (P5).
+Gate: all controls pass. Otherwise stop and report.
+- One run per dev case per arm, counterbalanced as in M4. The purpose is to check solvability, scorers and budgets.
+- No tuning of prompts, guards or conditions. Case and scorer defects may be fixed by a dated amendment, with one revision cycle at most.
+Gate: the user reviews the results and amendments.
+Hash the sources, cases, scorers, budgets and thresholds. Verify no mismatches. The user confirms.
+All held-out cases, both arms, paired and counterbalanced. Single run, with no reruns of failures. Before launch, review the reserve ledgers, authorization presence and world state. Review the preflight output before starting.
+- First-turn selection only, with no tool execution, using the macro condition sentence only. State the limitation that this doesn’t test the primitive sentence.
+- Catalogue sizes: 3 (target plus 2 distractors), 5 (the domain), 10 (both domains).
+- Run for Sol and for Qwen.
+- Same cases as Stage 4, with serving profile A.
+- Preflight GPU idle gate, reviewed before launch: close the browser and other GPU users, require three consecutive idle samples, and record the offload split. Don’t launch with unresolved GPU activity.
+- The user may defer this stage to the lab computer. If so, record the hardware as a different configuration.
+Apply the frozen decision rule per prediction. Include per-depth tables, discordant pairs, the batching and tool-sequence table, budget-exhaustion and length-stop shares, the ambiguity cases under both rubrics, and every amendment and deviation. Label it “exploratory generalization study G1”. State that two mock domains and two models don’t establish generality across robots, hardware or other models, and that horizon-dependent reliability is deferred to G2.
+Stop conditions: a source change is needed, authorization is lost, a ceiling would be exceeded, a protected-file hash mismatches, the model digest differs, or the teammate gate is unmet. In any of these, stop and report. Don’t extend limits.
+Please state explicitly: any step you can’t complete and why, any place the data contradict a prediction, and any design choice you think biases the study toward a favorable result.

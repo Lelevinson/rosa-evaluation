@@ -1,0 +1,39 @@
+--- original/worker.py
++++ continuation/worker.py
+@@ -9,7 +9,8 @@
+ from langchain_core.messages import AIMessage, HumanMessage, SystemMessage, ToolMessage
+ from rosa_backends.chat_ollama import ConfiguredChatOllama
+ 
+-ROOT=Path(__file__).resolve().parent
++CODE=Path(__file__).resolve().parent
++ROOT=CODE.parent
+ CLASSES={c.__name__:c for c in (AIMessage,HumanMessage,SystemMessage,ToolMessage)}
+ 
+ 
+@@ -30,6 +31,9 @@
+ 
+ 
+ def verify():
++    recovery=json.loads((CODE/'freeze.json').read_text())
++    for name,digest in recovery['files'].items():
++        assert hashlib.sha256((CODE/name).read_bytes()).hexdigest()==digest,'continuation_source_changed:'+name
+     frozen=json.loads((ROOT/'freeze.json').read_text())
+     for name,digest in frozen['probe_files'].items():
+         assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==digest, 'frozen_probe_file_changed:'+name
+@@ -57,13 +61,14 @@
+         ordinal=command['ordinal']
+         job=config['schedule'][ordinal]
+         assert command['profile']==profile
+-        folder=ROOT/profile/f'{ordinal:02d}'
++        assert profile=='B'
++        folder=ROOT/profile/('recovery-warmup' if ordinal==0 else f'{ordinal:02d}')
+         folder.mkdir(exist_ok=False)
+         verify()
+         fixture=fixtures[job['fixture']]
+         model,messages,tools,params=build(fixture,endpoint,context)
+         save(folder/'request.json',params)
+-        global_index={'A':0,'B':15,'C':30}[profile]+ordinal+1
++        global_index=31 if ordinal==0 else 16+ordinal
+         assert global_index<=45 and ordinal<15
+         with (ROOT/'reservations'/f'{global_index:02d}.json').open('x',encoding='utf-8') as f:
+             json.dump({'profile':profile,'ordinal':ordinal,'request_number':global_index,

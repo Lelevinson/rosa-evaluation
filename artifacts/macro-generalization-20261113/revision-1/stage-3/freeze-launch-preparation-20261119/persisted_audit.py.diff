@@ -1,0 +1,18 @@
+--- preserved-stage-2/persisted_audit.py
++++ new-stage-4/persisted_audit.py
+@@ -9,13 +9,13 @@
+ def main():
+     parser=argparse.ArgumentParser();parser.add_argument('folder',type=Path);folder=parser.parse_args().folder
+     local=json.loads((folder/'trace.json').read_text())['spans']
+-    root=next(s for s in local if s['name']=='g1.sol.dev')
++    root=next(s for s in local if s['name']=='g1.sol.heldout')
+     trace_id=root['context']['trace_id'].removeprefix('0x')
+     expected={s['context']['span_id'].removeprefix('0x') for s in local}
+     with httpx.Client(base_url='http://127.0.0.1:6006',timeout=15,trust_env=False) as http:
+         client=Client(http_client=http)
+         for _ in range(8):
+-            spans=client.spans.get_spans(project_identifier='rosa-g1-sol-dev-20261114',trace_ids=[trace_id],limit=10000)
++            spans=client.spans.get_spans(project_identifier='rosa-g1-sol-heldout-20261119',trace_ids=[trace_id],limit=10000)
+             received={s['context']['span_id'].removeprefix('0x') for s in spans}
+             if received==expected:break
+             time.sleep(.5)

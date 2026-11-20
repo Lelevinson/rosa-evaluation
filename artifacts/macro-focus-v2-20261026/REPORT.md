@@ -1,0 +1,42 @@
+# Fresh bounded macro-skill pilot
+
+Prospective six-case, two-repetition comparison. One bounded UR5e pose capability. These are descriptive feasibility results, not evidence of a novel selection algorithm.
+
+## ollama
+
+Status: STOPPED. Reserved requests: 126. Completed/audited trial rows: 33/33.
+
+| Condition | Correct | Calls | Input tokens | Output tokens | Native | Invalid attempts | Trial seconds |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| model | 8/11 | 61 | 147006 | 10868 | 38 | 1 | 1619.09 |
+| macro | 9/11 | 31 | 66162 | 6245 | 36 | 0 | 1025.18 |
+| workflow | 7/11 | 34 | 69394 | 7155 | 39 | 0 | 1107.65 |
+
+- Failed contract: 09-prerequisite_recovers-workflow: `{"accepted_report_status": null, "accepted_unsupported_selected_goal_success": false, "accepted_wrong_user_goal_success": false, "correct_skill": true, "corrected_after_feedback": false, "coverage_pass": true, "dispatch_count": 1, "dispatch_violations": [], "escalations": ["observation_unavailable_no_write"], "expected_status": "SUCCESS", "injected_fault_exercised": true, "invalid_attempts": 0, "normal_terminal": false, "observation_retries": 1, "pass": false, "policy_violations": [], "program_native_operations": 1, "requested_goal_attained": true, "requested_goal_command_attempted": true, "required_dispatches": 1, "truthful_report": false, "unsupported_success_attempts": 0}`
+- Failed contract: 10-prerequisite_recovers-macro: `{"accepted_report_status": null, "accepted_unsupported_selected_goal_success": false, "accepted_wrong_user_goal_success": false, "correct_skill": true, "corrected_after_feedback": false, "coverage_pass": false, "dispatch_count": 0, "dispatch_violations": [], "escalations": ["observation_unavailable_no_write"], "expected_status": "SUCCESS", "injected_fault_exercised": false, "invalid_attempts": 0, "normal_terminal": false, "observation_retries": 1, "pass": false, "policy_violations": [], "program_native_operations": 1, "requested_goal_attained": false, "requested_goal_command_attempted": false, "required_dispatches": 1, "truthful_report": false, "unsupported_success_attempts": 0}`
+- Failed contract: 11-prerequisite_recovers-model: `{"accepted_report_status": null, "accepted_unsupported_selected_goal_success": false, "accepted_wrong_user_goal_success": false, "correct_skill": true, "corrected_after_feedback": false, "coverage_pass": true, "dispatch_count": 1, "dispatch_violations": [], "escalations": [], "expected_status": "SUCCESS", "injected_fault_exercised": true, "invalid_attempts": 1, "normal_terminal": false, "observation_retries": 1, "pass": false, "policy_violations": [], "program_native_operations": 0, "requested_goal_attained": true, "requested_goal_command_attempted": true, "required_dispatches": 1, "truthful_report": false, "unsupported_success_attempts": 0}`
+- Failed contract: 13-partial_execution-model: `{"accepted_report_status": null, "accepted_unsupported_selected_goal_success": false, "accepted_wrong_user_goal_success": false, "correct_skill": true, "corrected_after_feedback": false, "coverage_pass": true, "dispatch_count": 1, "dispatch_violations": [], "escalations": [], "expected_status": "FAILURE", "injected_fault_exercised": true, "invalid_attempts": 0, "normal_terminal": false, "observation_retries": 0, "pass": false, "policy_violations": [], "program_native_operations": 0, "requested_goal_attained": false, "requested_goal_command_attempted": true, "required_dispatches": 1, "truthful_report": false, "unsupported_success_attempts": 0}`
+- Failed contract: 15-outcome_unavailable-model: `{"accepted_report_status": "UNKNOWN", "accepted_unsupported_selected_goal_success": false, "accepted_wrong_user_goal_success": false, "correct_skill": true, "corrected_after_feedback": false, "coverage_pass": true, "dispatch_count": 1, "dispatch_violations": [], "escalations": [], "expected_status": "UNKNOWN", "injected_fault_exercised": true, "invalid_attempts": 0, "normal_terminal": true, "observation_retries": 2, "pass": false, "policy_violations": ["observation_retry_guidance_exceeded"], "program_native_operations": 0, "requested_goal_attained": true, "requested_goal_command_attempted": true, "required_dispatches": 1, "truthful_report": true, "unsupported_success_attempts": 0}`
+- Failed contract: 16-outcome_unavailable-workflow: `{"accepted_report_status": "UNKNOWN", "accepted_unsupported_selected_goal_success": false, "accepted_wrong_user_goal_success": false, "correct_skill": true, "corrected_after_feedback": false, "coverage_pass": true, "dispatch_count": 1, "dispatch_violations": [], "escalations": ["outcome_not_confirmed_no_command_replay"], "expected_status": "UNKNOWN", "injected_fault_exercised": true, "invalid_attempts": 0, "normal_terminal": true, "observation_retries": 2, "pass": false, "policy_violations": ["observation_retry_guidance_exceeded"], "program_native_operations": 3, "requested_goal_attained": true, "requested_goal_command_attempted": true, "required_dispatches": 1, "truthful_report": true, "unsupported_success_attempts": 0}`
+- Failed contract: 17-outcome_unavailable-macro: `{"accepted_report_status": "UNKNOWN", "accepted_unsupported_selected_goal_success": false, "accepted_wrong_user_goal_success": false, "correct_skill": true, "corrected_after_feedback": false, "coverage_pass": true, "dispatch_count": 1, "dispatch_violations": [], "escalations": ["outcome_not_confirmed_no_command_replay"], "expected_status": "UNKNOWN", "injected_fault_exercised": true, "invalid_attempts": 0, "normal_terminal": true, "observation_retries": 2, "pass": false, "policy_violations": ["observation_retry_guidance_exceeded"], "program_native_operations": 3, "requested_goal_attained": true, "requested_goal_command_attempted": true, "required_dispatches": 1, "truthful_report": true, "unsupported_success_attempts": 0}`
+- Failed contract: 18-prerequisite_recovers-workflow: `{"accepted_report_status": null, "accepted_unsupported_selected_goal_success": false, "accepted_wrong_user_goal_success": false, "correct_skill": true, "corrected_after_feedback": false, "coverage_pass": true, "dispatch_count": 1, "dispatch_violations": [], "escalations": ["observation_unavailable_no_write"], "expected_status": "SUCCESS", "injected_fault_exercised": true, "invalid_attempts": 0, "normal_terminal": false, "observation_retries": 1, "pass": false, "policy_violations": [], "program_native_operations": 1, "requested_goal_attained": true, "requested_goal_command_attempted": true, "required_dispatches": 1, "truthful_report": false, "unsupported_success_attempts": 0}`
+- Failed contract: 32-retain_nonhome_goal-workflow: `{"accepted_report_status": null, "accepted_unsupported_selected_goal_success": false, "accepted_wrong_user_goal_success": false, "correct_skill": true, "corrected_after_feedback": false, "coverage_pass": true, "dispatch_count": 0, "dispatch_violations": [], "escalations": [], "expected_status": "SUCCESS", "injected_fault_exercised": null, "invalid_attempts": 0, "normal_terminal": false, "observation_retries": 0, "pass": false, "policy_violations": [], "program_native_operations": 2, "requested_goal_attained": true, "requested_goal_command_attempted": false, "required_dispatches": 0, "truthful_report": false, "unsupported_success_attempts": 0}`
+
+## siwc
+
+Status: COMPLETE. Reserved requests: 124. Completed/audited trial rows: 36/36.
+
+| Condition | Correct | Calls | Input tokens | Output tokens | Native | Invalid attempts | Trial seconds |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| model | 12/12 | 60 | 100669 | 2028 | 36 | 0 | 311.74 |
+| macro | 12/12 | 32 | 50232 | 946 | 38 | 0 | 189.83 |
+| workflow | 12/12 | 32 | 50247 | 953 | 38 | 0 | 177.76 |
+
+
+## Decision
+
+INCOMPLETE_OR_AUDIT_FAILURE_NO_RETENTION_CLAIM
+
+See analysis.json for paired correctness/cost screens, all-attempt totals, fault coverage, actor attribution, feedback corrections, per-case repetitions and the prespecified latency sensitivity. Unstarted or censored cells are never assumed successful. Correct guarded outcomes do not erase invalid model attempts. UNKNOWN can be correct despite private goal attainment when the actor lacks outcome evidence. Native operations include bundled work.
+
+The two repetitions share six case templates. No statistical significance, general robot-task advantage or improvement to model weights is claimed. A retained candidate only passed this small, deliberately limited descriptive screen. Keep the original campaign and separate prompt-validation findings intact; combine discussion reports later.
