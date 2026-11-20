@@ -1085,6 +1085,7 @@ results and interpretations.
 ## Contents
 
 - [Results at a glance (all studies)](#results-at-a-glance-all-studies)
+- [Claims ledger](#claims-ledger-what-the-report-may-and-may-not-say)
 
 1. [Goals and research question](#1-goals-and-research-question)
 2. [Current verified status](#2-current-verified-status)
@@ -1154,6 +1155,43 @@ F1 Stage 0 (2026-11-21) is design only, with no trials, so it has no row.
 | F1 step 0 (2026-11-20) | trace classification, no runs | Qwen | 116 trials scanned (M4 40 + G1 76) | 12 length stops: 8 class A, 4 class C | — | [F1_STEP0_LENGTH_STOPS_2026-11-20.md](docs/F1_STEP0_LENGTH_STOPS_2026-11-20.md) |
 
 Source checks: 100 literal strings across 37 rows, all found.
+
+## Claims ledger (what the report may and may not say)
+
+Added 2026-11-21. It starts from the novelty review's "claims we must NOT make" table, plus §12 and §17.
+"Allowed" claims still need their qualification in the report text. Figures quoted here were checked
+mechanically against the linked evidence (`tools/master_readme/claims_ledger.py`). Results per study: see
+[Results at a glance](#results-at-a-glance-all-studies). Suggested wording for the contribution statement:
+[novelty review §4](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md).
+
+| Claim | Status | Qualification / reason | Evidence |
+|---|---|---|---|
+| A reusable bounded-skill component for NASA-JPL ROSA was built: the LLM selects one registered skill; Python performs its reads, at most one write and a fresh verification | Allowed | Engineering contribution; not an algorithmic novelty. | [M1_ACCEPTANCE_REPORT.md](artifacts/macro-module-v1-20261027/M1_ACCEPTANCE_REPORT.md), [M2_M3_COMBINED_REPORT_2026-10-27.md](docs/M2_M3_COMBINED_REPORT_2026-10-27.md) |
+| The macro cut LLM calls for every backend with working tool calls | Allowed, with the stated qualification | All-attempt G1: Sol 126 → 74, Qwen 123 → 75, Ministral 154 → 83; M4 Sol 44.1% fewer requests. The saving is per model turn, not per unit of robot work. | [G1_SOL_ADJUDICATED_REPORT_2026-11-19.md](G1_SOL_ADJUDICATED_REPORT_2026-11-19.md), [G1_QWEN_ADJUDICATED_REPORT_2026-11-20.md](G1_QWEN_ADJUDICATED_REPORT_2026-11-20.md), [G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md](G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md), [FINAL_REPORT_FOR_CHATGPT.md](artifacts/macro-m4-20261027/FINAL_REPORT_FOR_CHATGPT.md) |
+| Savings track model turns, not native acquisition depth (P1′) | Allowed, with the stated qualification | This was predicted by design (the primitive read already batches sources) and supported for Sol; present it as a confirmed design consequence, not a discovery. | [G1_SOL_ADJUDICATED_REPORT_2026-11-19.md](G1_SOL_ADJUDICATED_REPORT_2026-11-19.md), [NOVELTY_AND_RELATED_WORK_2026-11-20.md](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md) |
+| Predictions were frozen before held-out runs | Allowed, with the stated qualification | Say "frozen internally before held-out runs", **not** "pre-registered": they were amended after dev data, are not on a public registry, and three backends were added after Sol/Qwen results. | [NOVELTY_AND_RELATED_WORK_2026-11-20.md](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md) |
+| Costs are reported for all attempts and for matched successes, with infrastructure censoring | Allowed | State both views; never quote only the favourable one. | [G1_SOL_ADJUDICATED_REPORT_2026-11-19.md](G1_SOL_ADJUDICATED_REPORT_2026-11-19.md) |
+| Correctness effects were mixed and small | Allowed | M4 Qwen went 15/20 → 14/20; G1 Qwen known-goal 26/36 → 30/36. Say "mixed", not "improved". | [FINAL_REPORT_FOR_CHATGPT.md](artifacts/macro-m4-20261027/FINAL_REPORT_FOR_CHATGPT.md), [G1_QWEN_ADJUDICATED_REPORT_2026-11-20.md](G1_QWEN_ADJUDICATED_REPORT_2026-11-20.md) |
+| Repairing the Ollama integration profile made Llama and Granite usable | Allowed, with the stated qualification | Llama known-goal 21/36 → 28/36, Granite 5/36 → 9/36 (P → M), from 0/36 before. The three repairs changed together, so their individual effects are not isolated; G1 used the old profile. | [INTEGRATION_RERUN_COMPLETE_REPORT_2026-11-17.md](artifacts/integration-rerun-20261117-r1/evidence/INTEGRATION_RERUN_COMPLETE_REPORT_2026-11-17.md) |
+| Qwen's length stops are selection failures, not a need for more output tokens | Allowed, with the stated qualification | Inference (H) from 12 traces (8 class A, 4 class C); the F1 wording fix built on it is untested. | [F1_STEP0_LENGTH_STOPS_2026-11-20.md](docs/F1_STEP0_LENGTH_STOPS_2026-11-20.md) |
+| Clarification behaviour was human-reviewed | Allowed, with the stated qualification | Say "rated by one teammate with self-attested eligibility"; not independent or external validation. | [G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md](G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md), [NOVELTY_AND_RELATED_WORK_2026-11-20.md](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md) |
+| A new algorithm or novel mechanism | **Not allowed** | AWO, PyRUA-Lean, BT-Agent, LLMCompiler, ReWOO and SayCan cover the mechanism. | [NOVELTY_AND_RELATED_WORK_2026-11-20.md](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md) |
+| First work to improve or benchmark ROSA | **Not allowed** | MetaTool/ROS (vs vanilla ROSA) and ROSClaw (parity protocol vs ROSA) exist. | [NOVELTY_AND_RELATED_WORK_2026-11-20.md](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md) |
+| Better than (stock) ROSA | **Not allowed** | Unmodified ROSA was never run as a baseline (§12 item 20). | [NOVELTY_AND_RELATED_WORK_2026-11-20.md](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md), this README |
+| Improves reliability | **Not allowed** | M4 Qwen 15/20 → 14/20; G1 gains are small, grouped, AI-authored and confounded with condition wording. | [NOVELTY_AND_RELATED_WORK_2026-11-20.md](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md), [FINAL_REPORT_FOR_CHATGPT.md](artifacts/macro-m4-20261027/FINAL_REPORT_FOR_CHATGPT.md) |
+| Generalizes to new tasks or robots | **Not allowed** | AI-authored, reused cases; mock domains; one Gazebo arm; no physical robot. | [NOVELTY_AND_RELATED_WORK_2026-11-20.md](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md) |
+| Small local models reach parity with Sol | **Not allowed** | Different hardware and provenance; Qwen and Ministral stay below Sol on the same G1 cases. | [NOVELTY_AND_RELATED_WORK_2026-11-20.md](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md) |
+| Fewer calls means less robot work | **Not allowed** | Native operations rose with the macro (G1 Qwen 100 → 106, Ministral 102 → 127). | [NOVELTY_AND_RELATED_WORK_2026-11-20.md](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md), [G1_QWEN_ADJUDICATED_REPORT_2026-11-20.md](G1_QWEN_ADJUDICATED_REPORT_2026-11-20.md), [G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md](G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md) |
+| Savings grow with task depth | **Not allowed** | The opposite was predicted and supported (P1′); the depth-growth idea (Stage 0 P1) was dropped before testing. | [NOVELTY_AND_RELATED_WORK_2026-11-20.md](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md) |
+| Granite/Llama results show the macro does not help | **Not allowed** | Those G1 results are tool-call integration failures, not macro evidence. | [NOVELTY_AND_RELATED_WORK_2026-11-20.md](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md), [G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md](G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md) |
+| Reliability across repeated runs (pass^k) | **Not allowed** | Each G1 case/condition ran once. (The separate M4-family Qwen lab repeat is one replication, not pass^k.) | [NOVELTY_AND_RELATED_WORK_2026-11-20.md](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md) |
+| Independent or externally validated human review | **Not allowed** | One teammate reviewer, self-attested eligibility (§12 item 23). | [NOVELTY_AND_RELATED_WORK_2026-11-20.md](docs/NOVELTY_AND_RELATED_WORK_2026-11-20.md) |
+| Lab timing shows a controlled speed difference | **Not allowed** | The GPU was shared with another project's Ollama server; timing is contextual (§12 item 22). | [LAB_CONTAINER_CHECK_2026-11-20.md](docs/LAB_CONTAINER_CHECK_2026-11-20.md) |
+| Batching (Stage 4) or the serving change (Phase 1) was an improvement | **Not allowed** | Both failed their predefined retention screens. | [FINAL_REPORT_FOR_CHATGPT.md](artifacts/stage4-batching-completion-20261021/FINAL_REPORT_FOR_CHATGPT.md), [QWEN_SERVING_PHASE1_REPORT_2026-11-13.md](docs/QWEN_SERVING_PHASE1_REPORT_2026-11-13.md) |
+| The F1 catalogue wording fixes Qwen | **Not allowed** | F1 is designed but untested (Stage 0 only); no F1 model run has happened. | this README |
+| Qwen was trained or its weights improved; JTVR or episodic memory was completed; physical-robot safety was shown; the full ROSA catalogue was benchmarked | **Not allowed** | None of these happened (§17 closing note). | this README |
+
+Ledger checks: 33 literal strings across 24 rows, all found.
 
 ## 1. Goals and research question
 
