@@ -3,1012 +3,17 @@
 Updated: **2026-11-21**. Maintained project context, decision history and evidence map.
 
 > **Where to start (2026-11-21).** The current state is the dated entries at the top of
-> [section 2](#2-current-verified-status), newest first. **All studies are closed and the project is
-> frozen** at tag `freeze-2026-11-21` (see [FREEZE.md](FREEZE.md)). New work is on branch
-> `member/martin-f1` (F1 Stage 0, design only). The bold-titled blocks between here and the
-> presentation briefing are a **chronological checkpoint archive** (2026-11-17 to 11-20). Words
-> such as "current", "latest", "pending" or "running" in them describe that moment, not today.
+> [section 2](#2-current-verified-status), newest first. For the report, start with
+> [Results at a glance](#results-at-a-glance-all-studies) and the
+> [Claims ledger](#claims-ledger-what-the-report-may-and-may-not-say). **All studies are closed and the
+> project is frozen** at tag `freeze-2026-11-21` (see [FREEZE.md](FREEZE.md)). New work is on branch
+> `member/martin-f1` (F1 Stage 0, design only). Older dated checkpoint blocks, the superseded
+> 2026-11-18 presentation briefing and historical section 2 checkpoints are kept unchanged in
+> [Appendices A–C](#appendix-a--chronological-checkpoint-archive-2026-10-27-to-2026-11-20). Words such as
+> "current", "latest", "pending" or "running" there describe that moment, not today.
 > **Git status 2026-11-21:** `member/martin` on GitHub is at `988cfd8`, pushed by Martin on 11-20.
 > Everything after it is local: the freeze commit `0cd6748`, the tag `freeze-2026-11-21`, the later
 > `member/martin` documentation commits and branch `member/martin-f1`. Pushing them awaits Martin.
-
-**Publication - 2026-11-20.** The owner explicitly approved the full public 22-commit
-payload; evaluation `member/martin` was pushed to **8f961b5**, verified on GitHub, with
-`main` unchanged. That approval covers the published payload, not arbitrary future
-uploads. Later documentation commits are local until separately approved for push.
-Operational lab-access details are kept in a private local handoff, not in this
-repository. The lab root Git checkout is older; the actual G1 execution mirror is a
-separate source/evidence snapshot, not a Git checkout. Do not blindly synchronize one
-over the other. The lab GPU is shared with another project; recheck and coordinate
-before any future model load, and never stop the other project's work.
-Historical checkpoints below preserve earlier status; the newest dated blocks
-and final reports take precedence. In particular, the old Stage3-blocked wording
-is superseded: Sol and the three-model extension are closed; ~~Qwen BatchB is pending~~
-(superseded: Qwen Batch B was closed and adjudicated on 2026-11-20).
-
-**Current closeout - 2026-11-20: extension T6 COMPLETE.** Levinson’s 12 actual
-ratings are bound after Martin forwarded the completed declaration (review date
-2026-11-19; five affirmative self-attestations; teammate relationship disclosed).
-The original ZIP and blank declaration are retained; the supplemental statement
-is separately attributed. Eligibility is self-attested, not external validation.
-All 228 extension attempts now have final outcomes. Primitives versus macro:
-Ministral **29/38 vs 35/38**, Granite **1/38 vs 0/38**, Llama **0/38 vs 1/38**.
-Known-goal results remain **28/36 vs 33/36**, **0/36 vs 0/36**, **0/36 vs 1/36**.
-Granite’s single pass is clarification, not native task execution.
-
-The frozen analysis ran on the lab with 10,000 whole-template-group bootstrap
-draws per model (seed 20261113); all new-backend outputs remain exploratory.
-H-write is **Uninformative for each model and overall**, because all three hit
-the predefined write-arm floor/ceiling override. P2’s ±25% native-operation
-rule is Against for Ministral/Llama and Uninformative for Granite. P1′ outputs
-on new backends are diagnostics of the originally Sol-specific endpoint; P3
-is dropped and P4 catalogue probing was not run. P5 is an engineering gate.
-
-Ministral uses **154→83 calls**, **5.32→3.18 seconds per task** and **102→127
-native operations** over all attempts. Its 28 matched successful pairs use
-**111→59 calls**, **144.43→92.62 task seconds** and **85→87 native operations**.
-Granite/Llama still have no matched successful pair. Their short failure times
-are not evidence of useful efficiency. No generic reliability or model parity
-claim follows. All raw evidence, frozen inputs/backend seals and 228 local plus
-228 persisted audits verify. **Zero new model requests**; the 710 charged total
-is unchanged. No experiment, runtime change or Git publication occurred.
-
-The [adjudicated report](G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md) supersedes
-earlier pending extension checkpoints below. Qwen Batch B’s separate four-case
-human review remains pending; no extension labels were transferred to it.
-
-**Current review checkpoint - 2026-11-20: all 12 extension ratings received;
-T6 remains BLOCKED because the reviewer declaration is blank.** Martin supplied
-`lev'srating3.zip`; all 12 H01?H12 entries name Levinson, have permitted labels
-and reasons, and match the issued extension packet, source hashes and rendered
-transcripts. The original ZIP and both member files are preserved unchanged.
-The declaration is byte-identical to the blank issued template: actual review
-date, eligibility, exposure and personal scoring without AI/coaching are not
-attested. No independence, accepted adjudication or final scores are inferred.
-Levinson only needs to complete and return the declaration; he need not repeat
-his ratings. Formal frozen analysis and H-write closeout remain withheld.
-Qwen Batch B's separate four-case review is still outstanding. No new model
-requests, raw-result changes, experiments or Git publication occurred.
-See the [intake status](artifacts/macro-generalization-20261113/revision-1/stage-4-multimodel-20261119/operator/human-review-intake-20261120/INTAKE_STATUS.md)
-and [declaration-only follow-up ZIP](artifacts/macro-generalization-20261113/revision-1/stage-4-multimodel-20261119/operator/human-review-intake-20261120/DECLARATION_TO_COMPLETE.zip).
-The earlier execution checkpoint below remains accurate for measured outcomes;
-its statement that no ratings were received is superseded by this intake note.
-
-**Current state - 2026-11-19: all228 exploratory extension attempts COMPLETE;
-actual human review and formal closeout remain pending.** The authorized fixed
-sequence finished Ministral, Granite and Llama on the lab. All76 attempts/model,
-including failures, are retained. **701 inference +6 preparation +3 cleanup
-=710 charged requests**, within the separate611-request ceilings: Ministral240,
-Granite79, Llama391. No infrastructure retries, censored trials or replacement
-attempts occurred. All228 local and228 persisted Phoenix audits pass. All models
-are unloaded. No Qwen/Sol rerun, OAuth, Gazebo, model download or Git publication
-occurred.
-
-These are **exploratory backends, added after Sol and Qwen results**, using the
-same38 AI-authored mock cases. Known-goal counts below exclude the two ambiguous
-cases per condition. Calls, time and native work include all38 attempts/condition.
-
-| New backend | Known-goal primitives | Known-goal macro | Calls P → M | Mean task seconds P → M | Native operations P → M |
-|---|---:|---:|---:|---:|---:|
-| Ministral3 8B | 28/36 | 33/36 | 154 →83 | 5.32 →3.18 | 102 →127 |
-| Granite3.3 8B | 0/36 | 0/36 | 38 →38 | 3.55 →3.15 | 0 →0 |
-| Llama3.1 8B | 0/36 | 1/36 | 203 →185 | 1.96 →2.11 | 42 →122 |
-
-Ministral is the strongest new local configuration observed here. Its27 matched
-successful pairs used110 vs58 calls and142.54 vs90.47 measured task seconds,
-with85 vs87 native operations. All-attempt calls fell46.1%; correctness rose by
-five known-goal passes as a point observation, not a proven general reliability
-gain. Granite returned76 text responses with0 recognized native calls; inspected
-outputs rendered tool-shaped JSON as text. Llama returned383 native calls but
-had150/135 invalid attempts and37/31 budget endings P/M. Faster failure is not
-useful task efficiency; neither Granite nor Llama has a matched successful pair.
-Do not interpret these results as intrinsic model rankings.
-
-All-attempt outcomes are Ministral61 PASS,12 FAIL,3 primary pending; Granite0
-PASS,72 FAIL,4 pending; Llama1 PASS,75 FAIL,0 primary pending. Nevertheless,
-**all12 new clarification transcripts require actual semantic review**: five
-already fail structural bounds, so favorable semantic ratings cannot turn those
-into passes. Levinson is nominated; an honest eligibility declaration and his
-actual ratings have not been obtained. The new shuffled packet is separate from
-Qwen Batch B's four outstanding responses and from earlier Sol/development/M4
-reviews. No AI ratings or reused human labels were supplied. T1–T5 are complete
-with the documented reporting qualifications; **T6 is BLOCKED pending actual
-ratings**. Formal frozen analysis and H-write closeout are withheld.
-
-The corrected predefined eight-case write-bearing counts are Ministral4/8 vs8/8,
-Granite0/8 vs0/8, and Llama0/8 vs1/8. Other known-goal counts are24/28 vs25/28,
-0/28 vs0/28, and0/28 vs0/28 respectively. Six healthy writes plus the two frozen
-`write_fault` cases form that eight-case group. The predefined floor/ceiling rule
-must take precedence; do not call the favorable Ministral point pattern H-write
-Support while ignoring its8/8 ceiling. No frozen hypothesis or threshold changed.
-
-All recorded loaded-model telemetry samples show full GPU residence at8K context
-(96/96 Ministral,89/89 Granite,80/80 Llama). The extension used the disclosed
-replacement Jazzy image and unchanged pinned dependencies/settings. Earlier Qwen
-used another image; Sol retains its original hosted/laptop-WSL provenance. The
-full report provides their contextual results without pooling rates or claiming
-hardware-matched speed, general model parity or case generalization. This job
-uses mock operations, not new ROS-controller/Gazebo/physical-robot execution.
-
-Three preflight metadata transcriptions were corrected in a dated addendum while
-preserving the acknowledged original; actual sealed configuration/digest checks
-were correct. A reporting-only host/container invocation error was repaired after
-trials finished. The first descriptive helper also omitted `write_fault`, showing
-6/30 instead of8/28; corrected derived outputs now supersede that table, with
-old source/output/ZIP retained. These are documented reporting errors, not quiet
-changes to scorers, raw scores, cases, prompts, budgets or formal analysis.
-
-The3,796 frozen inputs,1,159 retained Sol/Qwen hashes,three backend seals and228
-raw trial hashes reverify. All2,019 entries of the initial completed archive
-verified after local transfer. That archive retains superseded derived tables;
-the share package marks the corrected report/JSON authoritative. No live Phoenix
-database backup or model-weight upload is claimed.
-
-Share the [complete corrected comparison report](G1_MULTIMODEL_REPORT_2026-11-19.md)
-and [report/evidence share ZIP](artifacts/macro-generalization-20261113/revision-1/stage-4-multimodel-20261119/G1_MULTIMODEL_SHARE_20261119.zip).
-For Levinson, send **only** the [neutral12-response review ZIP](artifacts/reviewer-delivery-20261119/G1_EXTENSION_CLARIFICATION_REVIEW_2026-11-19.zip).
-The [task status](artifacts/macro-generalization-20261113/revision-1/stage-4-multimodel-20261119/STATUS.md)
-records the remaining human gate. Preserve original Qwen/Sol/M4 results; this
-closeout does not authorize another experiment, default-model switch or Git push.
-Earlier checkpoints below are retained history and are superseded by this block.
-
-**Earlier live checkpoint - 2026-11-19: three-model exploratory batch was RUNNING;
-superseded by the execution closeout above.**
-The owner read the combined preflight and explicitly replied: "I read the
-preflight—launch the three-model batch." The detached, sleep-inhibited sequence
-started at **22:26 Taipei time**, in fixed order Ministral, Granite, Llama.
-Ministral has now completed76/76 attempts:61 PASS,12 FAIL,3 pending human review,
-0 infrastructure-censored. Known-goal correctness is28/36 primitives versus33/36
-macro. All-attempt calls154 vs83, mean task time5.32 vs3.18s and native operations
-102 vs127. There are27 matched successful pairs; costs there are110 vs58 calls
-and142.54 vs90.47 task seconds. All76 local and76 persisted audits pass. Its
-237 inference +2 preparation +1 cleanup requests total240/611. Four actual
-clarification ratings are still required, including one structurally failed
-response. These are descriptive outcomes, not a final human-adjudicated verdict.
-Granite completed76/76 attempts:72 FAIL,4 pending human review; known-goal
-correctness0/36 in both conditions. It produced0 recognized native tool calls
-and0 native operations. Inspected outputs contain tool-shaped JSON as text;
-this is a limitation of the tested integration, not proof of intrinsic inability.
-One trial had a response-length stop. Granite spent76 inference +2 preparation
-+1 cleanup =79/611 charged requests. Llama is now running. Early Llama records
-contain recognized native calls but repeated schema/validation failures; no
-final Llama outcome is inferred. Do not assume unstarted outcomes.
-Counters and preserved attempts are in each backend's status/ledger.
-Three metadata values were transcribed incorrectly into the acknowledged
-preflight prose: Ministral's displayed digest and disk bytes, and Llama's loaded
-size. The original acknowledged document is preserved unchanged; the
-[dated correction](artifacts/macro-generalization-20261113/revision-1/stage-4-multimodel-20261119/PREFLIGHT_DISPLAY_CORRECTIONS_2026-11-19.md)
-gives the exact sealed values. Installed server digests rechecked against all
-three unchanged configurations; the actual launch used those correct sealed
-values. This is a documentation error, not a model replacement or protocol edit.
-The original protected inputs, three backend seals, service health and sleep
-inhibitor permission passed the final zero-inference check. Request caps,
-eight-hour backend windows, fresh idle gates and actual human-review requirements
-remain as specified below. No further acknowledgment is needed for this authorized
-sequence unless a genuinely new authorization boundary is reached.
-
-**Earlier preparation checkpoint - 2026-11-19: three additional local backends
-prepared; combined launch acknowledgment subsequently received as above.** The owner supplied a bounded G1
-extension for **Ministral 3 8B, Granite 3.3 8B and Llama 3.1 8B Instruct**, in that
-fixed order, using the same38 AI-authored cases and primitives/macro conditions:
-**76 attempts/model,228 total**. These are **exploratory backends, added after
-Sol and Qwen results**, not a new independently authored held-out catalogue.
-No model or case substitution, prompt/template/parser repair, download, Qwen/Sol
-rerun, Gazebo run, OAuth, catalogue probe or Git publication was performed.
-
-**Benchmark attempts remain0/228.** Eligibility preparation charged **six empty
-load/unload requests**, two per model, inside separate611-request total caps.
-At most609 requests/model remain, including inference, eligible retries and final
-unloads; the three-model aggregate cap is1,833. Each backend has its own eight-hour
-live window. Approximately200 inference requests/model is only a planning
-reference from earlier batches, not an estimate of missing counters or a promise.
-The owner's supplied T2/T4 explicitly requires reading and acknowledging the
-combined preflight once before any new benchmark launches. The later instruction
-to continue preparation has not been represented as acknowledgment of a record
-that did not yet exist.
-
-All three report native tool capability and loaded wholly on the lab GPU at8K
-context: **Ministral35/35 layers, Granite41/41, Llama33/33**. All use installed
-Q4_K_M weights; exact tags, digests, byte sizes, family and advertised context are
-recorded in the preflight and sealed configurations. No thinking capability is
-advertised; the common `think=false` wire field is retained. All **24 scripted
-controls**,24 local audits and24 persisted Phoenix audits passed, and **144
-serialized request bodies** matched the unchanged adapter. Six timing fields
-survived injected-response checks. Missing live-model usage/cached-token counters
-remain unrecorded; scripted checks are not model-performance results. The runner
-also failed closed without its execution flag or launch acknowledgment.
-
-The earlier container and its image became unavailable externally during
-preparation. The extension now uses its own container and another **already
-installed ROS2 Jazzy image**, `sha256:306205ffce29f89a7e138f130cd3ee0bd668c17ed5441a45532449dbcbf771d2`,
-with the same verified pinned Python dependencies. This differs from Qwen's
-original image; no identical-image replication is claimed. An extension-owned
-Phoenix service stores new traces separately, with raw control exports retained.
-No other project's container/server was modified. The GPU idle gate passed at
-the original threshold, with a fresh gate required before each backend. No
-benchmark is protected against explicit reboot or power loss. Execution will be
-detached with a scoped sleep inhibitor and GPU/container/model telemetry.
-
-These G1 operations are **mocks inside the ROS2/Jazzy software environment**;
-they do not command Gazebo, controllers or hardware. Earlier M4 and transfer
-experiments actually used Gazebo and remain separate evidence. The fixed source,
-cases, scorer, thresholds, original3,796 input hashes,1,159 retained Sol/Qwen file
-hashes and three new backend seals reverified. Preparation log-decoding and idle
-gate interruptions are retained, without repeating successful load/control work.
-
-The written H-write comparison is prospective only for these additional
-backends, derived from Qwen's retrospective2/8 vs6/8 write-bearing and24/28 vs24/28
-other known-goal split. It uses the owner's confirmed raw-count rule, with0/8 or
-8/8 in either write arm forcing Uninformative. Fifteen synthetic boundary checks
-passed on the lab. This rule can support write concentration even if overall
-accuracy worsens; both must be reported. Do not pool backend pass rates or claim
-new case generality. The requested P-label correction was inconsistent with the
-adopted November14 definitions: a factual addendum preserves **P3 dropped horizon
-reliability; P4 catalogue probe not run**. P1′ retains its original Sol-specific
-formal scope.
-
-**Levinson is nominated for the new pooled clarification review, not yet
-attested or scored.** After live execution, prepare a separate blinded packet
-of up to12 new transcripts. Qwen's four-transcript Batch B remains outstanding
-separately. No assistant ratings are permitted. Produce descriptive reports after
-each backend; the unchanged formal analyzer remains withheld until actual human
-ratings are bound. T4's immediate-analysis wording does not remove T6's gate.
-
-Read the [combined launch preflight](artifacts/macro-generalization-20261113/revision-1/stage-4-multimodel-20261119/READY_PREFLIGHT.md),
-[task-by-task status](artifacts/macro-generalization-20261113/revision-1/stage-4-multimodel-20261119/STATUS.md),
-[dated Qwen definition addendum](artifacts/macro-generalization-20261113/revision-1/stage-4-multimodel-20261119/QWEN_REPORT_ADDENDUM_2026-11-19.md)
-and [preparation evidence archive](artifacts/macro-generalization-20261113/revision-1/stage-4-multimodel-20261119/G1_MULTIMODEL_PREPARATION_20261119.zip).
-Completed Qwen and Sol results below remain unchanged; earlier current-state
-headings are historical checkpoints superseded by this block.
-
-**Completed Qwen result - 2026-11-19: Qwen lab execution COMPLETE;
-human adjudication pending.** All **76/76 G1 mock attempts** finished in one
-uninterrupted batch,19:45:22-20:05:33 Taipei time. Effective outcomes are
-**56 PASS,17 FAIL,3 PENDING_HUMAN_REVIEW,0 infrastructure-censored**. Primitives:
-26 PASS,11 FAIL,1 pending; macro:30 PASS,6 FAIL,2 pending. Known-goal correctness
-is **26/36 versus30/36**, including13/18 versus15/18 in each domain. Four new
-clarification transcripts need real semantic ratings: one already fails
-structural/runtime requirements, so only three primary outcomes are undecided.
-The frozen final analysis remains withheld until the required ratings arrive.
-No Sol/development ratings were reused and no human judgments were invented.
-
-The batch spent **198 inference requests plus1 earlier auxiliary load =199/611
-charged requests**, with0 infrastructure retries,0 task-budget exhaustions and
-no replay or replacement. All **76 local and76 persisted Phoenix audits pass**;
-3,796 original frozen inputs and81 sealed backend files reverify unchanged.
-The completed export's **662 manifest entries verified** after transfer. Source,
-raw outputs, failures, traces and operational repairs are retained.
-
-All-attempt primitives versus macro costs: **123 vs75 calls**,264,961 vs152,127
-input tokens,25,878 vs18,791 output tokens,100 vs106 native operations and322.22
-vs239.86 summed task seconds. Mean task time was8.48 vs6.31s; median7.93 vs5.90s.
-Across the **25 pairs where both conditions passed**, calls were87 vs52
-(40.2% fewer), task time221.63 vs159.90s (27.9% less), and native work87 vs86.
-Conditional successful-pair costs do not replace all-attempt accounting. Total
-campaign time was1,210.25s, including auditing/bookkeeping outside measured tasks.
-
-Qwen still has substantial failures. Seven trials stopped on response length
-(4 primitives,3 macro); five other failures had incorrect selection and five
-had correct selection but failed execution/reporting. There were0 recorded
-dispatch violations and0 unsupported accepted SUCCESS flags, but **one accepted,
-evidence-grounded SUCCESS for the wrong requested goal in each condition**.
-Skill-report truthfulness and user-goal completion remain separate. These
-descriptive buckets are not a causal diagnosis or new preregistered predictions.
-
-All198 inference calls retained all six Ollama timing fields; aggregate decode
-rates were89.96 and89.55 tokens/s. Cached-token counters were not returned.
-Telemetry sampled only Ollama and the existing remote-desktop compute processes;
-no fixed OOM/reset/runner-termination signatures were counted. The scoped sleep
-inhibitor ended normally. **Lab hardware; not directly comparable to M4**.
-This is neither a controlled laptop/lab comparison nor proof of parity with Sol.
-The previous adjudicated Sol results remain73 PASS and3 censored, unchanged.
-
-See the [complete Qwen report](G1_QWEN_LAB_REPORT_2026-11-19.md),
-[verified evidence ZIP](artifacts/g1-lab-preparation-20261119/G1_QWEN_LAB_COMPLETED_20261119.zip)
-and [neutral four-transcript review ZIP](artifacts/reviewer-delivery-20261119/G1_HELDOUT_REVIEW_BATCH_B_2026-11-19.zip).
-Send only that neutral review ZIP to the reviewer; model labels, mappings and
-prior scores are withheld. Return their actual CSV and declaration. The next
-authorized work is intake and unchanged final analysis, with zero inference.
-P3 remains dropped; the separate P4 catalogue probe is **not run**. No optional
-replay, new study, Gazebo batch, architectural change or Git publication began.
-Earlier launch/readiness/pending snapshots below are retained historical records
-and are superseded by this current-state block.
-
-**Earlier launch checkpoint - 2026-11-19: Qwen lab batch was RUNNING.** The owner read the
-preflight and gave the launch go-ahead. The detached worker started at **19:45
-Taipei time**, using the existing lab Jazzy container and local Qwen. All76 mock
-trials remain scheduled, with the original eight-hour window and611 total
-charged-request ceiling, including1 auxiliary load already spent. Fresh GPU idle
-samples passed; no other application was terminated. A temporary sleep/idle
-inhibitor and read-only GPU/container telemetry are active. Reboots, power loss
-and explicit shutdown can still interrupt execution. Only unstarted cells may
-resume after integrity checks under the original cumulative limits.
-
-The final zero-inference checks matched **48 serialized request bodies byte for
-byte** against the unchanged adapter and verified preservation of all six Ollama
-timing fields with an injected response. NVIDIA driver570.195.03, reported CUDA
-compatibility12.8 and the container image digest are recorded. Frozen runtime,
-prompts, cases and model settings were not changed. The original idle model
-retention remains; any load costs are recorded rather than silently excluded.
-The [launch checklist and limitations](artifacts/macro-generalization-20261113/revision-1/stage-4-qwen-lab-20261119/operator/LAUNCH_CHECKLIST_ADDENDUM.md)
-links the operational evidence. New Qwen clarification answers will require new
-human ratings. No live results or correctness conclusions are available at this
-launch checkpoint. No optional replay, catalogue probe, Sol replication or Git
-publication is authorized by this launch. Catalogue size is P4 and is not run;
-P3 is dropped. Label Qwen tables **lab hardware; not directly comparable to M4**.
-This is not a controlled laptop/lab speed comparison. The completed adjudicated
-Sol results remain unchanged. Earlier readiness and pending-review snapshots
-below are dated history, superseded by their later current-state updates.
-
-**Earlier preparation checkpoint - 2026-11-19: Qwen lab preflight ready; acknowledgment subsequently received and launch completed as above.**
-The owner chose to retain the adjudicated first Sol batch and prioritize Qwen;
-no Sol replication is scheduled. Qwen has **0/76 benchmark trials started**.
-Its exact frozen model digest is present on the lab. The established Jazzy
-container imports ROSA/Ollama successfully; eight scripted backend-port controls
-pass with8/8 local and8/8 persisted Phoenix audits. These are zero-inference
-engineering checks, not live Qwen performance evidence. The original3,796 frozen
-inputs and the new81-file backend assembly verify unchanged.
-
-One auxiliary empty-prompt model-load request established33/33 GPU layers,
-Flash Attention enabled,8K loaded context and f16 server KV configuration. Its
-6.59s setup time/response/log are preserved; omitted internal usage counters
-remain NOT_RECORDED. **This1 request is charged inside the611 overall ceiling**,
-leaving at most610 inference/retry requests for the76-trial batch. The live
-backend window is8h, with the original per-task call/token/native limits. Model
-may auto-unload while awaiting review; fresh idle GPU samples are taken before
-actual launch. No other workload is stopped. No OAuth is needed for local Qwen.
-
-Wire validation identified a documentation discrepancy: the pinned adapter's
-LangChain streaming=False setting still produces API stream=True. Client
-cache=False also does not disable the lab server's prompt cache, which its log
-reports enabled. The port preserves actual frozen adapter behavior and records
-these facts; it does not force different settings to improve outcomes. The first
-wire check stopped on its incorrect False assumption before live inference or
-scripted trials; corrected golden comparison and eight controls passed.
-
-The existing G1 final freeze/preflight review gate remains: the owner-readable
-[Qwen READY_PREFLIGHT](artifacts/macro-generalization-20261113/revision-1/stage-4-qwen-lab-20261119/READY_PREFLIGHT.md)
-is complete, and final launch acknowledgment has been requested. The detached
-lab operator is prepared but has not started a benchmark. New Qwen clarification
-responses will require new human ratings after execution; Sol ratings cannot be
-reused. No catalogue probe, Gazebo study, source-module rewrite, new hosted
-sign-in or Git publication is part of this preparation. The
-[adjudicated Sol report](G1_SOL_ADJUDICATED_REPORT_2026-11-19.md) remains the completed
-comparison for that backend, with its original provenance and all failures retained.
-
-**Current G1 adjudicated status - 2026-11-19.** Levinson returned the four new
-held-out ratings: YES on both criteria in H01-H04, with actual reasons and his
-eligibility declaration preserved and bound to the issued transcript/evidence
-hashes. Eligibility is based on his attestation, not independently verified;
-team membership and his separate earlier dev review are disclosed. No ratings
-were invented or transferred between cases. **The first Sol batch now has73 PASS,
-0 evaluable FAIL and3 infrastructure-censored attempts, with0 pending judgments**.
-V2 correctness is35/35 primitives and38/38 macro; V3 counting censored attempts
-as failures is35/38 versus38/38. Do not treat that operational difference as
-proved reliability improvement. All76 attempts and200 physical requests remain.
-
-Final analysis ran on the **lab via SSH** with the unchanged frozen analyzer,
-10,000 whole-template-group bootstrap draws and zero inference requests. This
-analysis host does not rewrite the original batch's laptop-WSL orchestration and
-hosted Sol provenance. P1-prime is Support, P2 is Uninformative (V2 Support,
-V3 Against), P3 Dropped, P4 not yet tested/Uninformative, P5 Support, P6 descriptive.
-Across the35 matched successful pairs, primitives versus macros used **120 vs68
-calls,186,400 vs103,332 input tokens,3,597 vs2,238 output tokens,487.76 vs280.38
-summed task seconds, and111 vs103 native operations**:43.3% fewer calls and42.5%
-less measured task time. Small groups, missing bootstrap cells, AI authorship,
-condition wording and unequal censoring remain material limitations.
-
-The owner selected **prioritize Qwen on the lab; retain completed Sol results**.
-No extra Sol replication is scheduled and no fresh hosted sign-in is needed for
-Qwen. All future tests/trials execute on the lab. Qwen's exact model/settings,
-resource and frozen-input readiness must be established before live launch.
-New Qwen clarification responses will require their own ratings; Sol judgments
-cannot supply them. See the [adjudicated Sol report](G1_SOL_ADJUDICATED_REPORT_2026-11-19.md)
-and its linked raw analysis/intake/lab-export records. Earlier pending/launch
-snapshots below are historical and superseded by this current-state block.
-
-**Execution host policy - 2026-11-19 (current owner instruction).** All future
-automated tests, deterministic controls, model probes and trials must execute on
-the **lab computer via SSH**, using the existing lab-rosa target and
-/media/naeem/d1/marvel proj/. Local editing/document and evidence review remain
-possible; do not silently fall back to laptop execution if the lab is unavailable.
-SSH was verified with a read-only inventory: **RTX4080 SUPER,16,376MiB total,
-15,916MiB free,0% utilization at that instant**. Zero inference requests or tests;
-one sample is not the complete frozen idle/model/offload preflight. Laptop GPU
-constraints do not describe this lab configuration. Keep applicable resource
-budgets/settings and lab workload checks; record actual loaded offload/digest.
-
-The completed76-attempt Sol batch below was orchestrated in laptop WSL with
-hosted OpenAI inference; this new instruction does not rewrite that provenance
-or rerun it. Future hosted runners also belong on the lab, while Sol inference
-itself remains hosted. G1 already permits separately recorded lab hardware; record
-the execution configuration before a newly authorized batch and distinguish
-hardware-dependent timing. Existing review/launch gates and consent boundaries
-remain. See the [execution-host policy and verified inventory](docs/EXECUTION_HOST_POLICY_2026-11-19.md).
-
-**Current G1 status - 2026-11-19: Sol execution COMPLETE; human review pending.**
-All **76/76 scheduled Sol mock attempts** are retained, with **200/611 physical
-requests**, zero eligible reserve retries and no trial replay/replacement.
-Effective outcomes are **69 PASS, 0 evaluable FAIL, 3 infrastructure-censored
-(1 pre-output, 2 post-action), and 4 PENDING_HUMAN_REVIEW**. Known-goal evaluable
-correctness is **33/33 primitives and 36/36 macro**; this excludes censored and
-ambiguous attempts and is not a claim of76 successful trials. Three provider
-stream interruptions were preserved; only unstarted cells resumed with the
-original freeze, cumulative counters and eight-hour origin. Their underlying
-provider cause is unknown. **76/76 local and76/76 persisted Phoenix audits pass**;
-all3,796 frozen source/input hashes match,245 previously retained trial files
-reverify, owned services stopped and credential memory cleanup completed.
-
-Across33 matched successful pairs, primitive versus macro costs were **118 vs66
-calls,183,745 vs100,679 input tokens,3,503 vs2,138 output tokens,480.67 vs271.66
-summed task seconds, and111 vs103 native operations**. These correspond to44.1%
-fewer calls and43.5% less measured task time. All-attempt costs, including censored
-and pending work, are126 vs74 calls and504.38 vs317.70 task seconds (means13.27
-vs8.36s). Three primitive records have incomplete token usage; missing values are
-not estimated. Campaign elapsed including setup/pauses was35.08min. No pair gap
-exceeded30min. This is descriptive evidence on the fixed AI-authored catalogue,
-not a final prediction verdict, general reliability claim or stock-ROSA comparison.
-
-The next gate is actual uninvolved human review of the **four new held-out
-clarification responses**. The older dev ratings cannot be reused. A new blinded
-packet contains transcripts, the unchanged rubric, blank ratings and declaration;
-no ratings were invented. After real submission intake/content binding, the
-unchanged frozen analysis can issue its final views/bootstrap/predictions.
-Qwen/catalogue stages remain unstarted; no additional stage, consent or Git
-publication is authorized here. See the complete
-[G1 Sol execution report](G1_SOL_HELDOUT_REPORT_2026-11-19.md) and
-[new blinded review packet](artifacts/macro-generalization-20261113/revision-1/stage-4/operator/heldout-human-review/G1_NEW_HELDOUT_HUMAN_REVIEW_2026-11-19.zip).
-Earlier dated checkpoints below are historical snapshots, superseded by this
-current-state block where their pending/launch descriptions differ.
-
-**G1 Sol held-out continuation - 2026-11-19.** The initial segment retained
-three trials and eight charged requests, then stopped on an in-stream provider
-error after one native acquisition. All three local and persisted Phoenix audits
-passed. The affected primitive trial G1r1-heldout-018-primitives is retained as
-INFRA_CENSORED_POST_ACTION; its unknown provider cause is not called quota
-exhaustion or a wrong model decision. Under the owner's standing recovery
-instruction, integrity was verified and an outer continuation started only the
-73 unstarted cells, using the exact frozen trial function and model/settings.
-The first three trial files remain unchanged. All eight spent requests, retry
-reserve state and original eight-hour origin are carried forward; no failed
-trial is repeated, no new consent is granted, and no frozen source is edited.
-See the [continuation record](artifacts/macro-generalization-20261113/revision-1/stage-4/operator/continuation-01/CONTINUATION_RECORD.json).
-Current cumulative state remains stage-4/status.json. A live continuation is
-not a completed campaign; future human clarification judgments remain required.
-
-**G1 Sol held-out launch acknowledged and started - 2026-11-19, before interruption.** The
-owner explicitly replied "I read the preflight-start the Sol run" (the original
-reply with punctuation is retained in stage-4/owner-launch-acknowledgment.json).
-The acknowledged frozen scope is76 Sol mock trials,611 physical requests maximum,
-8h backend window, unchanged cases/conditions/budgets/retry rules. A detached
-launcher was started and its process verified alive; it is checking the source
-freeze before owning Phoenix and restoring authorization again. Trial completion
-and success are not inferred from launch. Durable status is
-[stage-4/status.json](artifacts/macro-generalization-20261113/revision-1/stage-4/status.json)
-and operator/launcher.log in that same run directory. No new consent, Qwen stage,
-physical robot or publication is authorized. New ambiguous outcomes require new
-human review; preliminary execution is not a final campaign verdict. Later
-checkpoints supersede this launch snapshot without rewriting frozen evidence.
-
-**G1 held-out freeze and technical preflight complete - 2026-11-19, before owner acknowledgment.** The
-owner requested test commencement after preparation. The new 38-case/76-trial
-Sol mock batch is assembled with the two approved repairs; six new wiring tests
-pass and3,796 frozen files verify. The fresh restore-only preflight successfully
-renewed remembered authorization once, validated unchanged scopes and model
-availability, retained the opted-in encrypted credential and cleared memory.
-Zero inference requests. Quota remains UNKNOWN. Caps remain608 ordinary +3
-eligible reserve attempts,8h backend, with original per-task limits. No trial
-has started. The original protocol still requires owner acknowledgment of the
-completed preflight before launch; that final review is pending. No new consent,
-Qwen stage, robot action or Git publication occurred. See the
-[completed preflight](artifacts/macro-generalization-20261113/revision-1/stage-3/freeze-launch-preparation-20261119/READY_PREFLIGHT.md).
-New held-out clarification responses will need their own real blinded review;
-current dev ratings do not transfer. Historical artifacts remain preserved,
-including the pre-freeze helper's corrected control-key lookup error.
-
-**G1 second repair completed - 2026-11-19, before final freeze/preflight.** The owner explicitly accepted
-reduced metadata coverage while keeping protected code unchanged. The new G1-local
-observed transport passed all 12 integrated zero-model test methods, including
-six injected failure classes through the real parser, ChatSiwc and G1 recovery
-gate. Request contents, error semantics, availability, accounting and retries
-matched the unchanged implementation. Discarded HTTP provider fields remain
-NOT_RECORDED, as do stream fields before observation is possible. The canary was
-absent from saved metadata/logs. G-c is PASS against the approved reduced contract;
-the original full-coverage failure is preserved. Protected source, earlier data
-and the reviewed clarification-v2 layer are unchanged. Both repair decisions are
-now explicit; neither awaits another approval. See the
-[metadata repair report](artifacts/macro-generalization-20261113/revision-1/stage-3/error-metadata-v2-20261119/REPAIR_REPORT.md)
-and [latest gate status](artifacts/macro-generalization-20261113/revision-1/stage-3/LATEST_STAGE3_STATUS_2026-11-19_METADATA_REPAIR.md).
-The exact new execution/analysis assembly, protection scope and final freeze
-remain to be verified; the fresh restore-only preflight follows that freeze.
-No current provider validity/quota is established. No held-out trial, credential
-operation, robot action, Git commit/push or publication occurred. Future launch
-still needs the separately specified authorization after review of the preflight.
-
-**G1 first repair completed - 2026-11-19, before metadata repair.** The owner authorized the first,
-clarification-scoring repair. The new G1-local v2 layer uses actual eligible human
-judgments, leaves absent/CANNOT_JUDGE semantics explicitly pending, rejects wrong
-or duplicated bindings, and prevents human approval from overriding action or
-runner bounds. The regex remains diagnostic; old scores/results stay immutable.
-All15 implementer test methods pass. Renewed separate GPT-6 Astra review gives
-**PASS for this exact effective layer within its trusted-input boundary**:65
-original cases (63 matched,2 preserved reviewer construction errors), plus2
-corrected cases (2 matched); no substantive scorer defect. The old regex-only
-review remains historically FAIL. Four real Levinson ratings are bound and G-f
-remains PASS on his eligibility attestation. The retrospective dev view remains
-35 evaluable passes plus1 infrastructure-censored attempt, with unchanged costs.
-No new model-performance result is claimed. G-c metadata remains BLOCKED and its
-amendment unapproved; freeze/preflight/held-out launch remain blocked. No inference,
-OAuth/robot action, protected-source change or Git publication occurred. See the
-[repair report](artifacts/macro-generalization-20261113/revision-1/stage-3/clarification-scoring-v2-20261119/REPAIR_REPORT.md)
-and [current G1 status](artifacts/macro-generalization-20261113/revision-1/stage-3/LATEST_STAGE3_STATUS_2026-11-19_SCORING_REPAIR.md).
-Future analysis must retain pending judgments/costs, validate the authoritative
-schedule before projection, and require new real human review for new transcripts.
-The generic validator does not independently authenticate reviewers; actual
-submission provenance remains organizer-verified and eligibility self-declared.
-
-**G1 human review received - 2026-11-19, before scoring repair.** Levinson returned the four G1 Stage2
-ratings and completed declaration: YES on both criteria in all four cases.
-The issued packet integrity and submission completeness passed. G-f is **PASS
-on the submitted reviewer attestation**, which discloses team membership and
-affirms no case/system/scorer involvement or prior transcript/result exposure;
-this history is self-declared, not independently verified. Exact original files,
-reasons and hashes are retained in the
-[intake report](artifacts/macro-generalization-20261113/revision-1/stage-3/human-review-20261119/HUMAN_REVIEW_INTAKE_2026-11-19.md).
-This does not amend the legacy scorer or prove independent generalization.
-G-e remains FAIL, G-c remains BLOCKED, and the two proposed methodological
-amendments remain unapproved pending discussion. No held-out launch, new model
-requests, protected-source change or Git publication occurred.
-
-**G1 preparation resumed - 2026-11-19, before review intake.** The owner returned to the three
-outstanding Stage3 items: human-adjudicated clarification scoring, reduced error
-metadata coverage with protected source unchanged, and actual uninvolved review
-of four G1 cases. The owner chose to keep existing rules and discuss alternatives
-before approving either methodological amendment, and confirmed the actual human
-review was still pending at that point (the later intake above supersedes that
-pending status only). No renewed scorer review is authorized by that reply.
-The four-case
-ZIP and12 sealed Astra review artifacts verified intact. The old protection check
-reports one mismatch, the living master after authorized updates; its FAIL result
-is retained, and a new freeze must explicitly disposition mutable-document scope.
-All other checked protected entries match. No new source/scoring change, review
-substitution, inference, credential action or held-out launch occurred. See the
-[current G1 checkpoint](artifacts/macro-generalization-20261113/revision-1/stage-3/LATEST_STAGE3_STATUS_2026-11-19.md).
-Earlier dated checkpoints and all experimental evidence are preserved.
-
-**Research standards adopted - 2026-11-17.**
-The owner explicitly asked this assistant to follow the stable research rules
-**provided by teammate Levinson** through `rosa-contexts`. The operative local
-[adopted rules](docs/research-governance-20261117/ADOPTED_RESEARCH_RULES.md) and
-[dated adoption record](docs/research-governance-20261117/ADOPTION_RECORD.md) are
-now referenced by the workspace `AGENTS.md`. Before substantial future research
-work, use the full five-question preflight: closest mechanism and actual
-difference; observed need and honest denominators; concrete decision and
-discriminator; genuinely capable fair controls without a hidden oracle; and the
-smallest nonrepeating decision-changing next step. Preserve protocols, failures,
-negative findings, complete cost accounting, evidence provenance and review gates.
-
-This is a prospective governance change, not a new study or a retrospective claim
-of full compliance. Martin's practical ROSA reliability/efficiency vision remains
-the project direction; teammate-specific deadlines, language preferences and
-historical launch decisions are attributed context. No experiment, runtime,
-scorer, frozen result or G1 gate changed. Earlier experiment ZIPs retain the
-master snapshot at their packaging time; they are not rewritten to include this
-later policy update. The [source provenance](docs/research-governance-20261117/SOURCE_PROVENANCE.json)
-pins the adopted upstream version and verifies both saved source files.
-
-**Latest completed work - native-schema integration and robot reruns, 2026-11-17.**
-The opt-in `native-schema-v1` profile was implemented and the authorized **80 Llama + 80 Granite Gazebo attempts completed**. This is a separate replication of known M4 cases, not a rescore or replacement of any historical result and not G1 held-out testing. Each model has40 attempts per condition:36 known-goal tasks and4 ambiguous requests. All16 ambiguous attempts across the two models remain pending actual human semantic review; their legacy regex scores are diagnostic.
-
-| New backend/profile | Known-goal correct P / M | All-attempt calls P / M | Mean task seconds P / M |
-|---|---:|---:|---:|
-| llama3.1:8b-instruct-q4_K_M, native-schema-v1 | 21/36 / 28/36 | 190 / 113 | 2.37 / 2.16 |
-| granite3.3:8b, native-schema-v1 | 5/36 / 9/36 | 210 / 193 | 6.81 / 5.18 |
-
-Both previous configurations scored0/36 in each condition; those results remain frozen and available. The new profile adds model-native formatting guidance and current bound schemas to system messages and explicitly enforces HTTP stream=false. It does not choose skills, alias arguments, relax verification or automatically replay robot commands. Existing SDK argument normalization remains combined-system assistance. Actual HTTP bodies/responses and corresponding trace metadata were archived; the final tokenized/rendered Ollama prompt was not captured. The original adapter remains unchanged; the new module is `rosa-research/src/rosa_backends/tool_contract_ollama.py` and is opt-in.
-
-Seven zero-network checks,12 deterministic mock controls,24 live validation attempts and20 deterministic Gazebo controls preceded the160 live robot attempts. Fresh validation scored9/12 for Llama and6/12 for Granite. The functional gate required at least one healthy complete loop in each mode, with all safety/tracing/budget checks passing; it was not an all-case reliability gate. The mock ineffective-write checker could accept a truthful no-write failure: that cell does not prove a failed command was attempted. The main Gazebo scorer kept the original stricter fault-exercise/dispatch checks. The initial float-versus-bool fixture defect stopped deterministic validation with zero model calls; its failed source/control/archive are retained, and a documented fixture-only revision preceded all live validation outcomes.
-
-All216 completed validation/control/live attempts in this campaign passed local and persisted Phoenix audits. Independent read-only reconciliation verified archive manifests,75 frozen source/config hashes including the original69, model digests, schedule order, raw/checkpoint consistency, actual wire calls, token/resource bounds and cleanup. This is scripted evidence reconciliation, not outside scientific replication or a human semantic review. Validation budgets were96 requests/model; robot budgets were643/model, with the original8-call,2048-output-token and360-second task limits retained.
-
-Costs above include all40 attempts, including failures and ambiguity. Task latency excludes simulator setup/reset and persisted-audit overhead; campaign elapsed time and matched-success costs are in the full report. Accepted evidence-grounded SUCCESS for a wrong user goal remains a separate failure category. Fewer calls or fast failure does not establish reliability. See the per-family, discordant-pair, native-operation and fault-exercise tables before choosing a backend.
-
-The profile and explicit HTTP setting changed together, so their individual effects are not isolated. Primitive/macro mode and its original condition sentence remain coupled; a selection effect cannot be separated from condition wording. Four repetitions of familiar cases do not demonstrate independent generalization or intrinsic model parity. Older Qwen/Ministral serving profiles differ; no new Sol trial was run and no historical hosted comparison was replaced. No global default backend switch, new architecture or further study was authorized by completion of this replication. G1's existing scorer, instrumentation and real human-review gates remain unchanged.
-
-Current evidence: [complete integration-rerun report](artifacts/integration-rerun-20261117-r1/evidence/INTEGRATION_RERUN_COMPLETE_REPORT_2026-11-17.md), [independent raw-data analysis](artifacts/integration-rerun-20261117-r1/evidence/INDEPENDENT_RERUN_ANALYSIS.json), [shareable report and evidence ZIP](artifacts/integration-rerun-20261117-r1/delivery/ROSA_NATIVE_SCHEMA_RERUN_REPORT_AND_EVIDENCE_2026-11-17.zip) (kept out of git as a duplicate package; in the off-repo backup). The original Qwen lab repeat and first four-model lab study below are preserved reference configurations. Current documentation and evidence are backed up under the owner's lab project; no public upload or Git push was performed.
-
-**Latest completed investigation - Llama/Granite integration, 2026-11-17.**
-A separate, simulator-free investigation completed **48/48 local requests** (2 Qwen controls, 23 Llama, 23 Granite), with **zero actual tool/robot executions**. Old model digests and all69 frozen source/config hashes matched. No original trial, source, schema acceptance or model installation was changed. The corrected interpretation is that the earlier zero full-task scores describe those tested integrations, not inherent lack of model capability.
-
-The saved Llama template puts function schemas inside a last-user-message branch, so request-level schema presence did not prove they were visible after tool-result turns. Granite's custom system prompt bypassed its default native-call formatting guidance; restoring that guidance produced the exact harmless call in all4 raw/adapter and streaming configurations tested. Both models returned correct SUCCESS and UNKNOWN calls in the combined native-format-plus-persistent-schema variant (2/2 each), but schema persistence alone failed those fixtures, and tested correction feedback remained unsuccessful. This is promising narrow integration evidence, not a completed robotics fix or a newly measured task success rate.
-
-The pinned ChatOllama ignores constructor streaming=False: a zero-network reproduction sent HTTP stream=true; explicit invocation stream=False sent false. Earlier reports' nonstreaming wording therefore does not establish HTTP transport streaming was off. Also, the adapter preserved native call names/counts but automatically normalized two Llama list strings into arrays; report that assistance separately from exact server-output schema compliance. ToolMessage names are omitted by the converter, but restoring them showed no benefit in the two tested fixtures.
-
-All48 responses were retained. My diagnostic initially raised35 post-response instrumentation assertions because SDK serialization removes empty/auxiliary fields. All35 were decoded by exact-request offline mock replay, with **zero additional model/network requests**; original failures and raw archives remain preserved. Local verification checked67 outer content hashes plus61 nested original hashes, source freezes, request accounting and settings. Tokens:11,027 input and1,319 output. No Phoenix server-side audit was run for this HTTP-level diagnostic; do not label it as a robotics trace-audit campaign.
-
-That recommendation was subsequently implemented in the separately labeled native-schema rerun above; this investigation remains preserved as its preceding diagnostic evidence. Do not deploy the prototype silently, rescore old failures, or clear G1 gates. See [complete integration findings](artifacts/lab-integration-20261117/evidence/INTEGRATION_FINDINGS_2026-11-17.md) and [independent verification](artifacts/lab-integration-20261117/evidence/INDEPENDENT_INTEGRATION_VERIFICATION.json). Earlier ZIPs are unchanged and predate this correction.
-
-**Latest completed addition - Qwen lab repeatability, 2026-11-17.**
-The second lab Qwen batch completed **80/80 trials**, following **20/20 deterministic controls**. All **80/80 live local/Phoenix audits** and **74 source/config hashes** passed. The original 69 frozen files and earlier archives remain unchanged. Both lab runs use the identical installed Qwen3.5 9B Q4_K_M digest, 8K context, 1,024 output tokens per call, 2,048 per task, temperature 0 and seed 42; thinking is off. The current primary lab Qwen configuration uses the RTX 4080 SUPER with 16 GB VRAM. Historical laptop M4 used different hardware and is preserved as its own study. There was no new Sol run and no substitution into the historical paired Sol comparison.
-
-| Qwen lab run | Known-goal correct P / M | Calls across all 40 attempts P / M | Mean task seconds P / M |
-|---|---:|---:|---:|
-| lab_run_1 | 27/36 / 28/36 | 188 / 98 | 12.39 / 8.56 |
-| lab_run_2 | 26/36 / 28/36 | 185 / 97 | 12.01 / 8.52 |
-
-There were **3 changed correctness outcomes among 72 identical known-goal cells** between lab runs. The report records directions and individual cells, not just aggregate scores. Each lab run has eight ambiguous attempts pending actual human semantic review; legacy regex scores are diagnostics. These are four repetitions of already-seen families, not new held-out tasks or independent generalization evidence. Costs include failures; matched-success views are reported separately. The latest study does not resolve G1 gates.
-
-Full current lab reference and comparison: [Qwen repeat report](artifacts/qwen-lab-repeat-20261117/evidence/QWEN_LAB_REPEAT_COMPARISON_REPORT.md), [independent analysis](artifacts/qwen-lab-repeat-20261117/evidence/INDEPENDENT_REPEAT_ANALYSIS.json). The original multi-model comparison below remains unchanged. The misplaced outside-d1 paths were already absent; no matching temporary residue remained in the checked outside locations. Models, useful configuration, identity files and runtime dependencies were preserved.
-
-**Earlier completed execution - first lab local-model replication, original profiles, 2026-11-17.**
-The owner requested 80 trials **per model**, not original M4's 80 total.
-All **320/320 scheduled Gazebo trials executed**: four local models, ten known
-M4 task families, four repetitions and two conditions. Each model has 40
-primitive and 40 macro attempts. Eight ambiguous attempts per model remain
-pending actual human semantic review; the main correctness denominator is
-**36 known-goal tasks per condition**, 72 per model. These repeated known cases
-are not independent new tasks or G1 held-out evidence.
-
-| Lab backend | Known-goal correct: primitives / macro | Calls over all 40 attempts: P / M | Mean task seconds over all 40: P / M |
-|---|---:|---:|---:|
-| Qwen3.5 9B | 27/36 / 28/36 | 188 / 98 | 12.39 / 8.56 |
-| Ministral 3 8B | 28/36 / 28/36 | 156 / 82 | 4.83 / 2.31 |
-| Llama 3.1 8B | 0/36 / 0/36 | 211 / 193 | 2.16 / 2.84 |
-| Granite 3.3 8B | 0/36 / 0/36 | 40 / 40 | 3.13 / 2.64 |
-
-Costs include failures and ambiguous attempts. Short failure times are not good
-task efficiency. Same aggregate correctness also hides different errors:
-Ministral passed all four macro constrained-pose cells Qwen failed; Qwen passed
-all four partial-command cells Ministral failed. Both failed missing-prerequisite
-cases. Among the **24 identical macro cells both completed correctly**, Ministral
-took 45.53 seconds versus Qwen's 101.42, but used **53 versus 48 calls** and
-**57 versus 52 native operations**. It was faster on this subset, not uniformly
-cheaper by every measure. No general model-parity or reliability claim follows.
-
-Llama's result is especially qualified: it selected the correct skill in **32/36
-known-goal cases in each condition**, but failed the complete reporting/execution
-contract. Repeated schema errors included `classification` instead of required
-`status`, and `subject` instead of `nodes`. A macro example physically reached
-the independently checked target, then failed reporting. Its 0/72 full-task score
-does not mean zero task understanding. Granite invoked no tools in the main
-schedule, often writing descriptions/JSON for actions it did not execute.
-
-Four separately labeled **post-hoc, non-robot tool-binding probes** were run
-(one/model, 64 output tokens maximum): Qwen, Llama and Ministral produced the
-requested native call; Granite produced JSON text, with no native call. This
-supports different failure diagnoses, not universal capability conclusions.
-No returned diagnostic tool was executed. The original main scores were not
-changed, and no model-specific repair or prompt tuning occurred.
-
-**Verification and resources:** 20 deterministic controls passed; **320 live
-local/exact persisted Phoenix audits** passed, with **12,506 persisted live
-spans**. The copied main archive passed CRC and **3,233 file hashes**, including
-**69 frozen source/config hashes**. Diagnostic audit: four successful persisted
-checks, eight spans, zero native actions. Main model requests **1,008**; separate
-probes **4**, combined **1,012**. Main usage is complete and infrastructure
-reserve use is zero. Eight human-pending ambiguity attempts per model are not
-silently classified as passes or wrong model decisions.
-
-The models are Q4_K_M on the same lab **RTX 4080 SUPER, 16,376 MiB VRAM** and
-about 123 GiB RAM. Qwen's digest matches original M4; the lab status reported its
-loaded model fully in VRAM with 8K context. Conditions keep the same requested
-8K context, 1024 output tokens/call, 2048 observed output tokens/task, temp0,
-seed42, non-thinking policy, and existing tool/operation/correction/movement
-limits. Each model had a 643-request, eight-hour ceiling. Native templates and
-tokenizers differ. Qwen had 12 length stops; absence of an outer exception does
-not mean the agent returned no controlled-error text.
-
-The canonical remote folder is **`/media/naeem/d1/marvel proj/`**, with both
-`member/martin` clones, models, runtime, source snapshot and results. Research
-commit `b13df0f03677754f42383dee95424cded862b117`; evaluation commit
-`ec42ee72f53d95004c51b803c1a5d41f58e08d1c`, synchronized through a verified Git
-bundle without a GitHub push. The 62-file original M4 source snapshot is
-unchanged. Jazzy/Gazebo and locked dependencies run in an owned Ubuntu 24.04
-container on the Ubuntu 25.04 lab host, using project-local Ollama 0.40.6.
-Retained failed setup preflights are documented; zero scored model calls
-preceded the successful controls. No existing shared project was rewritten.
-
-**Decision:** retain Qwen as reference and consider Ministral as an additional
-fast candidate; no automatic default replacement is claimed. A clearer common
-reporting contract and Granite compatibility investigation are prospective
-options, not implemented fixes. Existing M1-M5/M4 results remain unchanged;
-**G1 is still blocked before its final freeze**. This separate authorization
-neither clears G1's scorer/observability/human-review gates nor starts G1 held-out,
-JTVR, memory or physical-robot work. Historical Sol is context only; it was not
-rerun on the lab, and old/new denominators and hardware must not be conflated.
-
-The [detailed report](artifacts/lab-multimodel-20261117/evidence/DETAILED_COMPARISON_REPORT.md)
-contains outcomes, paired/matched-success costs, family results, failure
-mechanisms, token/timing statistics, source identities and deployment details.
-The [main raw evidence ZIP](artifacts/lab-multimodel-20261117/evidence/ROSA_LAB_MULTIMODEL_2026-11-17.zip)
-and [post-hoc diagnostic addendum](artifacts/lab-multimodel-20261117/evidence/ROSA_LAB_TOOL_PROBE_ADDENDUM_2026-11-17.zip)
-are separately preserved and checksummed. The full sharing bundle adds these
-reports and this updated master as context; it does not embed every older
-artifact linked elsewhere in the master.
-
-**Presentation update:** the original three-slide briefing below describes M4
-and the earlier G1 checkpoint. The separate lab results above are the latest
-additional evidence for the November 18 presentation. Keep M4's 80-total table
-and the lab's 320-total/36-known-goal-per-condition table clearly separate; do
-not combine them into one success rate. Teammate-provided results stay credited
-to Levinson and are not part of this lab dataset.
-
-**Presentation handoff:** the self-contained [three-slide briefing](#presentation-briefing)
-below is prepared for **2026-11-18**. It contains slide text, speaker notes,
-exact result denominators, attribution and current next steps. A presentation
-writer receiving only this Markdown can use it without inventing facts from
-unavailable linked files. Detailed raw-evidence inspection still requires those files.
-
-**Attribution:** the `rosa-contexts` repository and Levinson's published research
-context were provided by **Martin's teammate, Levinson (`Lelevinson`)**. Martin
-passed the link to Codex for review; he did not author that teammate snapshot.
-The bounded-macro implementation and experiments described as our work below
-are Martin's project track. Levinson's fixed-loop/Forge/add-on results remain
-separately attributed teammate-reported evidence, not Martin's experiment results.
-
-**Sharing checkpoint:** reconciled with the team-context review closed November 17,
-G1 Stage 2 completion and the separate
-Stage 3 scorer review completed on 2026-11-15. **G1 is blocked before its final
-freeze; held-out live evaluation has not started.** M4 remains the completed 2026-10-27 study, with later retrospective analysis and owner feedback dated
-2026-10-29–30. M1–M5 technical delivery is complete locally. M6 and the optional
-first-turn wording probe have not started and are not authorized.
-
-**Current work: exploratory study G1, revision 1 — AI-authored cases.**
-Stage 1 completed 132 scripted controls. Stage 2 completed 36 hosted Sol dev
-attempts: 35 preliminary correct completions and one retained provider-stream
-interruption. These are development results with four clarification transcripts
-still awaiting uninvolved human review, not held-out confirmation. Stage 3's
-separate GPT-6 Astra review found six reachable clarification-scoring errors
-in newly constructed tests, so the scorer-review gate is not cleared. The owner
-declined a protected OAuth metadata hook; the full observability requirement
-remains unmet. See [current status and next gates](#2-current-verified-status)
-and [the detailed Stage 3 checkpoint](artifacts/macro-generalization-20261113/revision-1/stage-3/LATEST_STAGE3_STATUS_2026-11-15.md).
-No independent case authorship, Qwen G1 live results or generalization benefit
-is established. Prior M1–M5, serving probes and sealed G1 evidence remain retained.
-
-**Team-context review closed 2026-11-17:** all three `rosa-contexts` branch tips
-were inventoried at their November 16 snapshot: 100 unique files downloaded and
-Git-hash checked, including 91 manifest-verified research files. Detailed review
-covered the shared helper and current research reports; older material received
-section/decision review rather than an exhaustive paragraph audit. The repo is
-for coordination and contains neither the research runtime nor raw traces. Its
-findings do not clear our Stage 3 gates or authorize integration/publication.
-Read the [review and compatibility assessment](docs/team-context-review-20261116/ROSA_CONTEXTS_REVIEW_2026-11-16.md).
-
-<a id="presentation-briefing"></a>
-
-<a id="presentation-briefing"></a>
-
-## Three-slide presentation briefing — 2026-11-18
-
-Use exactly three slides. Speaker notes, attribution and limitations below are
-supporting material, not extra slides. The same text is available as a
-[standalone briefing](docs/presentation-handoff-20261117/PRESENTATION_BRIEF_2026-11-18.md).
-
-<!-- PRESENTATION_BRIEF_START -->
-## Presentation briefing — three slides for 2026-11-18
-
-Prepared **2026-11-17** from the retained evidence described in this master.
-Scope: Martin's Improved ROSA project track. The following is suggested slide
-wording and supporting notes, not a new research protocol or launch authorization.
-Use the short slide text on screen; keep qualifications and extra figures in
-speaker notes. Historical M1–M5 delivery, G1 stages and Qwen serving phases are
-different numbering systems and must not be combined into one completion count.
-
-### Slide 1 — Project introduction and goal
-
-**Title:** Improving ROSA's robotic task execution
-
-**Suggested slide text:**
-
-- Improve how ROSA uses existing LLMs to execute and verify robot tasks.
-- Let the LLM choose a permitted skill; let bounded Python routines handle its predictable execution steps.
-- Evaluate correctness and overhead with local Qwen3.5 9B and hosted Sol.
-
-**Speaker notes:** ROSA is an existing LLM-based robotic agent framework. We
-improve its surrounding software rather than train a model. A bounded macro
-is a registered routine: read prerequisites, make at most one permitted movement
-when needed, then check fresh state. A separate read-only routine checks arm
-readiness. This implements the project's divide-and-conquer idea through
-pre-authored skills. Program logic manages routine substeps; the model still
-interprets the request, selects the skill and handles unresolved intent.
-It is not a general planner that automatically decomposes every new task.
-
-Our research question is whether this arrangement reduces unnecessary model
-interactions and execution overhead while preserving verified task completion.
-Helping the tested smaller local model is an interest, not an achieved parity
-claim. The intended deliverable is a reusable ROSA component, reproducible
-evaluation and a working simulation demonstration. JTVR and verified episodic
-memory are optional deferred directions, not required current deliverables.
-
-### Slide 2 — Progress and measured results
-
-**Title:** Working prototype; lower overhead, mixed correctness
-
-**Suggested slide text:**
-
-- Reusable macro module demonstrated on a Gazebo UR5e: named-pose movement and read-only readiness inspection.
-- Completed M4: **80 Gazebo trials**, comparing model-managed primitives with macros inside the same repaired ROSA framework.
-
-| Backend | Correct tasks: primitives → macro | Model calls | Mean task time |
-|---|---:|---:|---:|
-| Hosted Sol | 20/20 → 20/20 | 68 → 38 | 16.42 → 9.73 s |
-| Local Qwen3.5 9B | 15/20 → 14/20 | 91 → 53 | 133.49 → 85.18 s |
-
-**Takeaway:** Macros reduced model-call overhead; a general reliability improvement is not established.
-
-**Speaker notes:** The 80 trials are ten task families × two repetitions ×
-two conditions × two backends. Every table condition contains 20 trials.
-Correctness includes appropriate FAILURE, UNKNOWN or clarification when required;
-these are not 80 successful movements. Model-call and mean-time figures include
-unsuccessful attempts. Task-loop times exclude the full campaign's setup,
-reset and subsequent trace-audit work. Hardware and serving differ by backend,
-so these times are observed system performance, not intrinsic model-speed rankings.
-
-Sol used **44.1% fewer calls** and **40.7% less task time**, with unchanged
-observed correctness. Qwen used **41.8% fewer calls** and **36.2% less task
-time**, while correct tasks fell from 15 to 14. The preset engineering retention
-screen passed for Sol and failed for Qwen. These small samples establish neither
-statistical equivalence nor a general reliability advantage. Native operations
-were Sol **38 → 40** and Qwen **50 → 48**; fewer model calls did not consistently
-mean less robot work.
-
-All 80 M4 live trace audits matched 3,290 persisted Phoenix spans. M1–M5 also
-delivered the package/install guide, report, claim ledger and simulation video.
-The comparison is against primitives with the same shared repairs, not untouched
-upstream ROSA. A verified selected skill can still fail the user's actual goal:
-wrong skill selection and ambiguous requests remain material limitations.
-
-**Latest progress beyond M4:** exploratory G1 extends the engineering fixtures
-to arm/base mock domains and different inspection acquisition depths. Its 36
-hosted Sol development attempts finished with **35 preliminary correct outcomes
-and one preserved provider-stream interruption**. The failed trial was not rerun.
-Among 17 pairs with both arms scored correct, calls were 59 → 32 and native
-attempts 40 → 40. These are dev-only selected pairs, not confirmed generalization.
-Four clarification transcripts still need uninvolved human review. G1 Qwen live
-and held-out model evaluation have not started.
-
-Current Stage 3 engineering controls passed, but a separate GPT-6 Astra scorer
-review found **six reachable clarification-classification errors in 41 new
-adversarial tests**. These are new constructed counterexamples, not six live
-Qwen/Sol failures. The scoring gate is not cleared. Full error-observability
-requirements also remain unresolved under the owner's source-unchanged decision.
-The experiment is paused before its final freeze, not running a held-out study.
-This is the latest evaluation limitation to mention if asked about current work.
-
-### Slide 3 — Future plan
-
-**Title:** Validate the evaluation, then test broader use
-
-**Suggested slide text:**
-
-1. Resolve clarification scoring, obtain independent human review and settle error-observability requirements.
-2. After validation and approval, freeze and run the planned held-out comparisons with matched budgets.
-3. Consolidate the reusable macro, simulation demo and evidence; retain improvements only where their benefits justify their costs and limitations.
-
-**Speaker notes:** First agree a documented disposition for the substantive
-scorer finding. Any separately approved scorer amendment must receive renewed
-review; previous scores and failed attempts remain preserved. Obtain actual
-uninvolved human ratings for the four G1 clarification transcripts. Decide how
-the full metadata requirement is satisfied or explicitly revised while honoring
-the current decision to leave protected authentication source unchanged. Neither
-a source change nor a methodological waiver is already approved.
-
-Only after those gates pass can the study be frozen, authorization/storage/trace
-preflight reviewed and a hosted held-out launch separately authorized. The current
-design has 38 held-out-designated AI-authored cases, or 76 trials per backend
-across two conditions. Qwen and catalogue-size work require their own later
-gates, including reviewed GPU-idle conditions. This is planned work, not an
-already launched or completed comparison. The AI-only authorship limitation must
-remain visible; no independent case-generalization claim is available.
-
-Keep the existing Gazebo capability and demonstration as completed engineering
-assets. Any wider simulation transfer, runtime integration with a teammate or
-physical hardware study is a conditional future proposal needing source/contract
-checks and a matched protocol. Physical-robot deployment, general planning,
-memory and a larger model are not automatic next steps or promised outcomes.
-The practical objective remains a smaller, reproducible ROSA improvement with
-honestly measured backend-specific trade-offs.
-
-### Attribution and claim rules for the presentation writer
-
-- **Martin's track:** bounded macros, shared ROSA repairs, UR5e movement/inspection,
-  the M1–M5 deliverable, M4 comparison, serving diagnostic and G1 preparation/dev work.
-- **Teammate-provided context:** Levinson supplied `Lelevinson/rosa-contexts`
-  and its published member context. His fixed-loop C1, Forge and add-on studies
-  are his track. Do not include 70/80, 55/80, 47/80, fresh 67/80 or his 320-episode
-  build as Martin's measured progress. They may be mentioned with explicit teammate
-  attribution if team coordination is relevant; they are not needed on these slides.
-- **Evidence levels:** deterministic controls test engineering, live dev results
-  test the development configuration, adversarial scorer tests expose evaluation
-  defects, and neither AI review nor owner feedback substitutes for uninvolved
-  human adjudication. G1 uses mock domains; M4 used Gazebo. Keep those environments separate.
-- **Supported headline:** a reusable bounded macro reduced LLM orchestration
-  overhead in the tested environment, with a favorable Sol result and mixed
-  Qwen correctness. Do not claim general parity, novel tool-selection superiority,
-  broad reliability gains, full JTVR/memory completion or physical-robot safety.
-- **Status precedence:** this dated briefing and the current G1 gate section
-  supersede older present-tense plans. The generated M4/M5 snapshot below is
-  historical. Linked original reports retain their original dates and definitions.
-- This one Markdown supplies the presentation narrative and numeric summaries;
-  it does not embed every raw trace. If only the master is uploaded, do not claim
-  to have independently opened its local links or reproduced the experiments.
-
-**Presentation-ready summary:** We built and evaluated a bounded ROSA macro
-module for robot movement and inspection. It reduced model-call overhead in
-our Gazebo comparison, but correctness benefits were backend-dependent. We are
-now addressing evaluation weaknesses before broader testing, while preserving
-the existing results and keeping teammate research separately attributed.
-<!-- PRESENTATION_BRIEF_END -->
-
-**Completed separate work: Claude's Qwen timing/serving roadmap.** The
-[living roadmap tracker](docs/CLAUDE_QWEN_ROADMAP_LIVE.md) records current progress,
-gates, costs and next steps; the
-[2026-11-12 report](docs/QWEN_TIMING_PHASE0_REPORT_2026-11-12.md) is the shareable
-dated checkpoint. All 40 M4 Qwen trials and 144 calls were analyzed without
-rescoring them. Two new hardware-probe requests were charged: one returned with
-an accidental FA-disabled serving mismatch, and one owner-approved correction
-was stopped for unresolved GPU activity. The corrected partial log confirms
-effective FA enabled, f16 cache, 8192 context and 17/33 layer offload, but a clean
-completed live baseline was not obtained in Phase 0. Both Phase 0 allowances are
-spent. The subsequently authorized Phase 1 comparison is described below.
-These exploratory observations do not establish a speed or correctness gain;
-M1-M5 findings and frozen artifacts are unchanged.
-
-**Phase 1 completed 2026-11-13: no serving candidate retained.** The owner
-authorized the [frozen screen](artifacts/qwen-serving-phase1-20261112/PROTOCOL.md)
-on2026-11-12. A (effective FA enabled, f16 KV, 8192 context) reached a median
-**8.388 generation tokens/s** over eleven unique inputs. B (explicit FA enabled,
-q8_0 KV, same context/weights/settings) reached **8.082**, or **0.963 times A**,
-below the 1.5-times gate. B matched A's family calls on **7/10** inputs, below the
-9/10 gate; the longest-input safety call also differed. Both completed fourteen
-measured requests with expected prompt counts, adequate output room, no output
-cap hits and 3/3 stable repeats. GPU KV shrank **128 to 68 MiB**, but both
-offloaded **17/33 layers**. C was skipped by the gates; D remains unscheduled.
-
-Measured blocks generated A **2212** versus B **3134** output tokens and took
-**278.528** versus **396.829** summed client request seconds. These are serving
-replay costs, not robotic task times or new correctness scores. Known-input call
-agreement cannot establish goal satisfaction or general Qwen/Sol parity.
-
-Actual cost was **31 returned requests, 52447 input / 6384 output tokens**, within
-the unchanged 45-request ceiling, with no unreturned requests, hosted calls or
-robot dispatches. The original schedule was 30 A/B requests. After A and B's
-original warm-up, an overly literal log validator incorrectly stopped B despite
-effective FA/q8_0. A separately frozen observer correction added one discarded
-recovery warm-up before only unstarted measurements. All earlier outputs and
-the failed checkpoint were preserved. This interruption, fixed profile order,
-single profile blocks and known cases limit causal/general claims. Earlier GPU
-preflight failures and the pre-inference desktop-classification amendment also
-remain documented. No new allowance was silently created; a full C block would
-not fit the remaining budget even if B had passed.
-
-All test servers stopped. Closeout checks passed for 950 protected M4 files,
-62 frozen sources, 93 Phase 0 files, all Phase 1/continuation freezes, identical
-paired API requests and exact resource accounting. Keep A as the serving
-reference; no new correctness experiment is scheduled. Share the
-[dated results](docs/QWEN_SERVING_PHASE1_REPORT_2026-11-13.md) and
-[full results/deviations](artifacts/qwen-serving-phase1-20261112/COMPLETED_REPORT.md).
-The [living tracker](docs/CLAUDE_QWEN_ROADMAP_LIVE.md) records gates and next
-decisions. Evidence remains local; no publication or Git push was performed.
-
-The [thinking-mode clarification](docs/QWEN_THINKING_CONFIGURATION_NOTE_2026-11-05.md)
-confirms that the Qwen adapter requested `think=false`. This was an inherited
-fixed serving profile, not an experimentally established optimum. No thinking
-on/off comparison has been run; results apply to the tested non-thinking profile,
-not Qwen's best achievable capability or matched reasoning compute versus Sol.
-
-**Latest goal clarification2026-11-05:** the user wants local Qwen performance
-close to Sol. The [proposal assessment](docs/QWEN_NEAR_SOL_PROPOSAL_ASSESSMENT_2026-11-05.md)
-frames a possible bounded task-correctness comparison, with costs reported
-separately. Intent-first instructions/schema, examples and thinking mode are
-untested candidates, not adopted improvements. The target, held-out cases and
-resource limits are not frozen. No new prompt/intent/examples/thinking condition
-or full-loop correctness trial has started. The later timing-only observations
-are tracked separately above.
-In M4, Qwen macro input averaged 1,996 tokens per call (maximum 3,928), not 5K in
-one prompt; the roughly 5K figure sums inputs across calls per task. M4 had no
-task timeouts. These distinctions matter for evaluating the proposed diagnostics.
 
 This is the maintained progress report and main overview for handing this project to another chatbot, researcher
 or teammate. It separates implemented software, measured results, unfinished work,
@@ -1104,6 +109,10 @@ results and interpretations.
 15. [Operational handoff](#15-operational-handoff)
 16. [Maintenance and user preferences](#16-maintenance-and-user-preferences)
 17. [Decision log and corrections](#17-decision-log-and-corrections)
+
+- [Appendix A — Chronological checkpoint archive](#appendix-a--chronological-checkpoint-archive-2026-10-27-to-2026-11-20)
+- [Appendix B — Presentation briefing for 2026-11-18 (superseded)](#appendix-b--presentation-briefing-for-2026-11-18-superseded)
+- [Appendix C — Historical section 2 checkpoints](#appendix-c--historical-section-2-checkpoints)
 
 ## Results at a glance (all studies)
 
@@ -1327,96 +336,6 @@ details are deliberately not recorded here. Verified 2026-11-20 unless marked ot
 | Safe read-only checks | `docker ps`, `nvidia-smi`, `curl 127.0.0.1:11439/api/ps` (and `/api/version`), `curl 127.0.0.1:6006/healthz`. A model load or generation **is** a charged request; never do one casually |
 | Verify frozen G1 inputs (zero inference) | In the mirror's `stage-4-multimodel-20261119`: `python3 -B -c "import runpy;assert runpy.run_path('operator/run_sequence.py')['verify']()"`. Never run `run_sequence.py --execute`, `launch.py` or completed analysis drivers as checks |
 | Disk | Root `/` is 98% full; write outputs under `/media/naeem/d1` (386 GB free) |
-
-### Historical G1 checkpoint — 2026-11-16 (superseded by the 2026-11-20 entry above; retained unedited below)
-
-
-
-**Stage 2 execution is complete; Stage 3 cannot freeze or launch.** The study uses
-AI-authored cases under the owner's documented fallback, with no independent
-teammate authorship or semantic-novelty review. The final design contains 18 dev
-and 38 held-out-designated cases, in two domains and two execution conditions.
-The 38 cases form 13 template groups, including six ladder groups. Engineering
-fixture checks have exercised held-out-designated paths; no held-out model
-outcomes have been produced. This is not a blind independently authored test set.
-
-| Stage | Verified progress | Current interpretation |
-|---|---|---|
-| G1 Stage 0 / revision 1 | Narrowed arm/base design, observer separation and documented AI-only authorship amendment | Earlier 16-dev draft superseded by the 18-dev Stage 1 plan; earlier files preserved. |
-| G1 Stage 1 | 132/132 scripted real-adapter controls; 9 observer/world tests; 132 local and 132 persisted audits; 5,544 matched spans | Engineering evidence, not live model competence. |
-| G1 Stage 2 | All 36 Sol dev attempts accounted for: 35 preliminary correct, one infrastructure interruption; 94/291 charged requests | Ten unstarted cases completed in an authorized continuation; interrupted trial never rerun. Four clarification answers await uninvolved human adjudication. |
-| G1 Stage 3 fresh controls | Another 132/132 controls, 9 observer/world tests and exact 5,544-span audit match | Both domains hosted with unchanged protected source; scripted execution only. |
-| G1 Stage 3 scorer review | GPT-6 Astra authored 41 new adversarial cases; 29 expectations matched, 12 mismatches retained | Six reachable clarification errors are substantive; G-e clearance failed. This is separate AI review, not human clarification review. |
-| G1 later stages | No held-out live run, Qwen live run or catalogue-size probe started | No launch authorization implied by preparation or this overview. |
-
-**Stage 2 descriptive efficiency:** all attempts used 60 primitive versus 34 macro
-inference requests, 194.91 versus 111.35 task seconds, and 40 versus 46 native
-attempts. The primitive interruption had unknown token usage; its macro partner
-completed six native acquisitions. On the 17 pairs with both conditions scored
-correct, requests were **59 versus 32** (45.76% fewer), task time **192.49 versus
-104.84 seconds** (45.53% less), and native operations **40 versus 40**. Matched
-known input tokens were 90,425 versus 47,227; output 1,783 versus 1,051. These
-selected dev pairs and interrupted timing segments do not establish causal speed
-or reliability superiority. All 36 local and persisted audits matched 1,472 spans.
-The historical automated scores are retained, not promoted to independently
-validated semantic outcomes by these checks.
-
-**Current Stage 3 gates:** G-a authorship fallback and G-b fresh controls pass.
-On **2026-11-17**, the owner confirmed they can arrange an uninvolved person.
-The [four-case blinded review ZIP](artifacts/macro-generalization-20261113/revision-1/stage-3/resolution-guide-20261117/G1_FOUR_CASE_HUMAN_REVIEW_2026-11-17.zip)
-is ready. Actual ratings and a reviewer name are not yet supplied. A
-[concrete scoring/observability amendment proposal](artifacts/macro-generalization-20261113/revision-1/stage-3/resolution-guide-20261117/DECISIONS_TO_APPROVE.md)
-is prepared for owner decision; neither amendment is adopted. See the
-[November 17 resolution checkpoint](artifacts/macro-generalization-20261113/revision-1/stage-3/LATEST_STAGE3_STATUS_2026-11-17.md).
-
-G-c is BLOCKED: the owner chose protected authentication source unchanged, and
-the existing outer wrapper cannot capture all required HTTP error details.
-G-d analysis checks pass, but ordered advancement waits. G-e is FAIL: the separate
-review accepted five non-clarifying answers and rejected one valid clarification
-in reachable answer-only tests. The other six mismatches comprise four forged
-program-owned evidence bypasses, one unreachable extra-source hypothesis and
-one documented reviewer expectation error; they are not six additional reachable
-model failures. G-f is BLOCKED pending actual uninvolved human ratings of the
-four G1 clarification transcripts. M4's eight transcripts are a different packet.
-G-g freeze and G-h launch preflight therefore remain BLOCKED.
-
-**Next actions require explicit disposition, not another run:** address the
-substantive scorer finding and unmet instrumentation scope without silently
-changing protected source or frozen criteria; obtain the required human review;
-then complete valid gates, a new freeze and zero-inference restore-only preflight.
-Any scorer amendment requires renewed review. No amendment or waiver is adopted
-here. Provider quota and current grant validity are not established by a local
-credential file. Stage 4 needs separate owner authorization after preflight.
-
-The [November 15 Stage 3 status](artifacts/macro-generalization-20261113/revision-1/stage-3/LATEST_STAGE3_STATUS_2026-11-15.md),
-[Astra review](artifacts/macro-generalization-20261113/revision-1/stage-3/scorer-review/astra-review-20261115/REVIEW_REPORT.md)
-and [Stage 2 results/problems](artifacts/macro-generalization-20261113/revision-1/STAGE2_RESULTS_AND_PROBLEMS_2026-11-14.md)
-are the detailed records. Stage 2's older P1–P4/P2 decision wording predates the
-owner-confirmed [P1′–P6 amendment](artifacts/macro-generalization-20261113/revision-1/stage-3/predictions-amendment-20261114/PREDICTIONS_AMENDMENT_2026-11-14.md);
-use that amendment for prospective rules, never retroactively edit the older report.
-No prediction is adjudicated from dev or scripted results.
-
-### Completed timing/serving screen — historical checkpoint
-
-**Timing roadmap status (2026-11-13):** Phase 0 analysis and Phase 1 A/B serving
-screen completed. A 8.388 vs B 8.082 generation tokens/s; B/A 0.963, family-call
-agreement 7/10. B failed the fixed screen, C skipped, no new serving configuration
-retained. Phase 1 charged31 requests including the declared recovery warm-up;
-its servers stopped and preservation/accounting checks passed. Phase 0's separate
-two charged attempts remain preserved. Use the
-[dedicated living tracker](docs/CLAUDE_QWEN_ROADMAP_LIVE.md) and
-[dated results](docs/QWEN_SERVING_PHASE1_REPORT_2026-11-13.md) for current evidence,
-limitations and next decisions. This serving screen launched no new full-loop
-correctness study; the subsequently authorized G1 development study is separate.
-
-The generated block below is the **M4/M5 delivery snapshot**, not a live status
-monitor for G1 or the separate timing roadmap. `PROJECT_LIVE_STATUS.json` likewise
-remains an M4/M5 saved snapshot, not G1 progress. Its saved refresh date remains visible.
-That block is refreshed from existing files by
-`python -m tools.project_context --refresh`. It makes no model calls, reads no
-credential records and does not modify experimental inputs or trial results.
-The figures are a snapshot, not a continuously refreshed dashboard. Refresh before
-sharing this document or making a new claim about an active run.
 
 > **Note 2026-11-21:** the generated block below is the **M4/M5 snapshot of 2026-11-05**. Its "Current
 > milestone" and "Next actions" rows are historical. Current next actions are in the dated 2026-11-21
@@ -2786,3 +1705,1117 @@ then follow the user's requested task. Do not claim the project is finished,
 all stages passed, the full ROSA catalogue was benchmarked, Qwen was trained,
 memory/JTVR was completed, or physical robot safety was demonstrated.
 
+
+
+## Appendix A — Chronological checkpoint archive (2026-10-27 to 2026-11-20)
+
+> Moved here unchanged on 2026-11-21 from the top of this file. Each block was the "current" status
+> on its date, newest first. For today's state see [section 2](#2-current-verified-status); for results
+> see [Results at a glance](#results-at-a-glance-all-studies).
+
+### A.1 Checkpoints 2026-11-17 to 2026-11-20 (newest first)
+
+**Publication - 2026-11-20.** The owner explicitly approved the full public 22-commit
+payload; evaluation `member/martin` was pushed to **8f961b5**, verified on GitHub, with
+`main` unchanged. That approval covers the published payload, not arbitrary future
+uploads. Later documentation commits are local until separately approved for push.
+Operational lab-access details are kept in a private local handoff, not in this
+repository. The lab root Git checkout is older; the actual G1 execution mirror is a
+separate source/evidence snapshot, not a Git checkout. Do not blindly synchronize one
+over the other. The lab GPU is shared with another project; recheck and coordinate
+before any future model load, and never stop the other project's work.
+Historical checkpoints below preserve earlier status; the newest dated blocks
+and final reports take precedence. In particular, the old Stage3-blocked wording
+is superseded: Sol and the three-model extension are closed; ~~Qwen BatchB is pending~~
+(superseded: Qwen Batch B was closed and adjudicated on 2026-11-20).
+
+**Current closeout - 2026-11-20: extension T6 COMPLETE.** Levinson’s 12 actual
+ratings are bound after Martin forwarded the completed declaration (review date
+2026-11-19; five affirmative self-attestations; teammate relationship disclosed).
+The original ZIP and blank declaration are retained; the supplemental statement
+is separately attributed. Eligibility is self-attested, not external validation.
+All 228 extension attempts now have final outcomes. Primitives versus macro:
+Ministral **29/38 vs 35/38**, Granite **1/38 vs 0/38**, Llama **0/38 vs 1/38**.
+Known-goal results remain **28/36 vs 33/36**, **0/36 vs 0/36**, **0/36 vs 1/36**.
+Granite’s single pass is clarification, not native task execution.
+
+The frozen analysis ran on the lab with 10,000 whole-template-group bootstrap
+draws per model (seed 20261113); all new-backend outputs remain exploratory.
+H-write is **Uninformative for each model and overall**, because all three hit
+the predefined write-arm floor/ceiling override. P2’s ±25% native-operation
+rule is Against for Ministral/Llama and Uninformative for Granite. P1′ outputs
+on new backends are diagnostics of the originally Sol-specific endpoint; P3
+is dropped and P4 catalogue probing was not run. P5 is an engineering gate.
+
+Ministral uses **154→83 calls**, **5.32→3.18 seconds per task** and **102→127
+native operations** over all attempts. Its 28 matched successful pairs use
+**111→59 calls**, **144.43→92.62 task seconds** and **85→87 native operations**.
+Granite/Llama still have no matched successful pair. Their short failure times
+are not evidence of useful efficiency. No generic reliability or model parity
+claim follows. All raw evidence, frozen inputs/backend seals and 228 local plus
+228 persisted audits verify. **Zero new model requests**; the 710 charged total
+is unchanged. No experiment, runtime change or Git publication occurred.
+
+The [adjudicated report](G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md) supersedes
+earlier pending extension checkpoints below. Qwen Batch B’s separate four-case
+human review remains pending; no extension labels were transferred to it.
+
+**Current review checkpoint - 2026-11-20: all 12 extension ratings received;
+T6 remains BLOCKED because the reviewer declaration is blank.** Martin supplied
+`lev'srating3.zip`; all 12 H01?H12 entries name Levinson, have permitted labels
+and reasons, and match the issued extension packet, source hashes and rendered
+transcripts. The original ZIP and both member files are preserved unchanged.
+The declaration is byte-identical to the blank issued template: actual review
+date, eligibility, exposure and personal scoring without AI/coaching are not
+attested. No independence, accepted adjudication or final scores are inferred.
+Levinson only needs to complete and return the declaration; he need not repeat
+his ratings. Formal frozen analysis and H-write closeout remain withheld.
+Qwen Batch B's separate four-case review is still outstanding. No new model
+requests, raw-result changes, experiments or Git publication occurred.
+See the [intake status](artifacts/macro-generalization-20261113/revision-1/stage-4-multimodel-20261119/operator/human-review-intake-20261120/INTAKE_STATUS.md)
+and [declaration-only follow-up ZIP](artifacts/macro-generalization-20261113/revision-1/stage-4-multimodel-20261119/operator/human-review-intake-20261120/DECLARATION_TO_COMPLETE.zip).
+The earlier execution checkpoint below remains accurate for measured outcomes;
+its statement that no ratings were received is superseded by this intake note.
+
+**Current state - 2026-11-19: all228 exploratory extension attempts COMPLETE;
+actual human review and formal closeout remain pending.** The authorized fixed
+sequence finished Ministral, Granite and Llama on the lab. All76 attempts/model,
+including failures, are retained. **701 inference +6 preparation +3 cleanup
+=710 charged requests**, within the separate611-request ceilings: Ministral240,
+Granite79, Llama391. No infrastructure retries, censored trials or replacement
+attempts occurred. All228 local and228 persisted Phoenix audits pass. All models
+are unloaded. No Qwen/Sol rerun, OAuth, Gazebo, model download or Git publication
+occurred.
+
+These are **exploratory backends, added after Sol and Qwen results**, using the
+same38 AI-authored mock cases. Known-goal counts below exclude the two ambiguous
+cases per condition. Calls, time and native work include all38 attempts/condition.
+
+| New backend | Known-goal primitives | Known-goal macro | Calls P → M | Mean task seconds P → M | Native operations P → M |
+|---|---:|---:|---:|---:|---:|
+| Ministral3 8B | 28/36 | 33/36 | 154 →83 | 5.32 →3.18 | 102 →127 |
+| Granite3.3 8B | 0/36 | 0/36 | 38 →38 | 3.55 →3.15 | 0 →0 |
+| Llama3.1 8B | 0/36 | 1/36 | 203 →185 | 1.96 →2.11 | 42 →122 |
+
+Ministral is the strongest new local configuration observed here. Its27 matched
+successful pairs used110 vs58 calls and142.54 vs90.47 measured task seconds,
+with85 vs87 native operations. All-attempt calls fell46.1%; correctness rose by
+five known-goal passes as a point observation, not a proven general reliability
+gain. Granite returned76 text responses with0 recognized native calls; inspected
+outputs rendered tool-shaped JSON as text. Llama returned383 native calls but
+had150/135 invalid attempts and37/31 budget endings P/M. Faster failure is not
+useful task efficiency; neither Granite nor Llama has a matched successful pair.
+Do not interpret these results as intrinsic model rankings.
+
+All-attempt outcomes are Ministral61 PASS,12 FAIL,3 primary pending; Granite0
+PASS,72 FAIL,4 pending; Llama1 PASS,75 FAIL,0 primary pending. Nevertheless,
+**all12 new clarification transcripts require actual semantic review**: five
+already fail structural bounds, so favorable semantic ratings cannot turn those
+into passes. Levinson is nominated; an honest eligibility declaration and his
+actual ratings have not been obtained. The new shuffled packet is separate from
+Qwen Batch B's four outstanding responses and from earlier Sol/development/M4
+reviews. No AI ratings or reused human labels were supplied. T1–T5 are complete
+with the documented reporting qualifications; **T6 is BLOCKED pending actual
+ratings**. Formal frozen analysis and H-write closeout are withheld.
+
+The corrected predefined eight-case write-bearing counts are Ministral4/8 vs8/8,
+Granite0/8 vs0/8, and Llama0/8 vs1/8. Other known-goal counts are24/28 vs25/28,
+0/28 vs0/28, and0/28 vs0/28 respectively. Six healthy writes plus the two frozen
+`write_fault` cases form that eight-case group. The predefined floor/ceiling rule
+must take precedence; do not call the favorable Ministral point pattern H-write
+Support while ignoring its8/8 ceiling. No frozen hypothesis or threshold changed.
+
+All recorded loaded-model telemetry samples show full GPU residence at8K context
+(96/96 Ministral,89/89 Granite,80/80 Llama). The extension used the disclosed
+replacement Jazzy image and unchanged pinned dependencies/settings. Earlier Qwen
+used another image; Sol retains its original hosted/laptop-WSL provenance. The
+full report provides their contextual results without pooling rates or claiming
+hardware-matched speed, general model parity or case generalization. This job
+uses mock operations, not new ROS-controller/Gazebo/physical-robot execution.
+
+Three preflight metadata transcriptions were corrected in a dated addendum while
+preserving the acknowledged original; actual sealed configuration/digest checks
+were correct. A reporting-only host/container invocation error was repaired after
+trials finished. The first descriptive helper also omitted `write_fault`, showing
+6/30 instead of8/28; corrected derived outputs now supersede that table, with
+old source/output/ZIP retained. These are documented reporting errors, not quiet
+changes to scorers, raw scores, cases, prompts, budgets or formal analysis.
+
+The3,796 frozen inputs,1,159 retained Sol/Qwen hashes,three backend seals and228
+raw trial hashes reverify. All2,019 entries of the initial completed archive
+verified after local transfer. That archive retains superseded derived tables;
+the share package marks the corrected report/JSON authoritative. No live Phoenix
+database backup or model-weight upload is claimed.
+
+Share the [complete corrected comparison report](G1_MULTIMODEL_REPORT_2026-11-19.md)
+and [report/evidence share ZIP](artifacts/macro-generalization-20261113/revision-1/stage-4-multimodel-20261119/G1_MULTIMODEL_SHARE_20261119.zip).
+For Levinson, send **only** the [neutral12-response review ZIP](artifacts/reviewer-delivery-20261119/G1_EXTENSION_CLARIFICATION_REVIEW_2026-11-19.zip).
+The [task status](artifacts/macro-generalization-20261113/revision-1/stage-4-multimodel-20261119/STATUS.md)
+records the remaining human gate. Preserve original Qwen/Sol/M4 results; this
+closeout does not authorize another experiment, default-model switch or Git push.
+Earlier checkpoints below are retained history and are superseded by this block.
+
+**Earlier live checkpoint - 2026-11-19: three-model exploratory batch was RUNNING;
+superseded by the execution closeout above.**
+The owner read the combined preflight and explicitly replied: "I read the
+preflight—launch the three-model batch." The detached, sleep-inhibited sequence
+started at **22:26 Taipei time**, in fixed order Ministral, Granite, Llama.
+Ministral has now completed76/76 attempts:61 PASS,12 FAIL,3 pending human review,
+0 infrastructure-censored. Known-goal correctness is28/36 primitives versus33/36
+macro. All-attempt calls154 vs83, mean task time5.32 vs3.18s and native operations
+102 vs127. There are27 matched successful pairs; costs there are110 vs58 calls
+and142.54 vs90.47 task seconds. All76 local and76 persisted audits pass. Its
+237 inference +2 preparation +1 cleanup requests total240/611. Four actual
+clarification ratings are still required, including one structurally failed
+response. These are descriptive outcomes, not a final human-adjudicated verdict.
+Granite completed76/76 attempts:72 FAIL,4 pending human review; known-goal
+correctness0/36 in both conditions. It produced0 recognized native tool calls
+and0 native operations. Inspected outputs contain tool-shaped JSON as text;
+this is a limitation of the tested integration, not proof of intrinsic inability.
+One trial had a response-length stop. Granite spent76 inference +2 preparation
++1 cleanup =79/611 charged requests. Llama is now running. Early Llama records
+contain recognized native calls but repeated schema/validation failures; no
+final Llama outcome is inferred. Do not assume unstarted outcomes.
+Counters and preserved attempts are in each backend's status/ledger.
+Three metadata values were transcribed incorrectly into the acknowledged
+preflight prose: Ministral's displayed digest and disk bytes, and Llama's loaded
+size. The original acknowledged document is preserved unchanged; the
+[dated correction](artifacts/macro-generalization-20261113/revision-1/stage-4-multimodel-20261119/PREFLIGHT_DISPLAY_CORRECTIONS_2026-11-19.md)
+gives the exact sealed values. Installed server digests rechecked against all
+three unchanged configurations; the actual launch used those correct sealed
+values. This is a documentation error, not a model replacement or protocol edit.
+The original protected inputs, three backend seals, service health and sleep
+inhibitor permission passed the final zero-inference check. Request caps,
+eight-hour backend windows, fresh idle gates and actual human-review requirements
+remain as specified below. No further acknowledgment is needed for this authorized
+sequence unless a genuinely new authorization boundary is reached.
+
+**Earlier preparation checkpoint - 2026-11-19: three additional local backends
+prepared; combined launch acknowledgment subsequently received as above.** The owner supplied a bounded G1
+extension for **Ministral 3 8B, Granite 3.3 8B and Llama 3.1 8B Instruct**, in that
+fixed order, using the same38 AI-authored cases and primitives/macro conditions:
+**76 attempts/model,228 total**. These are **exploratory backends, added after
+Sol and Qwen results**, not a new independently authored held-out catalogue.
+No model or case substitution, prompt/template/parser repair, download, Qwen/Sol
+rerun, Gazebo run, OAuth, catalogue probe or Git publication was performed.
+
+**Benchmark attempts remain0/228.** Eligibility preparation charged **six empty
+load/unload requests**, two per model, inside separate611-request total caps.
+At most609 requests/model remain, including inference, eligible retries and final
+unloads; the three-model aggregate cap is1,833. Each backend has its own eight-hour
+live window. Approximately200 inference requests/model is only a planning
+reference from earlier batches, not an estimate of missing counters or a promise.
+The owner's supplied T2/T4 explicitly requires reading and acknowledging the
+combined preflight once before any new benchmark launches. The later instruction
+to continue preparation has not been represented as acknowledgment of a record
+that did not yet exist.
+
+All three report native tool capability and loaded wholly on the lab GPU at8K
+context: **Ministral35/35 layers, Granite41/41, Llama33/33**. All use installed
+Q4_K_M weights; exact tags, digests, byte sizes, family and advertised context are
+recorded in the preflight and sealed configurations. No thinking capability is
+advertised; the common `think=false` wire field is retained. All **24 scripted
+controls**,24 local audits and24 persisted Phoenix audits passed, and **144
+serialized request bodies** matched the unchanged adapter. Six timing fields
+survived injected-response checks. Missing live-model usage/cached-token counters
+remain unrecorded; scripted checks are not model-performance results. The runner
+also failed closed without its execution flag or launch acknowledgment.
+
+The earlier container and its image became unavailable externally during
+preparation. The extension now uses its own container and another **already
+installed ROS2 Jazzy image**, `sha256:306205ffce29f89a7e138f130cd3ee0bd668c17ed5441a45532449dbcbf771d2`,
+with the same verified pinned Python dependencies. This differs from Qwen's
+original image; no identical-image replication is claimed. An extension-owned
+Phoenix service stores new traces separately, with raw control exports retained.
+No other project's container/server was modified. The GPU idle gate passed at
+the original threshold, with a fresh gate required before each backend. No
+benchmark is protected against explicit reboot or power loss. Execution will be
+detached with a scoped sleep inhibitor and GPU/container/model telemetry.
+
+These G1 operations are **mocks inside the ROS2/Jazzy software environment**;
+they do not command Gazebo, controllers or hardware. Earlier M4 and transfer
+experiments actually used Gazebo and remain separate evidence. The fixed source,
+cases, scorer, thresholds, original3,796 input hashes,1,159 retained Sol/Qwen file
+hashes and three new backend seals reverified. Preparation log-decoding and idle
+gate interruptions are retained, without repeating successful load/control work.
+
+The written H-write comparison is prospective only for these additional
+backends, derived from Qwen's retrospective2/8 vs6/8 write-bearing and24/28 vs24/28
+other known-goal split. It uses the owner's confirmed raw-count rule, with0/8 or
+8/8 in either write arm forcing Uninformative. Fifteen synthetic boundary checks
+passed on the lab. This rule can support write concentration even if overall
+accuracy worsens; both must be reported. Do not pool backend pass rates or claim
+new case generality. The requested P-label correction was inconsistent with the
+adopted November14 definitions: a factual addendum preserves **P3 dropped horizon
+reliability; P4 catalogue probe not run**. P1′ retains its original Sol-specific
+formal scope.
+
+**Levinson is nominated for the new pooled clarification review, not yet
+attested or scored.** After live execution, prepare a separate blinded packet
+of up to12 new transcripts. Qwen's four-transcript Batch B remains outstanding
+separately. No assistant ratings are permitted. Produce descriptive reports after
+each backend; the unchanged formal analyzer remains withheld until actual human
+ratings are bound. T4's immediate-analysis wording does not remove T6's gate.
+
+Read the [combined launch preflight](artifacts/macro-generalization-20261113/revision-1/stage-4-multimodel-20261119/READY_PREFLIGHT.md),
+[task-by-task status](artifacts/macro-generalization-20261113/revision-1/stage-4-multimodel-20261119/STATUS.md),
+[dated Qwen definition addendum](artifacts/macro-generalization-20261113/revision-1/stage-4-multimodel-20261119/QWEN_REPORT_ADDENDUM_2026-11-19.md)
+and [preparation evidence archive](artifacts/macro-generalization-20261113/revision-1/stage-4-multimodel-20261119/G1_MULTIMODEL_PREPARATION_20261119.zip).
+Completed Qwen and Sol results below remain unchanged; earlier current-state
+headings are historical checkpoints superseded by this block.
+
+**Completed Qwen result - 2026-11-19: Qwen lab execution COMPLETE;
+human adjudication pending.** All **76/76 G1 mock attempts** finished in one
+uninterrupted batch,19:45:22-20:05:33 Taipei time. Effective outcomes are
+**56 PASS,17 FAIL,3 PENDING_HUMAN_REVIEW,0 infrastructure-censored**. Primitives:
+26 PASS,11 FAIL,1 pending; macro:30 PASS,6 FAIL,2 pending. Known-goal correctness
+is **26/36 versus30/36**, including13/18 versus15/18 in each domain. Four new
+clarification transcripts need real semantic ratings: one already fails
+structural/runtime requirements, so only three primary outcomes are undecided.
+The frozen final analysis remains withheld until the required ratings arrive.
+No Sol/development ratings were reused and no human judgments were invented.
+
+The batch spent **198 inference requests plus1 earlier auxiliary load =199/611
+charged requests**, with0 infrastructure retries,0 task-budget exhaustions and
+no replay or replacement. All **76 local and76 persisted Phoenix audits pass**;
+3,796 original frozen inputs and81 sealed backend files reverify unchanged.
+The completed export's **662 manifest entries verified** after transfer. Source,
+raw outputs, failures, traces and operational repairs are retained.
+
+All-attempt primitives versus macro costs: **123 vs75 calls**,264,961 vs152,127
+input tokens,25,878 vs18,791 output tokens,100 vs106 native operations and322.22
+vs239.86 summed task seconds. Mean task time was8.48 vs6.31s; median7.93 vs5.90s.
+Across the **25 pairs where both conditions passed**, calls were87 vs52
+(40.2% fewer), task time221.63 vs159.90s (27.9% less), and native work87 vs86.
+Conditional successful-pair costs do not replace all-attempt accounting. Total
+campaign time was1,210.25s, including auditing/bookkeeping outside measured tasks.
+
+Qwen still has substantial failures. Seven trials stopped on response length
+(4 primitives,3 macro); five other failures had incorrect selection and five
+had correct selection but failed execution/reporting. There were0 recorded
+dispatch violations and0 unsupported accepted SUCCESS flags, but **one accepted,
+evidence-grounded SUCCESS for the wrong requested goal in each condition**.
+Skill-report truthfulness and user-goal completion remain separate. These
+descriptive buckets are not a causal diagnosis or new preregistered predictions.
+
+All198 inference calls retained all six Ollama timing fields; aggregate decode
+rates were89.96 and89.55 tokens/s. Cached-token counters were not returned.
+Telemetry sampled only Ollama and the existing remote-desktop compute processes;
+no fixed OOM/reset/runner-termination signatures were counted. The scoped sleep
+inhibitor ended normally. **Lab hardware; not directly comparable to M4**.
+This is neither a controlled laptop/lab comparison nor proof of parity with Sol.
+The previous adjudicated Sol results remain73 PASS and3 censored, unchanged.
+
+See the [complete Qwen report](G1_QWEN_LAB_REPORT_2026-11-19.md),
+[verified evidence ZIP](artifacts/g1-lab-preparation-20261119/G1_QWEN_LAB_COMPLETED_20261119.zip)
+and [neutral four-transcript review ZIP](artifacts/reviewer-delivery-20261119/G1_HELDOUT_REVIEW_BATCH_B_2026-11-19.zip).
+Send only that neutral review ZIP to the reviewer; model labels, mappings and
+prior scores are withheld. Return their actual CSV and declaration. The next
+authorized work is intake and unchanged final analysis, with zero inference.
+P3 remains dropped; the separate P4 catalogue probe is **not run**. No optional
+replay, new study, Gazebo batch, architectural change or Git publication began.
+Earlier launch/readiness/pending snapshots below are retained historical records
+and are superseded by this current-state block.
+
+**Earlier launch checkpoint - 2026-11-19: Qwen lab batch was RUNNING.** The owner read the
+preflight and gave the launch go-ahead. The detached worker started at **19:45
+Taipei time**, using the existing lab Jazzy container and local Qwen. All76 mock
+trials remain scheduled, with the original eight-hour window and611 total
+charged-request ceiling, including1 auxiliary load already spent. Fresh GPU idle
+samples passed; no other application was terminated. A temporary sleep/idle
+inhibitor and read-only GPU/container telemetry are active. Reboots, power loss
+and explicit shutdown can still interrupt execution. Only unstarted cells may
+resume after integrity checks under the original cumulative limits.
+
+The final zero-inference checks matched **48 serialized request bodies byte for
+byte** against the unchanged adapter and verified preservation of all six Ollama
+timing fields with an injected response. NVIDIA driver570.195.03, reported CUDA
+compatibility12.8 and the container image digest are recorded. Frozen runtime,
+prompts, cases and model settings were not changed. The original idle model
+retention remains; any load costs are recorded rather than silently excluded.
+The [launch checklist and limitations](artifacts/macro-generalization-20261113/revision-1/stage-4-qwen-lab-20261119/operator/LAUNCH_CHECKLIST_ADDENDUM.md)
+links the operational evidence. New Qwen clarification answers will require new
+human ratings. No live results or correctness conclusions are available at this
+launch checkpoint. No optional replay, catalogue probe, Sol replication or Git
+publication is authorized by this launch. Catalogue size is P4 and is not run;
+P3 is dropped. Label Qwen tables **lab hardware; not directly comparable to M4**.
+This is not a controlled laptop/lab speed comparison. The completed adjudicated
+Sol results remain unchanged. Earlier readiness and pending-review snapshots
+below are dated history, superseded by their later current-state updates.
+
+**Earlier preparation checkpoint - 2026-11-19: Qwen lab preflight ready; acknowledgment subsequently received and launch completed as above.**
+The owner chose to retain the adjudicated first Sol batch and prioritize Qwen;
+no Sol replication is scheduled. Qwen has **0/76 benchmark trials started**.
+Its exact frozen model digest is present on the lab. The established Jazzy
+container imports ROSA/Ollama successfully; eight scripted backend-port controls
+pass with8/8 local and8/8 persisted Phoenix audits. These are zero-inference
+engineering checks, not live Qwen performance evidence. The original3,796 frozen
+inputs and the new81-file backend assembly verify unchanged.
+
+One auxiliary empty-prompt model-load request established33/33 GPU layers,
+Flash Attention enabled,8K loaded context and f16 server KV configuration. Its
+6.59s setup time/response/log are preserved; omitted internal usage counters
+remain NOT_RECORDED. **This1 request is charged inside the611 overall ceiling**,
+leaving at most610 inference/retry requests for the76-trial batch. The live
+backend window is8h, with the original per-task call/token/native limits. Model
+may auto-unload while awaiting review; fresh idle GPU samples are taken before
+actual launch. No other workload is stopped. No OAuth is needed for local Qwen.
+
+Wire validation identified a documentation discrepancy: the pinned adapter's
+LangChain streaming=False setting still produces API stream=True. Client
+cache=False also does not disable the lab server's prompt cache, which its log
+reports enabled. The port preserves actual frozen adapter behavior and records
+these facts; it does not force different settings to improve outcomes. The first
+wire check stopped on its incorrect False assumption before live inference or
+scripted trials; corrected golden comparison and eight controls passed.
+
+The existing G1 final freeze/preflight review gate remains: the owner-readable
+[Qwen READY_PREFLIGHT](artifacts/macro-generalization-20261113/revision-1/stage-4-qwen-lab-20261119/READY_PREFLIGHT.md)
+is complete, and final launch acknowledgment has been requested. The detached
+lab operator is prepared but has not started a benchmark. New Qwen clarification
+responses will require new human ratings after execution; Sol ratings cannot be
+reused. No catalogue probe, Gazebo study, source-module rewrite, new hosted
+sign-in or Git publication is part of this preparation. The
+[adjudicated Sol report](G1_SOL_ADJUDICATED_REPORT_2026-11-19.md) remains the completed
+comparison for that backend, with its original provenance and all failures retained.
+
+**Current G1 adjudicated status - 2026-11-19.** Levinson returned the four new
+held-out ratings: YES on both criteria in H01-H04, with actual reasons and his
+eligibility declaration preserved and bound to the issued transcript/evidence
+hashes. Eligibility is based on his attestation, not independently verified;
+team membership and his separate earlier dev review are disclosed. No ratings
+were invented or transferred between cases. **The first Sol batch now has73 PASS,
+0 evaluable FAIL and3 infrastructure-censored attempts, with0 pending judgments**.
+V2 correctness is35/35 primitives and38/38 macro; V3 counting censored attempts
+as failures is35/38 versus38/38. Do not treat that operational difference as
+proved reliability improvement. All76 attempts and200 physical requests remain.
+
+Final analysis ran on the **lab via SSH** with the unchanged frozen analyzer,
+10,000 whole-template-group bootstrap draws and zero inference requests. This
+analysis host does not rewrite the original batch's laptop-WSL orchestration and
+hosted Sol provenance. P1-prime is Support, P2 is Uninformative (V2 Support,
+V3 Against), P3 Dropped, P4 not yet tested/Uninformative, P5 Support, P6 descriptive.
+Across the35 matched successful pairs, primitives versus macros used **120 vs68
+calls,186,400 vs103,332 input tokens,3,597 vs2,238 output tokens,487.76 vs280.38
+summed task seconds, and111 vs103 native operations**:43.3% fewer calls and42.5%
+less measured task time. Small groups, missing bootstrap cells, AI authorship,
+condition wording and unequal censoring remain material limitations.
+
+The owner selected **prioritize Qwen on the lab; retain completed Sol results**.
+No extra Sol replication is scheduled and no fresh hosted sign-in is needed for
+Qwen. All future tests/trials execute on the lab. Qwen's exact model/settings,
+resource and frozen-input readiness must be established before live launch.
+New Qwen clarification responses will require their own ratings; Sol judgments
+cannot supply them. See the [adjudicated Sol report](G1_SOL_ADJUDICATED_REPORT_2026-11-19.md)
+and its linked raw analysis/intake/lab-export records. Earlier pending/launch
+snapshots below are historical and superseded by this current-state block.
+
+**Execution host policy - 2026-11-19 (current owner instruction).** All future
+automated tests, deterministic controls, model probes and trials must execute on
+the **lab computer via SSH**, using the existing lab-rosa target and
+/media/naeem/d1/marvel proj/. Local editing/document and evidence review remain
+possible; do not silently fall back to laptop execution if the lab is unavailable.
+SSH was verified with a read-only inventory: **RTX4080 SUPER,16,376MiB total,
+15,916MiB free,0% utilization at that instant**. Zero inference requests or tests;
+one sample is not the complete frozen idle/model/offload preflight. Laptop GPU
+constraints do not describe this lab configuration. Keep applicable resource
+budgets/settings and lab workload checks; record actual loaded offload/digest.
+
+The completed76-attempt Sol batch below was orchestrated in laptop WSL with
+hosted OpenAI inference; this new instruction does not rewrite that provenance
+or rerun it. Future hosted runners also belong on the lab, while Sol inference
+itself remains hosted. G1 already permits separately recorded lab hardware; record
+the execution configuration before a newly authorized batch and distinguish
+hardware-dependent timing. Existing review/launch gates and consent boundaries
+remain. See the [execution-host policy and verified inventory](docs/EXECUTION_HOST_POLICY_2026-11-19.md).
+
+**Current G1 status - 2026-11-19: Sol execution COMPLETE; human review pending.**
+All **76/76 scheduled Sol mock attempts** are retained, with **200/611 physical
+requests**, zero eligible reserve retries and no trial replay/replacement.
+Effective outcomes are **69 PASS, 0 evaluable FAIL, 3 infrastructure-censored
+(1 pre-output, 2 post-action), and 4 PENDING_HUMAN_REVIEW**. Known-goal evaluable
+correctness is **33/33 primitives and 36/36 macro**; this excludes censored and
+ambiguous attempts and is not a claim of76 successful trials. Three provider
+stream interruptions were preserved; only unstarted cells resumed with the
+original freeze, cumulative counters and eight-hour origin. Their underlying
+provider cause is unknown. **76/76 local and76/76 persisted Phoenix audits pass**;
+all3,796 frozen source/input hashes match,245 previously retained trial files
+reverify, owned services stopped and credential memory cleanup completed.
+
+Across33 matched successful pairs, primitive versus macro costs were **118 vs66
+calls,183,745 vs100,679 input tokens,3,503 vs2,138 output tokens,480.67 vs271.66
+summed task seconds, and111 vs103 native operations**. These correspond to44.1%
+fewer calls and43.5% less measured task time. All-attempt costs, including censored
+and pending work, are126 vs74 calls and504.38 vs317.70 task seconds (means13.27
+vs8.36s). Three primitive records have incomplete token usage; missing values are
+not estimated. Campaign elapsed including setup/pauses was35.08min. No pair gap
+exceeded30min. This is descriptive evidence on the fixed AI-authored catalogue,
+not a final prediction verdict, general reliability claim or stock-ROSA comparison.
+
+The next gate is actual uninvolved human review of the **four new held-out
+clarification responses**. The older dev ratings cannot be reused. A new blinded
+packet contains transcripts, the unchanged rubric, blank ratings and declaration;
+no ratings were invented. After real submission intake/content binding, the
+unchanged frozen analysis can issue its final views/bootstrap/predictions.
+Qwen/catalogue stages remain unstarted; no additional stage, consent or Git
+publication is authorized here. See the complete
+[G1 Sol execution report](G1_SOL_HELDOUT_REPORT_2026-11-19.md) and
+[new blinded review packet](artifacts/macro-generalization-20261113/revision-1/stage-4/operator/heldout-human-review/G1_NEW_HELDOUT_HUMAN_REVIEW_2026-11-19.zip).
+Earlier dated checkpoints below are historical snapshots, superseded by this
+current-state block where their pending/launch descriptions differ.
+
+**G1 Sol held-out continuation - 2026-11-19.** The initial segment retained
+three trials and eight charged requests, then stopped on an in-stream provider
+error after one native acquisition. All three local and persisted Phoenix audits
+passed. The affected primitive trial G1r1-heldout-018-primitives is retained as
+INFRA_CENSORED_POST_ACTION; its unknown provider cause is not called quota
+exhaustion or a wrong model decision. Under the owner's standing recovery
+instruction, integrity was verified and an outer continuation started only the
+73 unstarted cells, using the exact frozen trial function and model/settings.
+The first three trial files remain unchanged. All eight spent requests, retry
+reserve state and original eight-hour origin are carried forward; no failed
+trial is repeated, no new consent is granted, and no frozen source is edited.
+See the [continuation record](artifacts/macro-generalization-20261113/revision-1/stage-4/operator/continuation-01/CONTINUATION_RECORD.json).
+Current cumulative state remains stage-4/status.json. A live continuation is
+not a completed campaign; future human clarification judgments remain required.
+
+**G1 Sol held-out launch acknowledged and started - 2026-11-19, before interruption.** The
+owner explicitly replied "I read the preflight-start the Sol run" (the original
+reply with punctuation is retained in stage-4/owner-launch-acknowledgment.json).
+The acknowledged frozen scope is76 Sol mock trials,611 physical requests maximum,
+8h backend window, unchanged cases/conditions/budgets/retry rules. A detached
+launcher was started and its process verified alive; it is checking the source
+freeze before owning Phoenix and restoring authorization again. Trial completion
+and success are not inferred from launch. Durable status is
+[stage-4/status.json](artifacts/macro-generalization-20261113/revision-1/stage-4/status.json)
+and operator/launcher.log in that same run directory. No new consent, Qwen stage,
+physical robot or publication is authorized. New ambiguous outcomes require new
+human review; preliminary execution is not a final campaign verdict. Later
+checkpoints supersede this launch snapshot without rewriting frozen evidence.
+
+**G1 held-out freeze and technical preflight complete - 2026-11-19, before owner acknowledgment.** The
+owner requested test commencement after preparation. The new 38-case/76-trial
+Sol mock batch is assembled with the two approved repairs; six new wiring tests
+pass and3,796 frozen files verify. The fresh restore-only preflight successfully
+renewed remembered authorization once, validated unchanged scopes and model
+availability, retained the opted-in encrypted credential and cleared memory.
+Zero inference requests. Quota remains UNKNOWN. Caps remain608 ordinary +3
+eligible reserve attempts,8h backend, with original per-task limits. No trial
+has started. The original protocol still requires owner acknowledgment of the
+completed preflight before launch; that final review is pending. No new consent,
+Qwen stage, robot action or Git publication occurred. See the
+[completed preflight](artifacts/macro-generalization-20261113/revision-1/stage-3/freeze-launch-preparation-20261119/READY_PREFLIGHT.md).
+New held-out clarification responses will need their own real blinded review;
+current dev ratings do not transfer. Historical artifacts remain preserved,
+including the pre-freeze helper's corrected control-key lookup error.
+
+**G1 second repair completed - 2026-11-19, before final freeze/preflight.** The owner explicitly accepted
+reduced metadata coverage while keeping protected code unchanged. The new G1-local
+observed transport passed all 12 integrated zero-model test methods, including
+six injected failure classes through the real parser, ChatSiwc and G1 recovery
+gate. Request contents, error semantics, availability, accounting and retries
+matched the unchanged implementation. Discarded HTTP provider fields remain
+NOT_RECORDED, as do stream fields before observation is possible. The canary was
+absent from saved metadata/logs. G-c is PASS against the approved reduced contract;
+the original full-coverage failure is preserved. Protected source, earlier data
+and the reviewed clarification-v2 layer are unchanged. Both repair decisions are
+now explicit; neither awaits another approval. See the
+[metadata repair report](artifacts/macro-generalization-20261113/revision-1/stage-3/error-metadata-v2-20261119/REPAIR_REPORT.md)
+and [latest gate status](artifacts/macro-generalization-20261113/revision-1/stage-3/LATEST_STAGE3_STATUS_2026-11-19_METADATA_REPAIR.md).
+The exact new execution/analysis assembly, protection scope and final freeze
+remain to be verified; the fresh restore-only preflight follows that freeze.
+No current provider validity/quota is established. No held-out trial, credential
+operation, robot action, Git commit/push or publication occurred. Future launch
+still needs the separately specified authorization after review of the preflight.
+
+**G1 first repair completed - 2026-11-19, before metadata repair.** The owner authorized the first,
+clarification-scoring repair. The new G1-local v2 layer uses actual eligible human
+judgments, leaves absent/CANNOT_JUDGE semantics explicitly pending, rejects wrong
+or duplicated bindings, and prevents human approval from overriding action or
+runner bounds. The regex remains diagnostic; old scores/results stay immutable.
+All15 implementer test methods pass. Renewed separate GPT-6 Astra review gives
+**PASS for this exact effective layer within its trusted-input boundary**:65
+original cases (63 matched,2 preserved reviewer construction errors), plus2
+corrected cases (2 matched); no substantive scorer defect. The old regex-only
+review remains historically FAIL. Four real Levinson ratings are bound and G-f
+remains PASS on his eligibility attestation. The retrospective dev view remains
+35 evaluable passes plus1 infrastructure-censored attempt, with unchanged costs.
+No new model-performance result is claimed. G-c metadata remains BLOCKED and its
+amendment unapproved; freeze/preflight/held-out launch remain blocked. No inference,
+OAuth/robot action, protected-source change or Git publication occurred. See the
+[repair report](artifacts/macro-generalization-20261113/revision-1/stage-3/clarification-scoring-v2-20261119/REPAIR_REPORT.md)
+and [current G1 status](artifacts/macro-generalization-20261113/revision-1/stage-3/LATEST_STAGE3_STATUS_2026-11-19_SCORING_REPAIR.md).
+Future analysis must retain pending judgments/costs, validate the authoritative
+schedule before projection, and require new real human review for new transcripts.
+The generic validator does not independently authenticate reviewers; actual
+submission provenance remains organizer-verified and eligibility self-declared.
+
+**G1 human review received - 2026-11-19, before scoring repair.** Levinson returned the four G1 Stage2
+ratings and completed declaration: YES on both criteria in all four cases.
+The issued packet integrity and submission completeness passed. G-f is **PASS
+on the submitted reviewer attestation**, which discloses team membership and
+affirms no case/system/scorer involvement or prior transcript/result exposure;
+this history is self-declared, not independently verified. Exact original files,
+reasons and hashes are retained in the
+[intake report](artifacts/macro-generalization-20261113/revision-1/stage-3/human-review-20261119/HUMAN_REVIEW_INTAKE_2026-11-19.md).
+This does not amend the legacy scorer or prove independent generalization.
+G-e remains FAIL, G-c remains BLOCKED, and the two proposed methodological
+amendments remain unapproved pending discussion. No held-out launch, new model
+requests, protected-source change or Git publication occurred.
+
+**G1 preparation resumed - 2026-11-19, before review intake.** The owner returned to the three
+outstanding Stage3 items: human-adjudicated clarification scoring, reduced error
+metadata coverage with protected source unchanged, and actual uninvolved review
+of four G1 cases. The owner chose to keep existing rules and discuss alternatives
+before approving either methodological amendment, and confirmed the actual human
+review was still pending at that point (the later intake above supersedes that
+pending status only). No renewed scorer review is authorized by that reply.
+The four-case
+ZIP and12 sealed Astra review artifacts verified intact. The old protection check
+reports one mismatch, the living master after authorized updates; its FAIL result
+is retained, and a new freeze must explicitly disposition mutable-document scope.
+All other checked protected entries match. No new source/scoring change, review
+substitution, inference, credential action or held-out launch occurred. See the
+[current G1 checkpoint](artifacts/macro-generalization-20261113/revision-1/stage-3/LATEST_STAGE3_STATUS_2026-11-19.md).
+Earlier dated checkpoints and all experimental evidence are preserved.
+
+**Research standards adopted - 2026-11-17.**
+The owner explicitly asked this assistant to follow the stable research rules
+**provided by teammate Levinson** through `rosa-contexts`. The operative local
+[adopted rules](docs/research-governance-20261117/ADOPTED_RESEARCH_RULES.md) and
+[dated adoption record](docs/research-governance-20261117/ADOPTION_RECORD.md) are
+now referenced by the workspace `AGENTS.md`. Before substantial future research
+work, use the full five-question preflight: closest mechanism and actual
+difference; observed need and honest denominators; concrete decision and
+discriminator; genuinely capable fair controls without a hidden oracle; and the
+smallest nonrepeating decision-changing next step. Preserve protocols, failures,
+negative findings, complete cost accounting, evidence provenance and review gates.
+
+This is a prospective governance change, not a new study or a retrospective claim
+of full compliance. Martin's practical ROSA reliability/efficiency vision remains
+the project direction; teammate-specific deadlines, language preferences and
+historical launch decisions are attributed context. No experiment, runtime,
+scorer, frozen result or G1 gate changed. Earlier experiment ZIPs retain the
+master snapshot at their packaging time; they are not rewritten to include this
+later policy update. The [source provenance](docs/research-governance-20261117/SOURCE_PROVENANCE.json)
+pins the adopted upstream version and verifies both saved source files.
+
+**Latest completed work - native-schema integration and robot reruns, 2026-11-17.**
+The opt-in `native-schema-v1` profile was implemented and the authorized **80 Llama + 80 Granite Gazebo attempts completed**. This is a separate replication of known M4 cases, not a rescore or replacement of any historical result and not G1 held-out testing. Each model has40 attempts per condition:36 known-goal tasks and4 ambiguous requests. All16 ambiguous attempts across the two models remain pending actual human semantic review; their legacy regex scores are diagnostic.
+
+| New backend/profile | Known-goal correct P / M | All-attempt calls P / M | Mean task seconds P / M |
+|---|---:|---:|---:|
+| llama3.1:8b-instruct-q4_K_M, native-schema-v1 | 21/36 / 28/36 | 190 / 113 | 2.37 / 2.16 |
+| granite3.3:8b, native-schema-v1 | 5/36 / 9/36 | 210 / 193 | 6.81 / 5.18 |
+
+Both previous configurations scored0/36 in each condition; those results remain frozen and available. The new profile adds model-native formatting guidance and current bound schemas to system messages and explicitly enforces HTTP stream=false. It does not choose skills, alias arguments, relax verification or automatically replay robot commands. Existing SDK argument normalization remains combined-system assistance. Actual HTTP bodies/responses and corresponding trace metadata were archived; the final tokenized/rendered Ollama prompt was not captured. The original adapter remains unchanged; the new module is `rosa-research/src/rosa_backends/tool_contract_ollama.py` and is opt-in.
+
+Seven zero-network checks,12 deterministic mock controls,24 live validation attempts and20 deterministic Gazebo controls preceded the160 live robot attempts. Fresh validation scored9/12 for Llama and6/12 for Granite. The functional gate required at least one healthy complete loop in each mode, with all safety/tracing/budget checks passing; it was not an all-case reliability gate. The mock ineffective-write checker could accept a truthful no-write failure: that cell does not prove a failed command was attempted. The main Gazebo scorer kept the original stricter fault-exercise/dispatch checks. The initial float-versus-bool fixture defect stopped deterministic validation with zero model calls; its failed source/control/archive are retained, and a documented fixture-only revision preceded all live validation outcomes.
+
+All216 completed validation/control/live attempts in this campaign passed local and persisted Phoenix audits. Independent read-only reconciliation verified archive manifests,75 frozen source/config hashes including the original69, model digests, schedule order, raw/checkpoint consistency, actual wire calls, token/resource bounds and cleanup. This is scripted evidence reconciliation, not outside scientific replication or a human semantic review. Validation budgets were96 requests/model; robot budgets were643/model, with the original8-call,2048-output-token and360-second task limits retained.
+
+Costs above include all40 attempts, including failures and ambiguity. Task latency excludes simulator setup/reset and persisted-audit overhead; campaign elapsed time and matched-success costs are in the full report. Accepted evidence-grounded SUCCESS for a wrong user goal remains a separate failure category. Fewer calls or fast failure does not establish reliability. See the per-family, discordant-pair, native-operation and fault-exercise tables before choosing a backend.
+
+The profile and explicit HTTP setting changed together, so their individual effects are not isolated. Primitive/macro mode and its original condition sentence remain coupled; a selection effect cannot be separated from condition wording. Four repetitions of familiar cases do not demonstrate independent generalization or intrinsic model parity. Older Qwen/Ministral serving profiles differ; no new Sol trial was run and no historical hosted comparison was replaced. No global default backend switch, new architecture or further study was authorized by completion of this replication. G1's existing scorer, instrumentation and real human-review gates remain unchanged.
+
+Current evidence: [complete integration-rerun report](artifacts/integration-rerun-20261117-r1/evidence/INTEGRATION_RERUN_COMPLETE_REPORT_2026-11-17.md), [independent raw-data analysis](artifacts/integration-rerun-20261117-r1/evidence/INDEPENDENT_RERUN_ANALYSIS.json), [shareable report and evidence ZIP](artifacts/integration-rerun-20261117-r1/delivery/ROSA_NATIVE_SCHEMA_RERUN_REPORT_AND_EVIDENCE_2026-11-17.zip) (kept out of git as a duplicate package; in the off-repo backup). The original Qwen lab repeat and first four-model lab study below are preserved reference configurations. Current documentation and evidence are backed up under the owner's lab project; no public upload or Git push was performed.
+
+**Latest completed investigation - Llama/Granite integration, 2026-11-17.**
+A separate, simulator-free investigation completed **48/48 local requests** (2 Qwen controls, 23 Llama, 23 Granite), with **zero actual tool/robot executions**. Old model digests and all69 frozen source/config hashes matched. No original trial, source, schema acceptance or model installation was changed. The corrected interpretation is that the earlier zero full-task scores describe those tested integrations, not inherent lack of model capability.
+
+The saved Llama template puts function schemas inside a last-user-message branch, so request-level schema presence did not prove they were visible after tool-result turns. Granite's custom system prompt bypassed its default native-call formatting guidance; restoring that guidance produced the exact harmless call in all4 raw/adapter and streaming configurations tested. Both models returned correct SUCCESS and UNKNOWN calls in the combined native-format-plus-persistent-schema variant (2/2 each), but schema persistence alone failed those fixtures, and tested correction feedback remained unsuccessful. This is promising narrow integration evidence, not a completed robotics fix or a newly measured task success rate.
+
+The pinned ChatOllama ignores constructor streaming=False: a zero-network reproduction sent HTTP stream=true; explicit invocation stream=False sent false. Earlier reports' nonstreaming wording therefore does not establish HTTP transport streaming was off. Also, the adapter preserved native call names/counts but automatically normalized two Llama list strings into arrays; report that assistance separately from exact server-output schema compliance. ToolMessage names are omitted by the converter, but restoring them showed no benefit in the two tested fixtures.
+
+All48 responses were retained. My diagnostic initially raised35 post-response instrumentation assertions because SDK serialization removes empty/auxiliary fields. All35 were decoded by exact-request offline mock replay, with **zero additional model/network requests**; original failures and raw archives remain preserved. Local verification checked67 outer content hashes plus61 nested original hashes, source freezes, request accounting and settings. Tokens:11,027 input and1,319 output. No Phoenix server-side audit was run for this HTTP-level diagnostic; do not label it as a robotics trace-audit campaign.
+
+That recommendation was subsequently implemented in the separately labeled native-schema rerun above; this investigation remains preserved as its preceding diagnostic evidence. Do not deploy the prototype silently, rescore old failures, or clear G1 gates. See [complete integration findings](artifacts/lab-integration-20261117/evidence/INTEGRATION_FINDINGS_2026-11-17.md) and [independent verification](artifacts/lab-integration-20261117/evidence/INDEPENDENT_INTEGRATION_VERIFICATION.json). Earlier ZIPs are unchanged and predate this correction.
+
+**Latest completed addition - Qwen lab repeatability, 2026-11-17.**
+The second lab Qwen batch completed **80/80 trials**, following **20/20 deterministic controls**. All **80/80 live local/Phoenix audits** and **74 source/config hashes** passed. The original 69 frozen files and earlier archives remain unchanged. Both lab runs use the identical installed Qwen3.5 9B Q4_K_M digest, 8K context, 1,024 output tokens per call, 2,048 per task, temperature 0 and seed 42; thinking is off. The current primary lab Qwen configuration uses the RTX 4080 SUPER with 16 GB VRAM. Historical laptop M4 used different hardware and is preserved as its own study. There was no new Sol run and no substitution into the historical paired Sol comparison.
+
+| Qwen lab run | Known-goal correct P / M | Calls across all 40 attempts P / M | Mean task seconds P / M |
+|---|---:|---:|---:|
+| lab_run_1 | 27/36 / 28/36 | 188 / 98 | 12.39 / 8.56 |
+| lab_run_2 | 26/36 / 28/36 | 185 / 97 | 12.01 / 8.52 |
+
+There were **3 changed correctness outcomes among 72 identical known-goal cells** between lab runs. The report records directions and individual cells, not just aggregate scores. Each lab run has eight ambiguous attempts pending actual human semantic review; legacy regex scores are diagnostics. These are four repetitions of already-seen families, not new held-out tasks or independent generalization evidence. Costs include failures; matched-success views are reported separately. The latest study does not resolve G1 gates.
+
+Full current lab reference and comparison: [Qwen repeat report](artifacts/qwen-lab-repeat-20261117/evidence/QWEN_LAB_REPEAT_COMPARISON_REPORT.md), [independent analysis](artifacts/qwen-lab-repeat-20261117/evidence/INDEPENDENT_REPEAT_ANALYSIS.json). The original multi-model comparison below remains unchanged. The misplaced outside-d1 paths were already absent; no matching temporary residue remained in the checked outside locations. Models, useful configuration, identity files and runtime dependencies were preserved.
+
+**Earlier completed execution - first lab local-model replication, original profiles, 2026-11-17.**
+The owner requested 80 trials **per model**, not original M4's 80 total.
+All **320/320 scheduled Gazebo trials executed**: four local models, ten known
+M4 task families, four repetitions and two conditions. Each model has 40
+primitive and 40 macro attempts. Eight ambiguous attempts per model remain
+pending actual human semantic review; the main correctness denominator is
+**36 known-goal tasks per condition**, 72 per model. These repeated known cases
+are not independent new tasks or G1 held-out evidence.
+
+| Lab backend | Known-goal correct: primitives / macro | Calls over all 40 attempts: P / M | Mean task seconds over all 40: P / M |
+|---|---:|---:|---:|
+| Qwen3.5 9B | 27/36 / 28/36 | 188 / 98 | 12.39 / 8.56 |
+| Ministral 3 8B | 28/36 / 28/36 | 156 / 82 | 4.83 / 2.31 |
+| Llama 3.1 8B | 0/36 / 0/36 | 211 / 193 | 2.16 / 2.84 |
+| Granite 3.3 8B | 0/36 / 0/36 | 40 / 40 | 3.13 / 2.64 |
+
+Costs include failures and ambiguous attempts. Short failure times are not good
+task efficiency. Same aggregate correctness also hides different errors:
+Ministral passed all four macro constrained-pose cells Qwen failed; Qwen passed
+all four partial-command cells Ministral failed. Both failed missing-prerequisite
+cases. Among the **24 identical macro cells both completed correctly**, Ministral
+took 45.53 seconds versus Qwen's 101.42, but used **53 versus 48 calls** and
+**57 versus 52 native operations**. It was faster on this subset, not uniformly
+cheaper by every measure. No general model-parity or reliability claim follows.
+
+Llama's result is especially qualified: it selected the correct skill in **32/36
+known-goal cases in each condition**, but failed the complete reporting/execution
+contract. Repeated schema errors included `classification` instead of required
+`status`, and `subject` instead of `nodes`. A macro example physically reached
+the independently checked target, then failed reporting. Its 0/72 full-task score
+does not mean zero task understanding. Granite invoked no tools in the main
+schedule, often writing descriptions/JSON for actions it did not execute.
+
+Four separately labeled **post-hoc, non-robot tool-binding probes** were run
+(one/model, 64 output tokens maximum): Qwen, Llama and Ministral produced the
+requested native call; Granite produced JSON text, with no native call. This
+supports different failure diagnoses, not universal capability conclusions.
+No returned diagnostic tool was executed. The original main scores were not
+changed, and no model-specific repair or prompt tuning occurred.
+
+**Verification and resources:** 20 deterministic controls passed; **320 live
+local/exact persisted Phoenix audits** passed, with **12,506 persisted live
+spans**. The copied main archive passed CRC and **3,233 file hashes**, including
+**69 frozen source/config hashes**. Diagnostic audit: four successful persisted
+checks, eight spans, zero native actions. Main model requests **1,008**; separate
+probes **4**, combined **1,012**. Main usage is complete and infrastructure
+reserve use is zero. Eight human-pending ambiguity attempts per model are not
+silently classified as passes or wrong model decisions.
+
+The models are Q4_K_M on the same lab **RTX 4080 SUPER, 16,376 MiB VRAM** and
+about 123 GiB RAM. Qwen's digest matches original M4; the lab status reported its
+loaded model fully in VRAM with 8K context. Conditions keep the same requested
+8K context, 1024 output tokens/call, 2048 observed output tokens/task, temp0,
+seed42, non-thinking policy, and existing tool/operation/correction/movement
+limits. Each model had a 643-request, eight-hour ceiling. Native templates and
+tokenizers differ. Qwen had 12 length stops; absence of an outer exception does
+not mean the agent returned no controlled-error text.
+
+The canonical remote folder is **`/media/naeem/d1/marvel proj/`**, with both
+`member/martin` clones, models, runtime, source snapshot and results. Research
+commit `b13df0f03677754f42383dee95424cded862b117`; evaluation commit
+`ec42ee72f53d95004c51b803c1a5d41f58e08d1c`, synchronized through a verified Git
+bundle without a GitHub push. The 62-file original M4 source snapshot is
+unchanged. Jazzy/Gazebo and locked dependencies run in an owned Ubuntu 24.04
+container on the Ubuntu 25.04 lab host, using project-local Ollama 0.40.6.
+Retained failed setup preflights are documented; zero scored model calls
+preceded the successful controls. No existing shared project was rewritten.
+
+**Decision:** retain Qwen as reference and consider Ministral as an additional
+fast candidate; no automatic default replacement is claimed. A clearer common
+reporting contract and Granite compatibility investigation are prospective
+options, not implemented fixes. Existing M1-M5/M4 results remain unchanged;
+**G1 is still blocked before its final freeze**. This separate authorization
+neither clears G1's scorer/observability/human-review gates nor starts G1 held-out,
+JTVR, memory or physical-robot work. Historical Sol is context only; it was not
+rerun on the lab, and old/new denominators and hardware must not be conflated.
+
+The [detailed report](artifacts/lab-multimodel-20261117/evidence/DETAILED_COMPARISON_REPORT.md)
+contains outcomes, paired/matched-success costs, family results, failure
+mechanisms, token/timing statistics, source identities and deployment details.
+The [main raw evidence ZIP](artifacts/lab-multimodel-20261117/evidence/ROSA_LAB_MULTIMODEL_2026-11-17.zip)
+and [post-hoc diagnostic addendum](artifacts/lab-multimodel-20261117/evidence/ROSA_LAB_TOOL_PROBE_ADDENDUM_2026-11-17.zip)
+are separately preserved and checksummed. The full sharing bundle adds these
+reports and this updated master as context; it does not embed every older
+artifact linked elsewhere in the master.
+
+**Presentation update:** the original three-slide briefing below describes M4
+and the earlier G1 checkpoint. The separate lab results above are the latest
+additional evidence for the November 18 presentation. Keep M4's 80-total table
+and the lab's 320-total/36-known-goal-per-condition table clearly separate; do
+not combine them into one success rate. Teammate-provided results stay credited
+to Levinson and are not part of this lab dataset.
+
+**Presentation handoff:** the self-contained [three-slide briefing](#presentation-briefing)
+below is prepared for **2026-11-18**. It contains slide text, speaker notes,
+exact result denominators, attribution and current next steps. A presentation
+writer receiving only this Markdown can use it without inventing facts from
+unavailable linked files. Detailed raw-evidence inspection still requires those files.
+
+**Attribution:** the `rosa-contexts` repository and Levinson's published research
+context were provided by **Martin's teammate, Levinson (`Lelevinson`)**. Martin
+passed the link to Codex for review; he did not author that teammate snapshot.
+The bounded-macro implementation and experiments described as our work below
+are Martin's project track. Levinson's fixed-loop/Forge/add-on results remain
+separately attributed teammate-reported evidence, not Martin's experiment results.
+
+**Sharing checkpoint:** reconciled with the team-context review closed November 17,
+G1 Stage 2 completion and the separate
+Stage 3 scorer review completed on 2026-11-15. **G1 is blocked before its final
+freeze; held-out live evaluation has not started.** M4 remains the completed 2026-10-27 study, with later retrospective analysis and owner feedback dated
+2026-10-29–30. M1–M5 technical delivery is complete locally. M6 and the optional
+first-turn wording probe have not started and are not authorized.
+
+**Current work: exploratory study G1, revision 1 — AI-authored cases.**
+Stage 1 completed 132 scripted controls. Stage 2 completed 36 hosted Sol dev
+attempts: 35 preliminary correct completions and one retained provider-stream
+interruption. These are development results with four clarification transcripts
+still awaiting uninvolved human review, not held-out confirmation. Stage 3's
+separate GPT-6 Astra review found six reachable clarification-scoring errors
+in newly constructed tests, so the scorer-review gate is not cleared. The owner
+declined a protected OAuth metadata hook; the full observability requirement
+remains unmet. See [current status and next gates](#2-current-verified-status)
+and [the detailed Stage 3 checkpoint](artifacts/macro-generalization-20261113/revision-1/stage-3/LATEST_STAGE3_STATUS_2026-11-15.md).
+No independent case authorship, Qwen G1 live results or generalization benefit
+is established. Prior M1–M5, serving probes and sealed G1 evidence remain retained.
+
+**Team-context review closed 2026-11-17:** all three `rosa-contexts` branch tips
+were inventoried at their November 16 snapshot: 100 unique files downloaded and
+Git-hash checked, including 91 manifest-verified research files. Detailed review
+covered the shared helper and current research reports; older material received
+section/decision review rather than an exhaustive paragraph audit. The repo is
+for coordination and contains neither the research runtime nor raw traces. Its
+findings do not clear our Stage 3 gates or authorize integration/publication.
+Read the [review and compatibility assessment](docs/team-context-review-20261116/ROSA_CONTEXTS_REVIEW_2026-11-16.md).
+
+
+### A.2 Earlier top-of-file summaries (2026-10-27 to 2026-11-13)
+
+
+**Completed separate work: Claude's Qwen timing/serving roadmap.** The
+[living roadmap tracker](docs/CLAUDE_QWEN_ROADMAP_LIVE.md) records current progress,
+gates, costs and next steps; the
+[2026-11-12 report](docs/QWEN_TIMING_PHASE0_REPORT_2026-11-12.md) is the shareable
+dated checkpoint. All 40 M4 Qwen trials and 144 calls were analyzed without
+rescoring them. Two new hardware-probe requests were charged: one returned with
+an accidental FA-disabled serving mismatch, and one owner-approved correction
+was stopped for unresolved GPU activity. The corrected partial log confirms
+effective FA enabled, f16 cache, 8192 context and 17/33 layer offload, but a clean
+completed live baseline was not obtained in Phase 0. Both Phase 0 allowances are
+spent. The subsequently authorized Phase 1 comparison is described below.
+These exploratory observations do not establish a speed or correctness gain;
+M1-M5 findings and frozen artifacts are unchanged.
+
+**Phase 1 completed 2026-11-13: no serving candidate retained.** The owner
+authorized the [frozen screen](artifacts/qwen-serving-phase1-20261112/PROTOCOL.md)
+on2026-11-12. A (effective FA enabled, f16 KV, 8192 context) reached a median
+**8.388 generation tokens/s** over eleven unique inputs. B (explicit FA enabled,
+q8_0 KV, same context/weights/settings) reached **8.082**, or **0.963 times A**,
+below the 1.5-times gate. B matched A's family calls on **7/10** inputs, below the
+9/10 gate; the longest-input safety call also differed. Both completed fourteen
+measured requests with expected prompt counts, adequate output room, no output
+cap hits and 3/3 stable repeats. GPU KV shrank **128 to 68 MiB**, but both
+offloaded **17/33 layers**. C was skipped by the gates; D remains unscheduled.
+
+Measured blocks generated A **2212** versus B **3134** output tokens and took
+**278.528** versus **396.829** summed client request seconds. These are serving
+replay costs, not robotic task times or new correctness scores. Known-input call
+agreement cannot establish goal satisfaction or general Qwen/Sol parity.
+
+Actual cost was **31 returned requests, 52447 input / 6384 output tokens**, within
+the unchanged 45-request ceiling, with no unreturned requests, hosted calls or
+robot dispatches. The original schedule was 30 A/B requests. After A and B's
+original warm-up, an overly literal log validator incorrectly stopped B despite
+effective FA/q8_0. A separately frozen observer correction added one discarded
+recovery warm-up before only unstarted measurements. All earlier outputs and
+the failed checkpoint were preserved. This interruption, fixed profile order,
+single profile blocks and known cases limit causal/general claims. Earlier GPU
+preflight failures and the pre-inference desktop-classification amendment also
+remain documented. No new allowance was silently created; a full C block would
+not fit the remaining budget even if B had passed.
+
+All test servers stopped. Closeout checks passed for 950 protected M4 files,
+62 frozen sources, 93 Phase 0 files, all Phase 1/continuation freezes, identical
+paired API requests and exact resource accounting. Keep A as the serving
+reference; no new correctness experiment is scheduled. Share the
+[dated results](docs/QWEN_SERVING_PHASE1_REPORT_2026-11-13.md) and
+[full results/deviations](artifacts/qwen-serving-phase1-20261112/COMPLETED_REPORT.md).
+The [living tracker](docs/CLAUDE_QWEN_ROADMAP_LIVE.md) records gates and next
+decisions. Evidence remains local; no publication or Git push was performed.
+
+The [thinking-mode clarification](docs/QWEN_THINKING_CONFIGURATION_NOTE_2026-11-05.md)
+confirms that the Qwen adapter requested `think=false`. This was an inherited
+fixed serving profile, not an experimentally established optimum. No thinking
+on/off comparison has been run; results apply to the tested non-thinking profile,
+not Qwen's best achievable capability or matched reasoning compute versus Sol.
+
+**Latest goal clarification2026-11-05:** the user wants local Qwen performance
+close to Sol. The [proposal assessment](docs/QWEN_NEAR_SOL_PROPOSAL_ASSESSMENT_2026-11-05.md)
+frames a possible bounded task-correctness comparison, with costs reported
+separately. Intent-first instructions/schema, examples and thinking mode are
+untested candidates, not adopted improvements. The target, held-out cases and
+resource limits are not frozen. No new prompt/intent/examples/thinking condition
+or full-loop correctness trial has started. The later timing-only observations
+are tracked separately above.
+In M4, Qwen macro input averaged 1,996 tokens per call (maximum 3,928), not 5K in
+one prompt; the roughly 5K figure sums inputs across calls per task. M4 had no
+task timeouts. These distinctions matter for evaluating the proposed diagnostics.
+
+
+## Appendix B — Presentation briefing for 2026-11-18 (SUPERSEDED)
+
+> **Superseded 2026-11-21.** Prepared on 2026-11-17, before the G1 Sol, Qwen and three-model
+> closeouts, the freeze and F1. Its figures and "next steps" are out of date: use
+> [Results at a glance](#results-at-a-glance-all-studies) and the
+> [Claims ledger](#claims-ledger-what-the-report-may-and-may-not-say). Kept unchanged for the record.
+
+<a id="presentation-briefing"></a>
+
+<a id="presentation-briefing"></a>
+
+## Three-slide presentation briefing — 2026-11-18
+
+Use exactly three slides. Speaker notes, attribution and limitations below are
+supporting material, not extra slides. The same text is available as a
+[standalone briefing](docs/presentation-handoff-20261117/PRESENTATION_BRIEF_2026-11-18.md).
+
+<!-- PRESENTATION_BRIEF_START -->
+## Presentation briefing — three slides for 2026-11-18
+
+Prepared **2026-11-17** from the retained evidence described in this master.
+Scope: Martin's Improved ROSA project track. The following is suggested slide
+wording and supporting notes, not a new research protocol or launch authorization.
+Use the short slide text on screen; keep qualifications and extra figures in
+speaker notes. Historical M1–M5 delivery, G1 stages and Qwen serving phases are
+different numbering systems and must not be combined into one completion count.
+
+### Slide 1 — Project introduction and goal
+
+**Title:** Improving ROSA's robotic task execution
+
+**Suggested slide text:**
+
+- Improve how ROSA uses existing LLMs to execute and verify robot tasks.
+- Let the LLM choose a permitted skill; let bounded Python routines handle its predictable execution steps.
+- Evaluate correctness and overhead with local Qwen3.5 9B and hosted Sol.
+
+**Speaker notes:** ROSA is an existing LLM-based robotic agent framework. We
+improve its surrounding software rather than train a model. A bounded macro
+is a registered routine: read prerequisites, make at most one permitted movement
+when needed, then check fresh state. A separate read-only routine checks arm
+readiness. This implements the project's divide-and-conquer idea through
+pre-authored skills. Program logic manages routine substeps; the model still
+interprets the request, selects the skill and handles unresolved intent.
+It is not a general planner that automatically decomposes every new task.
+
+Our research question is whether this arrangement reduces unnecessary model
+interactions and execution overhead while preserving verified task completion.
+Helping the tested smaller local model is an interest, not an achieved parity
+claim. The intended deliverable is a reusable ROSA component, reproducible
+evaluation and a working simulation demonstration. JTVR and verified episodic
+memory are optional deferred directions, not required current deliverables.
+
+### Slide 2 — Progress and measured results
+
+**Title:** Working prototype; lower overhead, mixed correctness
+
+**Suggested slide text:**
+
+- Reusable macro module demonstrated on a Gazebo UR5e: named-pose movement and read-only readiness inspection.
+- Completed M4: **80 Gazebo trials**, comparing model-managed primitives with macros inside the same repaired ROSA framework.
+
+| Backend | Correct tasks: primitives → macro | Model calls | Mean task time |
+|---|---:|---:|---:|
+| Hosted Sol | 20/20 → 20/20 | 68 → 38 | 16.42 → 9.73 s |
+| Local Qwen3.5 9B | 15/20 → 14/20 | 91 → 53 | 133.49 → 85.18 s |
+
+**Takeaway:** Macros reduced model-call overhead; a general reliability improvement is not established.
+
+**Speaker notes:** The 80 trials are ten task families × two repetitions ×
+two conditions × two backends. Every table condition contains 20 trials.
+Correctness includes appropriate FAILURE, UNKNOWN or clarification when required;
+these are not 80 successful movements. Model-call and mean-time figures include
+unsuccessful attempts. Task-loop times exclude the full campaign's setup,
+reset and subsequent trace-audit work. Hardware and serving differ by backend,
+so these times are observed system performance, not intrinsic model-speed rankings.
+
+Sol used **44.1% fewer calls** and **40.7% less task time**, with unchanged
+observed correctness. Qwen used **41.8% fewer calls** and **36.2% less task
+time**, while correct tasks fell from 15 to 14. The preset engineering retention
+screen passed for Sol and failed for Qwen. These small samples establish neither
+statistical equivalence nor a general reliability advantage. Native operations
+were Sol **38 → 40** and Qwen **50 → 48**; fewer model calls did not consistently
+mean less robot work.
+
+All 80 M4 live trace audits matched 3,290 persisted Phoenix spans. M1–M5 also
+delivered the package/install guide, report, claim ledger and simulation video.
+The comparison is against primitives with the same shared repairs, not untouched
+upstream ROSA. A verified selected skill can still fail the user's actual goal:
+wrong skill selection and ambiguous requests remain material limitations.
+
+**Latest progress beyond M4:** exploratory G1 extends the engineering fixtures
+to arm/base mock domains and different inspection acquisition depths. Its 36
+hosted Sol development attempts finished with **35 preliminary correct outcomes
+and one preserved provider-stream interruption**. The failed trial was not rerun.
+Among 17 pairs with both arms scored correct, calls were 59 → 32 and native
+attempts 40 → 40. These are dev-only selected pairs, not confirmed generalization.
+Four clarification transcripts still need uninvolved human review. G1 Qwen live
+and held-out model evaluation have not started.
+
+Current Stage 3 engineering controls passed, but a separate GPT-6 Astra scorer
+review found **six reachable clarification-classification errors in 41 new
+adversarial tests**. These are new constructed counterexamples, not six live
+Qwen/Sol failures. The scoring gate is not cleared. Full error-observability
+requirements also remain unresolved under the owner's source-unchanged decision.
+The experiment is paused before its final freeze, not running a held-out study.
+This is the latest evaluation limitation to mention if asked about current work.
+
+### Slide 3 — Future plan
+
+**Title:** Validate the evaluation, then test broader use
+
+**Suggested slide text:**
+
+1. Resolve clarification scoring, obtain independent human review and settle error-observability requirements.
+2. After validation and approval, freeze and run the planned held-out comparisons with matched budgets.
+3. Consolidate the reusable macro, simulation demo and evidence; retain improvements only where their benefits justify their costs and limitations.
+
+**Speaker notes:** First agree a documented disposition for the substantive
+scorer finding. Any separately approved scorer amendment must receive renewed
+review; previous scores and failed attempts remain preserved. Obtain actual
+uninvolved human ratings for the four G1 clarification transcripts. Decide how
+the full metadata requirement is satisfied or explicitly revised while honoring
+the current decision to leave protected authentication source unchanged. Neither
+a source change nor a methodological waiver is already approved.
+
+Only after those gates pass can the study be frozen, authorization/storage/trace
+preflight reviewed and a hosted held-out launch separately authorized. The current
+design has 38 held-out-designated AI-authored cases, or 76 trials per backend
+across two conditions. Qwen and catalogue-size work require their own later
+gates, including reviewed GPU-idle conditions. This is planned work, not an
+already launched or completed comparison. The AI-only authorship limitation must
+remain visible; no independent case-generalization claim is available.
+
+Keep the existing Gazebo capability and demonstration as completed engineering
+assets. Any wider simulation transfer, runtime integration with a teammate or
+physical hardware study is a conditional future proposal needing source/contract
+checks and a matched protocol. Physical-robot deployment, general planning,
+memory and a larger model are not automatic next steps or promised outcomes.
+The practical objective remains a smaller, reproducible ROSA improvement with
+honestly measured backend-specific trade-offs.
+
+### Attribution and claim rules for the presentation writer
+
+- **Martin's track:** bounded macros, shared ROSA repairs, UR5e movement/inspection,
+  the M1–M5 deliverable, M4 comparison, serving diagnostic and G1 preparation/dev work.
+- **Teammate-provided context:** Levinson supplied `Lelevinson/rosa-contexts`
+  and its published member context. His fixed-loop C1, Forge and add-on studies
+  are his track. Do not include 70/80, 55/80, 47/80, fresh 67/80 or his 320-episode
+  build as Martin's measured progress. They may be mentioned with explicit teammate
+  attribution if team coordination is relevant; they are not needed on these slides.
+- **Evidence levels:** deterministic controls test engineering, live dev results
+  test the development configuration, adversarial scorer tests expose evaluation
+  defects, and neither AI review nor owner feedback substitutes for uninvolved
+  human adjudication. G1 uses mock domains; M4 used Gazebo. Keep those environments separate.
+- **Supported headline:** a reusable bounded macro reduced LLM orchestration
+  overhead in the tested environment, with a favorable Sol result and mixed
+  Qwen correctness. Do not claim general parity, novel tool-selection superiority,
+  broad reliability gains, full JTVR/memory completion or physical-robot safety.
+- **Status precedence:** this dated briefing and the current G1 gate section
+  supersede older present-tense plans. The generated M4/M5 snapshot below is
+  historical. Linked original reports retain their original dates and definitions.
+- This one Markdown supplies the presentation narrative and numeric summaries;
+  it does not embed every raw trace. If only the master is uploaded, do not claim
+  to have independently opened its local links or reproduced the experiments.
+
+**Presentation-ready summary:** We built and evaluated a bounded ROSA macro
+module for robot movement and inspection. It reduced model-call overhead in
+our Gazebo comparison, but correctness benefits were backend-dependent. We are
+now addressing evaluation weaknesses before broader testing, while preserving
+the existing results and keeping teammate research separately attributed.
+<!-- PRESENTATION_BRIEF_END -->
+
+## Appendix C — Historical section 2 checkpoints
+
+> Moved here unchanged on 2026-11-21 from section 2. "Above" in these headings referred to their
+> old position; the current entries are at the top of [section 2](#2-current-verified-status).
+
+### Historical G1 checkpoint — 2026-11-16 (superseded by the 2026-11-20 entry above; retained unedited below)
+
+
+
+**Stage 2 execution is complete; Stage 3 cannot freeze or launch.** The study uses
+AI-authored cases under the owner's documented fallback, with no independent
+teammate authorship or semantic-novelty review. The final design contains 18 dev
+and 38 held-out-designated cases, in two domains and two execution conditions.
+The 38 cases form 13 template groups, including six ladder groups. Engineering
+fixture checks have exercised held-out-designated paths; no held-out model
+outcomes have been produced. This is not a blind independently authored test set.
+
+| Stage | Verified progress | Current interpretation |
+|---|---|---|
+| G1 Stage 0 / revision 1 | Narrowed arm/base design, observer separation and documented AI-only authorship amendment | Earlier 16-dev draft superseded by the 18-dev Stage 1 plan; earlier files preserved. |
+| G1 Stage 1 | 132/132 scripted real-adapter controls; 9 observer/world tests; 132 local and 132 persisted audits; 5,544 matched spans | Engineering evidence, not live model competence. |
+| G1 Stage 2 | All 36 Sol dev attempts accounted for: 35 preliminary correct, one infrastructure interruption; 94/291 charged requests | Ten unstarted cases completed in an authorized continuation; interrupted trial never rerun. Four clarification answers await uninvolved human adjudication. |
+| G1 Stage 3 fresh controls | Another 132/132 controls, 9 observer/world tests and exact 5,544-span audit match | Both domains hosted with unchanged protected source; scripted execution only. |
+| G1 Stage 3 scorer review | GPT-6 Astra authored 41 new adversarial cases; 29 expectations matched, 12 mismatches retained | Six reachable clarification errors are substantive; G-e clearance failed. This is separate AI review, not human clarification review. |
+| G1 later stages | No held-out live run, Qwen live run or catalogue-size probe started | No launch authorization implied by preparation or this overview. |
+
+**Stage 2 descriptive efficiency:** all attempts used 60 primitive versus 34 macro
+inference requests, 194.91 versus 111.35 task seconds, and 40 versus 46 native
+attempts. The primitive interruption had unknown token usage; its macro partner
+completed six native acquisitions. On the 17 pairs with both conditions scored
+correct, requests were **59 versus 32** (45.76% fewer), task time **192.49 versus
+104.84 seconds** (45.53% less), and native operations **40 versus 40**. Matched
+known input tokens were 90,425 versus 47,227; output 1,783 versus 1,051. These
+selected dev pairs and interrupted timing segments do not establish causal speed
+or reliability superiority. All 36 local and persisted audits matched 1,472 spans.
+The historical automated scores are retained, not promoted to independently
+validated semantic outcomes by these checks.
+
+**Current Stage 3 gates:** G-a authorship fallback and G-b fresh controls pass.
+On **2026-11-17**, the owner confirmed they can arrange an uninvolved person.
+The [four-case blinded review ZIP](artifacts/macro-generalization-20261113/revision-1/stage-3/resolution-guide-20261117/G1_FOUR_CASE_HUMAN_REVIEW_2026-11-17.zip)
+is ready. Actual ratings and a reviewer name are not yet supplied. A
+[concrete scoring/observability amendment proposal](artifacts/macro-generalization-20261113/revision-1/stage-3/resolution-guide-20261117/DECISIONS_TO_APPROVE.md)
+is prepared for owner decision; neither amendment is adopted. See the
+[November 17 resolution checkpoint](artifacts/macro-generalization-20261113/revision-1/stage-3/LATEST_STAGE3_STATUS_2026-11-17.md).
+
+G-c is BLOCKED: the owner chose protected authentication source unchanged, and
+the existing outer wrapper cannot capture all required HTTP error details.
+G-d analysis checks pass, but ordered advancement waits. G-e is FAIL: the separate
+review accepted five non-clarifying answers and rejected one valid clarification
+in reachable answer-only tests. The other six mismatches comprise four forged
+program-owned evidence bypasses, one unreachable extra-source hypothesis and
+one documented reviewer expectation error; they are not six additional reachable
+model failures. G-f is BLOCKED pending actual uninvolved human ratings of the
+four G1 clarification transcripts. M4's eight transcripts are a different packet.
+G-g freeze and G-h launch preflight therefore remain BLOCKED.
+
+**Next actions require explicit disposition, not another run:** address the
+substantive scorer finding and unmet instrumentation scope without silently
+changing protected source or frozen criteria; obtain the required human review;
+then complete valid gates, a new freeze and zero-inference restore-only preflight.
+Any scorer amendment requires renewed review. No amendment or waiver is adopted
+here. Provider quota and current grant validity are not established by a local
+credential file. Stage 4 needs separate owner authorization after preflight.
+
+The [November 15 Stage 3 status](artifacts/macro-generalization-20261113/revision-1/stage-3/LATEST_STAGE3_STATUS_2026-11-15.md),
+[Astra review](artifacts/macro-generalization-20261113/revision-1/stage-3/scorer-review/astra-review-20261115/REVIEW_REPORT.md)
+and [Stage 2 results/problems](artifacts/macro-generalization-20261113/revision-1/STAGE2_RESULTS_AND_PROBLEMS_2026-11-14.md)
+are the detailed records. Stage 2's older P1–P4/P2 decision wording predates the
+owner-confirmed [P1′–P6 amendment](artifacts/macro-generalization-20261113/revision-1/stage-3/predictions-amendment-20261114/PREDICTIONS_AMENDMENT_2026-11-14.md);
+use that amendment for prospective rules, never retroactively edit the older report.
+No prediction is adjudicated from dev or scripted results.
+
+### Completed timing/serving screen — historical checkpoint
+
+**Timing roadmap status (2026-11-13):** Phase 0 analysis and Phase 1 A/B serving
+screen completed. A 8.388 vs B 8.082 generation tokens/s; B/A 0.963, family-call
+agreement 7/10. B failed the fixed screen, C skipped, no new serving configuration
+retained. Phase 1 charged31 requests including the declared recovery warm-up;
+its servers stopped and preservation/accounting checks passed. Phase 0's separate
+two charged attempts remain preserved. Use the
+[dedicated living tracker](docs/CLAUDE_QWEN_ROADMAP_LIVE.md) and
+[dated results](docs/QWEN_SERVING_PHASE1_REPORT_2026-11-13.md) for current evidence,
+limitations and next decisions. This serving screen launched no new full-loop
+correctness study; the subsequently authorized G1 development study is separate.
+
+The generated block below is the **M4/M5 delivery snapshot**, not a live status
+monitor for G1 or the separate timing roadmap. `PROJECT_LIVE_STATUS.json` likewise
+remains an M4/M5 saved snapshot, not G1 progress. Its saved refresh date remains visible.
+That block is refreshed from existing files by
+`python -m tools.project_context --refresh`. It makes no model calls, reads no
+credential records and does not modify experimental inputs or trial results.
+The figures are a snapshot, not a continuously refreshed dashboard. Refresh before
+sharing this document or making a new claim about an active run.
