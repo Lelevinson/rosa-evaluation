@@ -13,3 +13,5 @@ Lab results (G1 and the 11-17 Gazebo runs) are not hardware-matched to these lap
 - [ADDENDUM_F1.md](ADDENDUM_F1.md): F1 catalogue wording (W1/W2) for Qwen, with a Sol guard.
 - [ADDENDUM_PARITY.md](ADDENDUM_PARITY.md): parity integration, Phases A to C.
 - [ADDENDUM_GAZEBO_D.md](ADDENDUM_GAZEBO_D.md): Gazebo D, fresh cases, multi-model.
+
+Future work: reuse Levinson's original-ROSA baseline harness to add a stock-ROSA arm to the macro comparison.

@@ -51,3 +51,7 @@ on a different machine from G1 (lab). So any G1 vs Phase C difference mixes the 
 ## Limits to state
 The shared prompt and catalogue were developed with Sol and Qwen; parity rules cannot remove that. A transport
 repair is engineering credit to the combined system, not intrinsic model ability. No model ranking or parity claim.
+
+Teammate overlap (reported by the teammates in rosa-contexts `member/levinson` `87eb2bd`, `member/krln` `8072aaf`; not verified by us): ADJACENT. Levinson's team uses no argument coercion in any arm (`exam_prep_20261121`, update 2). Report native-schema-v1's list-string → array normalization and ChatOllama's string-argument decoding as assistance, separate from the model's own schema compliance. See parity AMENDMENT_01.
+
+Future work: reuse Levinson's original-ROSA baseline harness to add a stock-ROSA arm to the macro comparison.

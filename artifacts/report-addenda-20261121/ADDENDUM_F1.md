@@ -40,3 +40,5 @@ Ambiguous cases stay PRELIMINARY until the blinded kit is rated by a human (Levi
 ## Limits to state
 AI-authored cases; G1 mock world, not Gazebo; laptop partial offload, not comparable to lab G1 speed;
 "not adopted" is a valid outcome; this is a Qwen-only wording question, not a general prompt claim.
+
+Teammate overlap (reported by the teammates in rosa-contexts `member/levinson` `87eb2bd`, `member/krln` `8072aaf`; not verified by us): ADJACENT. Levinson's Headroom 3d (generic sentences hurt Qwen, 24 → 20) and his compaction study (no benefit) support F1's guards (P-c, P-d, P-f′). No change to F1.

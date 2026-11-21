@@ -102,3 +102,11 @@ Sessions: **A = runner** (worktree `wt-a-f1`, owns GPU queue, F1 branch). **B = 
 - **For A:** D1 follows `artifacts/gazebo-d-20261121/RUNBOOK_SESSION_A.md` after Phase B admissions. Use your own
   worktree. Fill addenda tables only from frozen analysis outputs.
 - B has no open tasks. B starts no model or Gazebo process. B will check STATUS when asked.
+
+## 2026-11-21 09:31 — B — teammate-overlap amendments (owner)
+- Parity `AMENDMENT_01_TEAMMATE_OVERLAP_2026-11-21.md`; Gazebo `D0_AMENDMENT_02_TEAMMATE_OVERLAP_2026-11-21.md`.
+  Parity ADJACENT (no argument coercion; SDK normalization reported as assistance); Gazebo D NEW; macro verification
+  CONSISTENT (do not claim the macro catches false reports; value = call efficiency). F1 ADJACENT: note in
+  ADDENDUM_F1 only; member/martin-f1 not touched. Teammates' reported evidence (rosa-contexts levinson 87eb2bd,
+  krln 8072aaf), not verified by us. Addenda: future-work line on a stock-ROSA arm via Levinson's baseline harness.
+- No design, criteria or analysis change. Zero model calls.

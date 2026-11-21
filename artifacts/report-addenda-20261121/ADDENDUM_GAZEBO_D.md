@@ -56,3 +56,7 @@ PRELIMINARY until human-rated.
 ## Limits to state
 AI-authored cases; only the 3 registered poses and the M4 fault set; 10 groups, so intervals are wide; laptop
 partial offload; Sol is hosted; no stock-ROSA arm, so no claim of improvement over original ROSA; no physical robot.
+
+Teammate overlap (reported by the teammates in rosa-contexts `member/levinson` `87eb2bd`, `member/krln` `8072aaf`; not verified by us): Gazebo D is NEW (Levinson's Gazebo stage is Nav2/TurtleBot read-then-act, method M). Macro verification is CONSISTENT with Levinson's report-gate screen (0 claim/final-state contradictions in 128 dev action episodes): do not claim the macro catches false reports; its supported value is call efficiency. See D0_AMENDMENT_02.
+
+Future work: reuse Levinson's original-ROSA baseline harness to add a stock-ROSA arm to the macro comparison.
