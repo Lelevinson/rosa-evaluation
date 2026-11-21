@@ -65,3 +65,48 @@ Sessions: **A = runner** (worktree `wt-a-f1`, owns GPU queue, F1 branch). **B = 
   its own branches made from B's frozen commits: `member/martin-parity-runs` (from member/martin-parity) and later
   `member/martin-gazebo-runs` (from the D1-frozen member/martin-gazebo commit). B never touches those.
   B will merge nothing from them without A's note here.
+
+## 2026-11-21 16:05 — B — CHECKPOINT before VS Code restart (clean stop)
+- **Done:** B1 (gate PASS), B2 (D0 approved, all 20 cases), owner updates (PA-1 = transport; D0 Amendment 01;
+  rosa-research branches member/martin-parity 62ae05a and member/martin-gazebo 9fe6d58 from 8713f9b).
+  B3 so far: D analysis `tools/gazebo_d/analysis.py` + 11/11 synthetic tests pass (`tools/gazebo_d/test_analysis.py`).
+- **In progress (not frozen):** wrapper `experiments/gazebo_d/runner.py` is written and committed but NOT tested in
+  WSL/Gazebo and NOT frozen. D1 must not use it until B freezes it (hashes) and the 52 zero-model controls pass.
+- **Next for B:** (1) offline tests of runner pure logic (schedule filter, resume, deadline, ledger, reset check);
+  (2) freeze wrapper + analysis; (3) report addenda drafts (F1, parity, Gazebo) with empty tables, citing the 11-17
+  lab Gazebo runs; (4) master README entry.
+- **Waiting on A:** confirm the run-branch proposal (member/martin-parity-runs / member/martin-gazebo-runs).
+- No long job running in session B. Zero model calls by B. verify_freeze PASS on both B branches.
+- B note: `member/martin-parity` has a local, unpushed session-A commit f8e7570 (Phase B runner, iteration log).
+  B did not push it and did not touch those files; A should push it at its next gate.
+  So A is committing on member/martin-parity: fine with B, as long as A only adds its own files (B keeps the
+  parity design files unchanged). The run-branch proposal above is then optional.
+
+## 2026-11-21 16:36 — B — CHECKPOINT before Windows reboot (clean stop)
+- **Done since last checkpoint:** owner update 5 applied: detached launcher `experiments/gazebo_d/start_detached.ps1`
+  (WMI → wsl.exe → `job.sh`; parent WmiPrvSE.exe, survives VS Code restart; NOT sleep/reboot/wsl --shutdown).
+  Tested with a stub job: logs on disk, FINISHED state, duplicate launch refused. Runner logic tests 8/8 and
+  analysis tests 11/11 pass in the WSL research env; M4 verify() PASS from a worktree.
+  Runbook for A: `artifacts/gazebo-d-20261121/RUNBOOK_SESSION_A.md`. Hash record: `WRAPPER_FREEZE_2026-11-21.json`.
+- **Not yet done:** wrapper never run against real Gazebo (that is A's 52 controls in D1). Report addenda drafts
+  (F1, parity, Gazebo) and master README entry not started.
+- **Next for B after reboot:** report addenda drafts with empty tables (cite 11-17 lab Gazebo runs), master README
+  entry, rosa-research gate-log update.
+- No job running in B. The stub test job finished. Zero model calls by B. Session A commit f8e7570 on parity still unpushed by A.
+
+## 2026-11-21 16:48 — B — GATE B3: DONE (zero model calls)
+- Wrapper + detached launcher + analysis + runner tests + runbook: rosa-evaluation member/martin-gazebo 08675f4.
+- Report addenda drafts (F1, parity, Gazebo D; empty tables, 11-17 lab Gazebo runs cited): 24904de
+  (`artifacts/report-addenda-20261121/`). Master README entry on member/martin-gazebo.
+- rosa-research member/martin-gazebo gate log updated. member/martin untouched.
+- **For A:** D1 follows `artifacts/gazebo-d-20261121/RUNBOOK_SESSION_A.md` after Phase B admissions. Use your own
+  worktree. Fill addenda tables only from frozen analysis outputs.
+- B has no open tasks. B starts no model or Gazebo process. B will check STATUS when asked.
+
+## 2026-11-21 09:31 — B — teammate-overlap amendments (owner)
+- Parity `AMENDMENT_01_TEAMMATE_OVERLAP_2026-11-21.md`; Gazebo `D0_AMENDMENT_02_TEAMMATE_OVERLAP_2026-11-21.md`.
+  Parity ADJACENT (no argument coercion; SDK normalization reported as assistance); Gazebo D NEW; macro verification
+  CONSISTENT (do not claim the macro catches false reports; value = call efficiency). F1 ADJACENT: note in
+  ADDENDUM_F1 only; member/martin-f1 not touched. Teammates' reported evidence (rosa-contexts levinson 87eb2bd,
+  krln 8072aaf), not verified by us. Addenda: future-work line on a stock-ROSA arm via Levinson's baseline harness.
+- No design, criteria or analysis change. Zero model calls.
