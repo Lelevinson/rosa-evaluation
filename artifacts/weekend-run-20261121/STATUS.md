@@ -65,3 +65,15 @@ Sessions: **A = runner** (worktree `wt-a-f1`, owns GPU queue, F1 branch). **B = 
   its own branches made from B's frozen commits: `member/martin-parity-runs` (from member/martin-parity) and later
   `member/martin-gazebo-runs` (from the D1-frozen member/martin-gazebo commit). B never touches those.
   B will merge nothing from them without A's note here.
+
+## 2026-11-21 16:05 — B — CHECKPOINT before VS Code restart (clean stop)
+- **Done:** B1 (gate PASS), B2 (D0 approved, all 20 cases), owner updates (PA-1 = transport; D0 Amendment 01;
+  rosa-research branches member/martin-parity 62ae05a and member/martin-gazebo 9fe6d58 from 8713f9b).
+  B3 so far: D analysis `tools/gazebo_d/analysis.py` + 11/11 synthetic tests pass (`tools/gazebo_d/test_analysis.py`).
+- **In progress (not frozen):** wrapper `experiments/gazebo_d/runner.py` is written and committed but NOT tested in
+  WSL/Gazebo and NOT frozen. D1 must not use it until B freezes it (hashes) and the 52 zero-model controls pass.
+- **Next for B:** (1) offline tests of runner pure logic (schedule filter, resume, deadline, ledger, reset check);
+  (2) freeze wrapper + analysis; (3) report addenda drafts (F1, parity, Gazebo) with empty tables, citing the 11-17
+  lab Gazebo runs; (4) master README entry.
+- **Waiting on A:** confirm the run-branch proposal (member/martin-parity-runs / member/martin-gazebo-runs).
+- No long job running in session B. Zero model calls by B. verify_freeze PASS on both B branches.
