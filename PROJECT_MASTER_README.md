@@ -2,7 +2,19 @@
 
 
 
-Updated: **2026-11-20**. Maintained project context, decision history and evidence map.
+Updated: **2026-11-21**. Maintained project context, decision history and evidence map.
+
+**Weekend run - 2026-11-21 (branch `member/martin-parity`; other branches carry their own entries).**
+Owner decision **D16 (= PX-1)**: the lab is unavailable until Monday 2026-11-23, so F1, parity and Gazebo D
+run on the laptop (RTX 4050 6 GB), with G1 digests/settings, no machine mixing, offload recorded and timing
+descriptive only. Two Claude Code sessions: A runner (`wt-a-f1`), B designer (this checkout + `wt-b-gazebo`).
+Shared log: `weekend-status/STATUS.md` (outside git; snapshots in `artifacts/weekend-run-20261121/`).
+**Gate B1 PASS (16:10, zero model calls):** 12 scratch + 10 acceptance parity tasks (leakage 22/22 OK with
+the F1 checker), frozen [acceptance criteria](artifacts/parity-integration-20261121/ACCEPTANCE_CRITERIA.md)
+(A1 recognized calls ≥ 0.90, A2 schema-valid ≥ 0.90, A3 zero parse crashes, both arms). The scorer on
+frozen G1 records gives Qwen/Ministral PASS, Granite FAIL A1, Llama FAIL A2, matching the Phase A audit.
+Open: whether owner exception PA-1 (Granite sentence) survives the weekend rule "no per-model instructions".
+No model results yet. Next on this track: A2 adapter work by session A; B2 Gazebo D0 design by session B.
 
 
 
