@@ -45,3 +45,5 @@ read-only) as a new process: `http://172.31.0.1:11440`, models `.local/parity-ol
 - 2026-11-21T12:29Z (Sat 20:29 TPE) [A-chain] GATE F1-H: PASS; {"qwen_runner_exit": 0, "sol_runner_exit": 0, "sol_trials_retained": 60, "analysis_exit": 0, "decision": "NOT ADOPTED", "censoring_arms_over_20pct": [], "qwen_status": "COMPLETE", "sol_status": "COMPLETE"} Disk free C: 15.36 GB.
 - 2026-11-21T12:30Z (Sat 20:30 TPE) [A-chain] publish wt-a-f1: commit=[0, 0] verify_freeze=PASS push=ok branch=member/martin-f1 Disk free C: 15.36 GB.
 - 2026-11-21T12:43Z (Sat 20:43 TPE) [A-chain] GATE D1-controls: PASS; {"job_exit": 0, "status": "COMPLETE", "trials": 52, "passed_trials": 52} Disk free C: 15.45 GB.
+- 2026-11-21T12:44Z (Sat 20:44 TPE) [A-chain] publish wt-a-gazebo: commit=[0, 0] verify_freeze=PASS push=ok branch=member/martin-gazebo-runs Disk free C: 15.45 GB.
+- 2026-11-21T13:37Z (Sat 21:37 TPE) [A-chain] GATE D1-dev: PASS; {"job_exit": 0, "d1_gate": {"pass": true, "reasons": [], "trials": 48, "censored_by_model": {"sol": 0, "qwen": 0, "ministral": 0, "llama": 0}}} Disk free C: 14.74 GB.
