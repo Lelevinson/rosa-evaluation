@@ -2,7 +2,22 @@
 
 
 
-Updated: **2026-11-20**. Maintained project context, decision history and evidence map.
+Updated: **2026-11-21**. Maintained project context, decision history and evidence map.
+
+**Weekend run - 2026-11-21, Gazebo D design (branch `member/martin-gazebo`; the parity and F1 branches carry
+their own entries).** Owner decision **D16**: laptop execution until Monday 2026-11-23, with G1 digests and
+settings. **D0 approved (all 20 held-out cases)** and frozen
+([protocol](artifacts/gazebo-d-20261121/D0_PROTOCOL.md), [approval](artifacts/gazebo-d-20261121/D0_APPROVAL_2026-11-21.md),
+[amendment 01](artifacts/gazebo-d-20261121/D0_AMENDMENT_01_2026-11-21.md)). 26 fresh UR5e cases (6 dev, 20 held-out
+= 10 M4 families × 2), leakage 26/26 OK; frozen M4 harness, scorer and bounds reused unchanged; models Sol, Qwen,
+Ministral, plus Granite/Llama if Phase B admits them. **D is not the first multi-model Gazebo evidence:** the
+2026-11-17 lab runs already ran Qwen, Ministral and repaired Llama/Granite on the known M4 families. D adds fresh
+cases, Sol in the same campaign and one simultaneous harness. **PA-1 (Granite sentence) = transport**, byte-identical
+to IBM's template and native-schema-v1. B3 done (zero model calls): detached WSL launcher (survives a VS Code
+restart, not sleep or reboot), study-local wrapper, D analysis (11/11 synthetic tests), runner logic tests (8/8),
+[runbook for session A](artifacts/gazebo-d-20261121/RUNBOOK_SESSION_A.md), and
+[report addenda drafts](artifacts/report-addenda-20261121/README.md) with empty results tables.
+No D trial has run. Next: session A runs D1 (52 controls, then dev) after Phase B admissions.
 
 
 
