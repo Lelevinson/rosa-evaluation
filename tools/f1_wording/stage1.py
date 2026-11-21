@@ -42,6 +42,7 @@ QWEN_DIGEST = '56671c2ab9385f9cfcb404638e32cd62d88e3501d44822208363c010179a3c90'
 HELDOUT_SEED = 20261121
 LOCAL_OPTIONS = {'num_ctx': 8192, 'temperature': 0, 'seed': 42, 'use_mmap': True}
 PROJECT = 'rosa-f1-stage1-20261121'
+DEADLINE_UTC = datetime(2026, 11, 22, 22, 0, tzinfo=timezone.utc)  # = Mon 2026-11-23 06:00 Taipei
 ROOT_SPAN = 'f1.stage1.trial'
 
 
@@ -399,7 +400,13 @@ class Telemetry(threading.Thread):
 
 def readiness(backend):
     """Read-only checks before a live block (LAB_PLAN §3, laptop form)."""
-    record = {'utc': now(), 'backend': backend, 'gpu': gpu_sample()}
+    research = WORKSPACE / 'rosa-research'
+    git = lambda *a: subprocess.run(['git', '-c', 'core.fileMode=false', '-c', 'core.autocrlf=true', *a], cwd=research, capture_output=True, text=True).stdout.strip()
+    record = {'utc': now(), 'backend': backend, 'gpu': gpu_sample(),
+              'rosa_research': {'commit': git('rev-parse', 'HEAD'), 'branch': git('rev-parse', '--abbrev-ref', 'HEAD'),
+                                'src_dirty': bool(git('status', '--porcelain', '--', 'src'))}}
+    if record['rosa_research']['src_dirty']:
+        raise SystemExit('readiness_failed: rosa-research src has uncommitted changes')
     if backend == 'qwen':
         record['ollama_version'] = http_json(OLLAMA_ENDPOINT + '/api/version')['version']
         tags = {m['name']: m['digest'] for m in http_json(OLLAMA_ENDPOINT + '/api/tags')['models']}
@@ -458,6 +465,7 @@ def cmd_execute(args):
     import wording
     if meta['wording_revision'] != wording.WORDING_REVISION:
         raise SystemExit('wording revision changed since plan; plan a new run')
+    ready = readiness(backend)  # before RUN_ONCE: a failed readiness check never marks a run as started
     status_path = run / 'status.json'
     if args.resume_unstarted:
         status = read(status_path)
@@ -467,7 +475,6 @@ def cmd_execute(args):
         (run / 'RUN_ONCE').write_text('No replacement of completed or censored trials.\n')
         status = {'status': 'STARTING', 'planned': meta['trials'], 'completed': 0, 'started_utc': now(),
                   'current_trial': None, 'phases': []}
-    ready = readiness(backend)
     phase = {'started_utc': now(), 'readiness': ready, 'frozen_inputs_verified': frozen, 'g1_freeze_check': g1_check}
     status['phases'].append(phase)
 
@@ -520,6 +527,11 @@ def cmd_execute(args):
                 continue
             if stop_file.exists():
                 raise KeyboardInterrupt('stop requested between trials')
+            if datetime.now(timezone.utc) >= DEADLINE_UTC:
+                raise KeyboardInterrupt('deadline Mon 2026-11-23 06:00 Taipei reached; no new trial starts')
+            st = os.statvfs(str(run))
+            if st.f_bavail * st.f_frsize / 1e9 < 3.0:
+                raise KeyboardInterrupt('disk free below 3 GB; stopped between trials')
             if backend == 'sol':
                 transport.raise_if_unavailable()
             status['current_trial'] = item['id']
