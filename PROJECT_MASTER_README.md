@@ -244,6 +244,17 @@ user's earlier clarification. Its immediate experiment suggestions describe that
 historical point; the M1–M5 priorities below reflect subsequent decisions.
 
 ## 2. Current verified status
+### 2026-11-21 — Parity decisions PA-1 (Granite) and PA-2 (Llama)
+
+- **PA-1 (Martin):** Granite gets IBM's own tool-format sentence appended to its system message, "so we can use
+  the model". This is an owner exception to the parity rule against per-model instructions. Every Granite result
+  is labelled "adapted, with owner exception PA-1". Other models are not changed.
+- **PA-2 (Martin):** the Llama template fix comes from Meta's public `llama-models` code (commit `0e0b8c51`).
+  Meta puts the tool list in a user message that stays in the conversation. Ollama's wording matches Meta's,
+  but Ollama shows the list only when the user message is last. The fix moves it to the first user message on
+  every turn, with no new words.
+- Phase B is not started: it needs Martin's OK and the lab.
+
 ### 2026-11-21 — Parity integration Phase A audit (zero model calls)
 
 On branch `member/martin-parity` (from `freeze-2026-11-21`):
