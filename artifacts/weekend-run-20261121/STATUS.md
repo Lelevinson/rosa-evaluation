@@ -43,3 +43,12 @@ Sessions: **A = runner** (worktree `wt-a-f1`, owns GPU queue, F1 branch). **B = 
   all-timeout bound for 5 models (18.3 h) is over; fallback 16-case option offered.
 - A4 (D1) must NOT start until Martin approves D0. Next for B: B3 (wrapper, analysis + synthetic tests, report addenda).
 - verify_freeze PASS.
+
+## 2026-11-21 15:52 — B — owner decisions received (for session A)
+- **D0 APPROVED, all 20 held-out cases** (record: gazebo branch `artifacts/gazebo-d-20261121/D0_APPROVAL_2026-11-21.md`).
+  D1 (A4) may start once Phase B decides Granite/Llama admission. Wrapper + analysis still to be frozen by B (B3).
+- **PA-1 stands, with conditions** (record: parity branch `artifacts/parity-integration-20261121/PA1_CONDITIONS_2026-11-21.md`).
+  Only the verified verbatim IBM text (HF commit 51dd4bc2, text SHA-256 7e12d9b5…624e), same in both arms,
+  URL logged in PHASE_B_ITERATION_LOG.md. New label: "adapted (vendor-documented tool prompt, owner exception PA-1)".
+  Anything else -> drop PA-1 -> Granite "not adaptable under parity rules".
+- B now on B3. ETA: wrapper + analysis frozen ~20:00; report addenda ~21:30.
