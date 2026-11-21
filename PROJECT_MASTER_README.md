@@ -244,6 +244,22 @@ user's earlier clarification. Its immediate experiment suggestions describe that
 historical point; the M1–M5 priorities below reflect subsequent decisions.
 
 ## 2. Current verified status
+### 2026-11-21 — D12 approved; F1 classified against Levinson's work (D13–D15)
+
+No model inference. On branch `member/martin-f1`, F1 `PROTOCOL.md` §12 and §14:
+- **D13 (Martin):** D12 approved. S-base and S-new run in the same laptop environment **back to back**,
+  so environment drift since G1 affects both arms equally and does not bias the F1 comparison. A
+  fingerprint match with G1 would matter only for F1-vs-G1 Sol comparisons, and the protocol makes none.
+  The code-hash check against the lab copy stays.
+- **D14 (Martin):** the laptop zero-model controls dry run is approved once the lab controls pass. If the lab
+  is still down it may run first, labelled **laptop-only**. It does not replace G1 on the lab.
+- **D15:** `rosa-contexts` was read with Martin's access (`main` = `member/krln` `26ac7bd9`, shared-only;
+  `member/levinson` `70e61ae8`, 2026-11-19). **F1 is new, with adjacent overlap; it is not a replication.**
+  The closest items are reported evidence, not rerun: Levinson's tool-description compaction (FULL 32 vs
+  COMPACT 33 /40, "no benefit shown") and headroom Stage 3d (six generic prompt sentences on Qwen:
+  20/24 vs 24/24, and two unrequested service-call attempts). Stage 3d is the closest negative and backs
+  F1's P-c guard and P-f′ veto. No F1 threshold, arm, case or gate changed.
+
 ### 2026-11-21 — F1 safety veto revised (D11); where G1 Sol ran; Sol plan (D12)
 
 No model inference, network call or credential refresh. On branch `member/martin-f1`:
@@ -1713,6 +1729,7 @@ assistant continuously edits files while no assistant task or refresh process ru
 | Master README formatting repaired 2026-11-21 | A 2026-11-17 rewrite produced `\r\r\n` line endings; the later line-ending cleanup turned each into an extra blank line, splitting about 700 sentences and breaking 26 tables. 1,768 inserted blank lines were removed using the pre-cleanup backup as a map; every non-blank line is byte-identical. |
 | F1 thresholds confirmed 2026-11-21 (Martin) | P-c covers 10 cases; P-f safety veto added (it cannot fire by construction; P-f′ diagnostic pending an owner decision); P-a fixed at net ≥ +3; F1 dev corrected to the 18 G1 dev cases. Gate G1 blocked by lab outage. |
 | F1 D11/D12 2026-11-21 (Martin) | P-f′ (movement-skill selections on 16 non-movement no-dispatch cases, Q-new > Q-base) replaces P-f as the veto; P-f kept as a diagnostic. Sol arms run on the laptop WSL env as G1 Sol did (documented exception), conditional on identical code hashes with the lab copy. Limitation 26 added. |
+| F1 D13–D15 2026-11-21 | D12 approved (same env, back to back; no F1-vs-G1 Sol comparison made). Laptop dry run approved after the lab controls, or first if the lab is down, labelled laptop-only. F1 classified **new, with adjacent overlap** against Levinson's `rosa-contexts` branch (closest negative: his headroom Stage 3d). |
 
 For a new assistant: read this document, refresh/inspect actual current state,
 then follow the user's requested task. Do not claim the project is finished,
