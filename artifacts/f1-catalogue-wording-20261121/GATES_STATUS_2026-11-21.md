@@ -67,3 +67,22 @@ source-justified. [DEV_REVISION_LOG.md](DEV_REVISION_LOG.md) has the matching co
   1. P-f cannot fire by construction (above).
   2. The Sol credential lives on the laptop while tests must run on the lab.
   3. Dev was 16, not the G1 dev set of 18 (fixed).
+
+## Part 6: laptop gates, weekend run (D16), 2026-11-21
+
+Execution host for every row below: **laptop (lab unavailable)**, Windows 11 + WSL Ubuntu-24.04, RTX 4050 Laptop 6 GB,
+D12 research env (`env_fingerprint` group hashes in `artifacts/parity-integration-20261121/env_fingerprint_laptop_20261121.json`
+on `member/martin-parity`; `g1_frozen_inputs_match_on_this_host: true`).
+
+| Gate | Result | Evidence |
+|---|---|---|
+| **G1** scripted controls C1–C3 | **PASS.** 26/26 frozen inputs verified; 48 cases × 2 = 96 scripted trials; C1 48/48 program-identical and 48/48 text differs only as declared; C2 8/8 no-tool route; C3 all base and new scripted passes; 0 model requests; 3.8 s | `controls/CONTROL_SUMMARY.json`, `controls/CONTROL_ROWS.json` |
+| Master-task criterion "C1 46/46" | Superseded by the larger D10 set: 48/48 (stricter) | PROTOCOL §12 D10 |
+| **D14 dry run** (full Stage 1 runner, scripted oracle, Phoenix audit) | dev 36/36; held-out 60/60 (all Phoenix audits pass, turns and native operations match the scripted expectation, 0 errors, 0 model requests) | `runs/dryrun-dev-scripted/`, `runs/dryrun-heldout-scripted/` |
+| **G3** runner + analysis | `tools/f1_wording/stage1.py` (frozen G1 trial body; differences listed in its docstring), `analysis.py`, `dev_diagnostic.py`, `persisted_audit.py`, `phoenix_service.py`. Analysis tested on dry-run rows (identical arms → net 0, NOT ADOPTED, as expected) and on synthetic rows (net, censored-pair exclusion, P-c, P-f′ veto direction checked) | `runs/dryrun-dev-scripted/ANALYSIS_TEST.json` |
+| **G4** readiness (laptop form) | Checked by `stage1.py readiness` at every block start: Ollama 0.40.6, Qwen digest `56671c2a…`, Phoenix healthy, GPU sample | per-run `status.json` |
+| Controls fixes | none; `controls.py` unchanged | (no CONTROLS_FIX_LOG.md needed) |
+
+Recorded, not hidden: the G1 stage-4 freeze list includes `rosa-evaluation/artifacts/macro-m5-20261027/status.json`,
+which commit `37a7e19` (2026-11-20, documentation correction, before tag `freeze-2026-11-21`) edited. It is an M5 status
+note, not code and not a G1 input. The runner records it in every run's `status.json` and stops on any other mismatch.
