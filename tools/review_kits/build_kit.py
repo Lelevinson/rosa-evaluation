@@ -1,6 +1,6 @@
 """Blinded ambiguous-case review kit (G1 pattern). No model requests, no ratings, arm/model labels hidden.
-usage: build_kit.py {f1|phasec|gazebo} OUT_DIR RESULT_DIR... ; send OUT/packet only; keep OUT/private-key.json."""
-import csv, json, random, secrets, sys
+usage: build_kit.py {f1|phasec|gazebo} OUT_DIR RESULT_DIR... ; send OUT/packet only; key goes to $KEY_DIR (off git)."""
+import csv, hashlib, json, os, random, secrets, sys
 from pathlib import Path
 kind, out = sys.argv[1], Path(sys.argv[2]); roots = [Path(p) for p in sys.argv[3:]]
 RUBRIC = Path(__file__).with_name('RUBRIC.md').read_text(encoding='utf-8')
@@ -26,8 +26,11 @@ with (pk / 'ratings-empty.csv').open('w', encoding='utf-8', newline='') as f:
             f'Recorded tool executions / robot movements: {r["execs"]}.\n', encoding='utf-8')
         w.writerow([c, '', '', '', '']); key[c] = dict(trial_id=r['id'], model=r['model'], arm=r['arm'])
 (pk / 'RUBRIC.md').write_text(RUBRIC.replace('{N}', str(len(rows))), encoding='utf-8')
-(out / 'private-key.json').write_text(json.dumps(key, indent=1), encoding='utf-8')
+kd = Path(os.environ['KEY_DIR']); kd.mkdir(parents=True, exist_ok=True)   # outside git
+kf = kd / f'{kind}-{out.name}-private-key.json'; blob = json.dumps(key, indent=1).encode()
+kf.write_bytes(blob)
+(out / 'KEY_SHA256.txt').write_text(hashlib.sha256(blob).hexdigest() + '  private key (kept off git, not in this repo)\n', encoding='utf-8')
 (out / 'KIT_README.md').write_text(f'# {kind} ambiguous-case kit\n\n{len(rows)} transcripts, shuffled, labels hidden, 0 ratings, 0 model requests.\n'
-    'Send `packet/` only to an uninvolved reviewer (Levinson). Keep `private-key.json` private until ratings are returned.\n'
+    'Send `packet/` only to an uninvolved reviewer (Levinson). Keep the private key (off git) private until ratings are returned.\n'
     'Results stay PRELIMINARY until rated. No AI ratings.\n', encoding='utf-8')
 print(kind, len(rows))
