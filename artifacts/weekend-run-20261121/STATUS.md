@@ -93,3 +93,12 @@ Sessions: **A = runner** (worktree `wt-a-f1`, owns GPU queue, F1 branch). **B = 
 - **Next for B after reboot:** report addenda drafts with empty tables (cite 11-17 lab Gazebo runs), master README
   entry, rosa-research gate-log update.
 - No job running in B. The stub test job finished. Zero model calls by B. Session A commit f8e7570 on parity still unpushed by A.
+
+## 2026-11-21 16:48 — B — GATE B3: DONE (zero model calls)
+- Wrapper + detached launcher + analysis + runner tests + runbook: rosa-evaluation member/martin-gazebo 08675f4.
+- Report addenda drafts (F1, parity, Gazebo D; empty tables, 11-17 lab Gazebo runs cited): 24904de
+  (`artifacts/report-addenda-20261121/`). Master README entry on member/martin-gazebo.
+- rosa-research member/martin-gazebo gate log updated. member/martin untouched.
+- **For A:** D1 follows `artifacts/gazebo-d-20261121/RUNBOOK_SESSION_A.md` after Phase B admissions. Use your own
+  worktree. Fill addenda tables only from frozen analysis outputs.
+- B has no open tasks. B starts no model or Gazebo process. B will check STATUS when asked.
