@@ -51,6 +51,8 @@ ACCEPTANCE_ORDER = ('acc-007 P, acc-009 M, acc-004 P, acc-002 M, acc-004 M, acc-
                     'acc-005 M, acc-008 P, acc-010 M, acc-008 M, acc-001 P, acc-001 M, acc-010 P, acc-002 P, '
                     'acc-006 M, acc-005 P, acc-003 M, acc-009 P')
 LOW_DISK_GB = 3.0
+DEADLINE_UTC = datetime(2026, 11, 22, 22, 0, tzinfo=timezone.utc)  # = Mon 2026-11-23 06:00 Taipei
+G1_PLANS = G1 / 'stage-4-multimodel-20261119/backends'
 
 
 def now():
@@ -101,6 +103,13 @@ def disk_free_gb(path):
 
 
 def build_plan(task_set, model, adapter, only):
+    if task_set == 'g1-heldout':
+        # Phase C: the frozen G1 multi-model held-out plan for this model, same items and order as G1.
+        slug = {'granite3.3': 'granite', 'llama3.1': 'llama', 'ministral-3': 'ministral'}[model.split(':')[0]]
+        g1 = read(G1_PLANS / slug / 'plan.json')
+        key = model.split(':')[0].replace('.', '')
+        return [dict(item, id=f"{item['id']}-{key}-adapted", g1_id=item['id'], model=model, adapter=adapter,
+                     task_set=task_set, case_id=item['case']['case_id']) for item in g1]
     tasks = {t['case_id']: t for t in read(STUDY / f'tasks/{task_set}.json')}
     if task_set == 'acceptance':
         order = [(f"PAR-{x.split()[0]}", {'P': 'primitives', 'M': 'macro'}[x.split()[1]])
@@ -123,12 +132,14 @@ def cmd_plan(a):
     if a.adapter == 'native-schema-v1' and a.model.split(':')[0] not in ('llama3.1', 'granite3.3'):
         raise SystemExit('native-schema-v1 supports llama3.1 and granite3.3 only')
     hashes = check_task_hashes()
+    if a.task_set == 'g1-heldout' and a.cases:
+        raise SystemExit('Phase C always runs the whole frozen G1 plan')
     plan = build_plan(a.task_set, a.model, a.adapter, set(a.cases.split(',')) if a.cases else None)
     run.mkdir(parents=True)
     write(run / 'plan.json', plan)
     meta = {'run': a.run, 'task_set': a.task_set, 'model': a.model, 'model_digest_expected': DIGESTS[a.model],
             'adapter': a.adapter, 'adapter_sha256': sha(ADAPTER_FILE) if a.adapter != 'plain' else None,
-            'rosa_research': research_commit(), 'trials': len(plan), 'request_cap': 8 * len(plan) + 3,
+            'rosa_research': research_commit(), 'trials': len(plan), 'request_cap': 611 if a.task_set == 'g1-heldout' else 8 * len(plan) + 3,
             'task_hashes': hashes, 'created_utc': now(),
             'plan_sha256': sha(run / 'plan.json'), 'runner_sha256': sha(Path(__file__)),
             'execution_host': 'laptop (lab unavailable, D16): Windows 11 + WSL Ubuntu-24.04, RTX 4050 Laptop 6 GB',
@@ -168,6 +179,49 @@ class Campaign:
         v = self.inner.snapshot()
         v['request_cap'] = self.cap
         return v
+
+
+class WireCapture:
+    """httpx transport that records every Ollama request/response body (as integration-rerun-20261117-r1
+    campaign.py WireCapture). Observation only: the bytes returned to the client are unchanged. Needed to
+    report the SDK's argument normalization (ChatOllama _parse_arguments_from_tool_call) separately."""
+
+    def __init__(self, folder):
+        import httpx
+        self.folder = Path(folder)
+        self.folder.mkdir(parents=True, exist_ok=True)
+        self.count = len(list(self.folder.glob('*.json')))
+        self.inner = httpx.HTTPTransport(retries=0)
+
+    def handle_request(self, request):
+        self.count += 1
+        path = self.folder / f'{self.count:05d}.json'
+        row = {'request': json.loads(request.content or b'{}'), 'status': 'STARTED', 'utc': now()}
+        write(path, row)
+        try:
+            response = self.inner.handle_request(request)
+            payload = response.read()
+            text = payload.decode('utf-8', errors='replace')
+            row.update(status='RETURNED', http_status=response.status_code,
+                       response=[json.loads(l) for l in text.splitlines() if l.strip()])
+            import httpx
+            return httpx.Response(response.status_code, headers=response.headers, content=payload,
+                                  request=request, extensions=response.extensions)
+        except BaseException as error:
+            row.update(status='ERROR', error_type=type(error).__name__)
+            raise
+        finally:
+            write(path, row)
+
+    def close(self):
+        self.inner.close()
+
+
+def attach_wire(model, folder):
+    import httpx
+    import ollama
+    model._client = ollama.Client(host=OLLAMA_ENDPOINT, timeout=180, transport=WireCapture(folder))
+    return model
 
 
 def make_model(model, adapter):
@@ -211,7 +265,8 @@ def trial(run, item, model, transport, campaign):
     metadata_start = len(transport.error_metadata_records)
     row = {'id': item['id'], 'mode': item['mode'], 'case': case, 'backend': 'ollama', 'model': item['model'],
            'adapter': item['adapter'], 'task_set': item['task_set'], 'execution_host': 'laptop (lab unavailable, D16)',
-           'expected_scripted_turns': None, 'expected_scripted_native': None,
+           'expected_scripted_turns': item.get('expected_turns'), 'expected_scripted_native': item.get('expected_native'),
+           'g1_id': item.get('g1_id'), 'label': 'adapted-integration rerun (laptop)' if item['task_set'] == 'g1-heldout' else None,
            'primary_pass': False, 'error': None, 'decision_actor': 'live_model'}
     timeout = {'fired': False}
     inv = gate = meter = None
@@ -390,6 +445,7 @@ def cmd_execute(a):
     telemetry = Telemetry(run / 'telemetry.jsonl')
     telemetry.start()
     model, transport = make_model(meta['model'], meta['adapter'])
+    attach_wire(model, run / 'wire')
     journal = run / f"physical-call-journal-phase{len(status['phases'])}.json"
     try:
         status['status'] = 'RUNNING'
@@ -398,6 +454,8 @@ def cmd_execute(a):
                 continue
             if (run / 'STOP_REQUESTED').exists():
                 raise KeyboardInterrupt('stop requested between trials')
+            if datetime.now(timezone.utc) >= DEADLINE_UTC:
+                raise KeyboardInterrupt('deadline Mon 2026-11-23 06:00 Taipei reached; no new trial starts')
             free = disk_free_gb(str(run))
             if free < LOW_DISK_GB:
                 raise KeyboardInterrupt(f'disk free {free:.1f} GB < {LOW_DISK_GB} GB; stopped between trials')
@@ -431,7 +489,7 @@ def main():
     s = p.add_subparsers(dest='cmd', required=True)
     a = s.add_parser('plan')
     a.add_argument('--run', required=True)
-    a.add_argument('--set', dest='task_set', choices=('acceptance', 'scratch'), required=True)
+    a.add_argument('--set', dest='task_set', choices=('acceptance', 'scratch', 'g1-heldout'), required=True)
     a.add_argument('--model', choices=tuple(DIGESTS), required=True)
     a.add_argument('--adapter', choices=('plain', 'native-schema-v1'), required=True)
     a.add_argument('--cases')
