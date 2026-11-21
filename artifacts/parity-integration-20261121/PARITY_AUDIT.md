@@ -215,9 +215,47 @@ is last.
 3. The lab env's `langchain_ollama/chat_models.py` SHA-256, to compare with the laptop `d7f16a67…`.
 4. Whether a foreign GPU compute process is present. Nothing is assumed.
 
+## 7. Owner decisions and the Llama template source (2026-11-21)
+
+| # | Decision | Owner |
+|---|---|---|
+| PA-1 | **Granite: option B.** Restore IBM's own tool-format sentence for Granite. Martin's justification: **"so we can use the model."** This is an **owner exception** to the NOT ALLOWED item "extra instructions … for one model only". Every Granite result must be labelled "adapted, with owner exception PA-1" | Martin |
+| PA-2 | **Llama: build the template fix from Meta's public `llama-models` code**, not from the gated HF template | Martin |
+
+**PA-1 details (to implement in Phase B, not yet written):**
+- Text: append IBM's sentence, byte for byte as in the official template (`tokenizer_config.json`, the
+  default-system branch), to the end of Granite's system message: "When a tool is required to answer the user's
+  query, respond only with <|tool_call|> followed by a JSON list of tools used. If a tool does not exist in the
+  provided list of tools, notify the user that you do not have the ability to fulfill the request."
+- Nothing else changes: schemas are not duplicated (they are already in `available_tools` on every request), and
+  there is no parsing of fenced or prose output.
+- This is the Granite half of the 2026-11-17 `native-schema-v1` profile only, without the duplicated schemas.
+- **Not extended to other models.** Ministral has no gap (§3), so its dropped default guidance is not restored.
+  Qwen is unchanged. This asymmetry is disclosed with PA-1.
+
+**PA-2 source (read 2026-11-21, public, commit `0e0b8c51` of `meta-llama/llama-models`):**
+- `models/llama3_1/prompt_format.md` (sha `7f85a2e5…`), section "JSON based tool calling": "Instructions for tools
+  added as a user message". The example places the function list in a **user message before the question**,
+  inside the conversation, so it stays present on later turns.
+- `models/llama3/chat_format.py` (sha `8442f8b7…`) `encode_dialog_prompt` encodes every message in order with
+  no special handling. Nothing removes earlier messages.
+- Meta's llama.com example (§1) uses the same instruction wording as Ollama's template ("Given the following
+  functions, please respond with a JSON for a function call … Respond in the format {"name": function name,
+  "parameters": …}. Do not use variables.") and re-sends that user message with the definitions at step 3.
+
+**Conclusion:** Ollama's Llama template has the right wording and the wrong placement. It shows the function list
+only when the user message is the **last** message.
+
+**PA-2 fix (Phase B):** a derived tag built from the same weights blob (`667b0c19…`), with one template change.
+- The function list is rendered inside the **first** user message on every request, instead of only when the
+  user message is last.
+- The wording is unchanged, so no new model-visible text is added. ROSA has one user message per task, so this
+  matches Meta's step-3 example.
+- The digest is recorded at creation. This needs the lab.
+
 ## 6. Next phase (not started)
 
-Phase B needs Martin's written OK, plus a decision on Granite (§4 G1) and on the Llama template source (§4 L1).
+Phase B needs Martin's written OK. The Granite and Llama questions are now decided (§7: PA-1, PA-2).
 Phase B steps:
 1. Write 12 scratch and 10 acceptance tasks and run the F1 leakage checker on them.
 2. Write `tools/parity/adapters/llama.py`, which builds the derived template tag.
