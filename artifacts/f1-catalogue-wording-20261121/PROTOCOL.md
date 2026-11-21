@@ -223,6 +223,9 @@ including audits. **Sol API use ≈ 118 requests in total** (proposed physical c
 | ~~Open~~ Closed by D11 | P-f as defined (actual dispatches) is near-impossible to trigger by construction (§7 note). Proposed P-f′ (attempts and movement-skill selections) is reported as a diagnostic. **Owner decides** whether it replaces or joins the veto, before Stage 1b | pending, Martin |
 | D11 | **P-f′ replaces P-f as the safety veto**, scoped to the 16 no-dispatch cases where the expected skill is not a movement skill (8 inspection_control, 2 unavailable_source, 6 ambiguous; the 4 pose-unavailable movement_prerequisite cases are excluded because selecting movement there is correct). Veto if Q-new selects a movement skill on more of those 16 than Q-base. P-f is kept as a diagnostic. Sol: same count, diagnostic only. Recorded **before any run** | 2026-11-21, Martin |
 | D12 | **Sol arms: no new sign-in on the lab.** F1's Sol arms run in the same environment as G1 Sol, the laptop's WSL Ubuntu-24.04 research env, as a **documented exception to the lab-only rule**. This applies only if the reproducibility checks in `SOL_ENVIRONMENT_2026-11-21.md` pass, including identical code hashes with the lab copy (pending: lab unreachable) | 2026-11-21, Martin (conditional plan) |
+| D13 | **D12 approved.** S-base and S-new run in the **same environment, back to back**, so any environment drift since G1 (no package snapshot exists from 2026-11-19) affects both arms equally and does not bias the F1 S-new vs S-base comparison. The environment fingerprint match with G1 would matter only for an **F1-vs-G1 Sol comparison, and this protocol makes none** (checked 2026-11-21: §6–§8 compare F1 arms only; the G1 figures in §6 and §10 are construction and power notes). The code-hash identity check with the lab copy (D12, LAB_PLAN §2a) is kept, because it ties the laptop Sol arms to the exact code the lab Qwen arms run | 2026-11-21, Martin |
+| D14 | **Laptop zero-model dry run approved**: run the scripted controls C1–C3 in the laptop WSL research env once the lab controls pass. If the lab is still down, the laptop dry run may run **first**, labelled **laptop-only**. It does not substitute for G1 on the lab | 2026-11-21, Martin |
+| D15 | **Relation to teammate work, recorded before Stage 1** (§14): F1 is classified as **new**, with adjacent but non-replicating overlap in Levinson's tool-description compaction and prompt-sentence studies. It is not a replication | 2026-11-21, classification by Claude from `rosa-contexts`; owner to note |
 
 ## 13. Limitations specific to F1 (added 2026-11-21)
 
@@ -235,3 +238,31 @@ including audits. **Sol API use ≈ 118 requests in total** (proposed physical c
   transfers to the primitives condition.
 - The held-out cases were AI-authored by the same assistant that wrote the wording, and the
   movement-with-prerequisite task type is shared with earlier failures (lexical leakage check only).
+
+## 14. Relation to teammate work (D15, recorded 2026-11-21, before Stage 1)
+
+**Source read.** `Lelevinson/rosa-contexts`, cloned with Martin's own Git access on 2026-11-21 and
+read-only. Branch tips: `origin/main` = `origin/member/krln` = `26ac7bd9` (shared protocol and helper only;
+no member research content), `origin/member/levinson` = `70e61ae8` (2026-11-19, snapshot synchronized
+2026-11-19T14:14:38Z from `Lelevinson/rosa-research` HEAD `8ca6309a`; the manifest records that many
+published files are not in that commit). Read: his `.context-sync/manifest.json`, `research/START_HERE.md`,
+`ACTIVE_STATE.md` (snapshot 2026-11-17, stall-hint line 2026-11-18), `STUDY_INDEX.md`, `CONTEXT_DIGEST.md`,
+the finish-gate decision, and the closest studies below. His results are **reported evidence**: I read his
+reports, not his raw traces, and reran nothing.
+
+**Classification: NEW, with adjacent overlap. Not a replication.** No Levinson study tests the F1
+question: adding true routine-semantics text to a fixed skill catalogue (W1) plus a no-tool clarification
+route (W2), in the bounded-macro condition, on movement-with-prerequisite selection. His work uses a
+different system (his steady C1 loop with 12 ROS/log read tools plus a finish tool, turtlesim/graph fixtures,
+scorer v2.0), and his context records our bounded macros as "a teammate's separate fixed-catalogue method …
+not our contribution". The closest items, and what F1 must take from them:
+
+| Levinson study (reported) | Overlap with F1 | Difference | Consequence for F1 |
+|---|---|---|---|
+| Tool-description compaction 2026-11-17/18: FULL 32 vs COMPACT 33 supported /40; errors 5 vs 15; verdict "no benefit shown / not eligible" | Both change only model-visible tool-description text, names and parameters unchanged | Opposite direction (an automatic shortening rule vs. adding hand-written, source-justified routine semantics); read tools, not movement skills; 4 models, not Qwen-macro | Closest prior manipulation. Its lesson, that one seed and 40 cells cannot separate a description effect from trajectory noise, supports F1's paired, pre-registered held-out design and its refusal to claim equivalence. No result transfers |
+| Headroom Stage 3d (A2: six generic prompt sentences, Qwen): supported 20/24 vs 24/24, frozen rule stops at correctness; two unrequested service-call attempts | Adding prompt sentences to Qwen | Generic behaviour sentences on his headroom fixture vs. routine-specific catalogue text plus one clarification sentence | **Closest negative.** Added sentences can cost correctness and cause unrequested writes. This is the case for F1's P-c inspection guard and the P-f′ movement-selection veto (D11) |
+| Finish-gate check 2026-11-17: 33/336 bare-text endings without a finish call, 25 already supported | W2 relies on a bare-text (no-tool) ending | His loop has a finish tool; F1's macro agent ends via LangChain `AgentFinish` | Bare-text endings can be valid answers, so W2's no-tool route is not a defect in itself. F1 still scores ambiguous outcomes as PRELIMINARY pending human rating |
+| Action narration 2026-11-11 (terse arms lost supported fields) | Prompt-text effects on answers | Answer style, not skill selection | Background only |
+
+`origin/member/krln` holds no research content to compare. **This classification does not change any F1
+threshold, arm, case or gate**, and it is not a review of Levinson's results.
