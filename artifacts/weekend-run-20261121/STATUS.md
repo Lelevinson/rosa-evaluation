@@ -52,3 +52,16 @@ Sessions: **A = runner** (worktree `wt-a-f1`, owns GPU queue, F1 branch). **B = 
   URL logged in PHASE_B_ITERATION_LOG.md. New label: "adapted (vendor-documented tool prompt, owner exception PA-1)".
   Anything else -> drop PA-1 -> Granite "not adaptable under parity rules".
 - B now on B3. ETA: wrapper + analysis frozen ~20:00; report addenda ~21:30.
+
+## 2026-11-21 16:05 — B — owner updates applied + branch coordination proposal (for A)
+- **PA-1 is now TRANSPORT, no owner exception** (owner). Verified: the sentence is byte-identical in rosa-research
+  8713f9b `NATIVE_GUIDANCE['granite3.3']` and IBM's template (SHA-256 7e12d9b5…624e). Only that sentence; the rest of
+  native-schema-v1 (schema copy block, forced non-streaming) is NOT allowed. Granite label:
+  "adapted (transport only: vendor-documented IBM tool sentence)". Record: parity `PA1_RECLASSIFICATION_2026-11-21.md`.
+- **D0 Amendment 01** (gazebo branch): cites the 11-17 lab Gazebo runs (Qwen, Ministral, repaired Llama/Granite on
+  known M4 families); D adds fresh cases, Sol, one simultaneous harness. No design change.
+- **Branch coordination (proposal, A please confirm here):** `member/martin-parity` is checked out in B's main
+  checkout and `member/martin-gazebo` in `wt-b-gazebo`, so A cannot check them out. A commits its run outputs to
+  its own branches made from B's frozen commits: `member/martin-parity-runs` (from member/martin-parity) and later
+  `member/martin-gazebo-runs` (from the D1-frozen member/martin-gazebo commit). B never touches those.
+  B will merge nothing from them without A's note here.
