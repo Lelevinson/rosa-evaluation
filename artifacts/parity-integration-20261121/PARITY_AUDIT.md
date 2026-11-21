@@ -263,3 +263,16 @@ Phase B steps:
 4. Run the acceptance test for Llama (plus Granite if adaptable), and for Qwen and Ministral as reference.
 
 No command can be given until the lab is back and the task files exist.
+
+## 8. Addendum 2026-11-21 (session B, weekend run): B1 complete
+
+- The weekend master task (owner, 2026-11-21) moved execution to the laptop (D16 = PX-1) and split the work:
+  session A runs every model process; session B (this addendum) makes zero model calls.
+- §6 step 1 is done: 12 scratch and 10 acceptance tasks, leakage-checked with the F1 checker (22/22 OK).
+  Criteria, run order and scorer are frozen in [ACCEPTANCE_CRITERIA.md](ACCEPTANCE_CRITERIA.md).
+  The scorer, run on frozen G1 records, reproduces §3: Qwen/Ministral pass, Granite fails A1, Llama fails A2.
+- §5 (lab items) is replaced for this weekend by laptop checks, done by session A (A0).
+- §6 "Phase B needs Martin's written OK" is superseded: the weekend master task pre-authorizes Phase B once
+  B1 is handed off.
+- Open: PA-1 versus the weekend rule "no per-model instructions" (ACCEPTANCE_CRITERIA §6). Asked Martin.
+- Handoff: [PHASE_B_HANDOFF.md](PHASE_B_HANDOFF.md).
