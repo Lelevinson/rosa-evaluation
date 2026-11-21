@@ -1,112 +1,37 @@
 # Weekend run 2026-11-21 → 2026-11-23 — shared status (append-only)
 
-Live copy: `C:\Proj\robotics\introtorobotics\weekend-status\STATUS.md` (outside every git worktree,
-so neither session's working tree is touched by the other's appends).
-At each gate push, the pushing session copies this whole file to
-`artifacts/weekend-run-20261121/STATUS.md` on its own branch (a snapshot; never edited there).
-Rules: append only, newest at the bottom, Taipei time, one entry per gate/problem. Never rewrite old entries.
+Canonical live copy: `C:\Proj\robotics\introtorobotics\weekend-run-20261121\STATUS.md` (outside every
+worktree, so both sessions append to one file). At each gate the owning session copies a snapshot to
+`artifacts/weekend-run-20261121/STATUS.md` on its own branch and pushes.
 
-Sessions: **A = runner** (worktree `wt-a-f1`, owns GPU queue, F1 branch). **B = designer** (main checkout
-`rosa-evaluation` on `member/martin-parity`; worktree `wt-b-gazebo` on `member/martin-gazebo`). Zero model calls in B.
+Rules: append only; one entry per event; UTC timestamp + Taipei time; session tag [A] runner / [B] designer.
+Only session A starts model processes. GPU queue owner: A.
+
+Worktrees: main checkout `rosa-evaluation/` = member/martin-parity (left for session B);
+session A = `wt-a-f1/` (member/martin-f1). Gazebo branch `member/martin-gazebo`: to be created by B from the freeze tag.
+
+Inference server (D16): pinned Ollama 0.40.6 (`.local/ollama-0.40.6/ollama.exe`, the M4/timing binary, used
+read-only) as a new process: `http://172.31.0.1:11440`, models `.local/parity-ollama-models`, state
+`.local/parity-ollama-state`. Start: `.local/start-parity-ollama.ps1`. M4 server (11436) and store untouched.
 
 ---
-
-## 2026-11-21 15:24 — B — start
-- Phase: B1 (parity Phase A audit + scratch/acceptance tasks).
-- Found: Phase A audit already committed earlier today on `member/martin-parity` (bfb1d03, 1d75323, 0df57ec):
-  PARITY_AUDIT.md, REDIAGNOSIS_G1.json, LAPTOP_TARGET_CONFIG.md. Owner decisions PA-1 (Granite IBM sentence,
-  owner exception) and PA-2 (Llama template from Meta public code) recorded there.
-- Created branch `member/martin-gazebo` from `freeze-2026-11-21` in worktree `wt-b-gazebo`.
-- verify_freeze: PASS on member/martin-parity (main checkout) and member/martin-gazebo.
-- Remaining B1: 12 scratch + 10 acceptance tasks, leakage check, frozen acceptance criteria, handoff note.
-- ETA B1 handoff: ~18:00.
-- Open question for Martin: PA-1 is a per-model instruction. The weekend task lists that as NOT ALLOWED.
-  Does PA-1 still stand? (Affects A2 Granite only.)
-
-## 2026-11-21 16:10 — B — GATE B1: PASS (handed off to A)
-- Commit 8f50101 on `member/martin-parity`. Zero model calls.
-- 12 scratch + 10 acceptance tasks; leakage check with the F1 checker: 22/22 OK (one scratch draft reworded first).
-- Acceptance criteria, run order and scorer FROZEN: `artifacts/parity-integration-20261121/ACCEPTANCE_CRITERIA.md`.
-- Scorer calibration on frozen G1 records: Qwen PASS, Ministral PASS, Granite FAIL (0 recognized calls), Llama FAIL (44% schema-valid).
-- Handoff: `artifacts/parity-integration-20261121/PHASE_B_HANDOFF.md`. A2 may start (after A0).
-- Still open: PA-1 (Granite) vs "no per-model instructions". Llama/Qwen/Ministral not affected.
-- verify_freeze PASS. Next: B2 Gazebo D0 design, ETA 21:00, then STOP for Martin's approval.
-
-## 2026-11-21 15:36 — B — correction
-- The entry above headed "16:10" was mistimed. Gate B1 actually passed at about 15:30 (commit 8f50101). No other content changes.
-
-## 2026-11-21 15:43 — B — GATE B2: D0 written, STOPPED for Martin's approval
-- `artifacts/gazebo-d-20261121/D0_PROTOCOL.md` on `member/martin-gazebo`. Zero model calls, zero Gazebo runs.
-- 26 fresh cases (6 dev, 20 held-out = 10 M4 families x 2); leakage 26/26 OK (5 drafts reworded first).
-- Frozen M4 harness reused unchanged (62/62 files match). Wrapper not yet written (B3, frozen before D1).
-- Estimate: held-out typical 3.4 h (3 models) to 6.6 h (5 models); fits Sun 12:00-Mon 06:00. Only the
-  all-timeout bound for 5 models (18.3 h) is over; fallback 16-case option offered.
-- A4 (D1) must NOT start until Martin approves D0. Next for B: B3 (wrapper, analysis + synthetic tests, report addenda).
-- verify_freeze PASS.
-
-## 2026-11-21 15:52 — B — owner decisions received (for session A)
-- **D0 APPROVED, all 20 held-out cases** (record: gazebo branch `artifacts/gazebo-d-20261121/D0_APPROVAL_2026-11-21.md`).
-  D1 (A4) may start once Phase B decides Granite/Llama admission. Wrapper + analysis still to be frozen by B (B3).
-- **PA-1 stands, with conditions** (record: parity branch `artifacts/parity-integration-20261121/PA1_CONDITIONS_2026-11-21.md`).
-  Only the verified verbatim IBM text (HF commit 51dd4bc2, text SHA-256 7e12d9b5…624e), same in both arms,
-  URL logged in PHASE_B_ITERATION_LOG.md. New label: "adapted (vendor-documented tool prompt, owner exception PA-1)".
-  Anything else -> drop PA-1 -> Granite "not adaptable under parity rules".
-- B now on B3. ETA: wrapper + analysis frozen ~20:00; report addenda ~21:30.
-
-## 2026-11-21 16:05 — B — owner updates applied + branch coordination proposal (for A)
-- **PA-1 is now TRANSPORT, no owner exception** (owner). Verified: the sentence is byte-identical in rosa-research
-  8713f9b `NATIVE_GUIDANCE['granite3.3']` and IBM's template (SHA-256 7e12d9b5…624e). Only that sentence; the rest of
-  native-schema-v1 (schema copy block, forced non-streaming) is NOT allowed. Granite label:
-  "adapted (transport only: vendor-documented IBM tool sentence)". Record: parity `PA1_RECLASSIFICATION_2026-11-21.md`.
-- **D0 Amendment 01** (gazebo branch): cites the 11-17 lab Gazebo runs (Qwen, Ministral, repaired Llama/Granite on
-  known M4 families); D adds fresh cases, Sol, one simultaneous harness. No design change.
-- **Branch coordination (proposal, A please confirm here):** `member/martin-parity` is checked out in B's main
-  checkout and `member/martin-gazebo` in `wt-b-gazebo`, so A cannot check them out. A commits its run outputs to
-  its own branches made from B's frozen commits: `member/martin-parity-runs` (from member/martin-parity) and later
-  `member/martin-gazebo-runs` (from the D1-frozen member/martin-gazebo commit). B never touches those.
-  B will merge nothing from them without A's note here.
-
-## 2026-11-21 16:05 — B — CHECKPOINT before VS Code restart (clean stop)
-- **Done:** B1 (gate PASS), B2 (D0 approved, all 20 cases), owner updates (PA-1 = transport; D0 Amendment 01;
-  rosa-research branches member/martin-parity 62ae05a and member/martin-gazebo 9fe6d58 from 8713f9b).
-  B3 so far: D analysis `tools/gazebo_d/analysis.py` + 11/11 synthetic tests pass (`tools/gazebo_d/test_analysis.py`).
-- **In progress (not frozen):** wrapper `experiments/gazebo_d/runner.py` is written and committed but NOT tested in
-  WSL/Gazebo and NOT frozen. D1 must not use it until B freezes it (hashes) and the 52 zero-model controls pass.
-- **Next for B:** (1) offline tests of runner pure logic (schedule filter, resume, deadline, ledger, reset check);
-  (2) freeze wrapper + analysis; (3) report addenda drafts (F1, parity, Gazebo) with empty tables, citing the 11-17
-  lab Gazebo runs; (4) master README entry.
-- **Waiting on A:** confirm the run-branch proposal (member/martin-parity-runs / member/martin-gazebo-runs).
-- No long job running in session B. Zero model calls by B. verify_freeze PASS on both B branches.
-- B note: `member/martin-parity` has a local, unpushed session-A commit f8e7570 (Phase B runner, iteration log).
-  B did not push it and did not touch those files; A should push it at its next gate.
-  So A is committing on member/martin-parity: fine with B, as long as A only adds its own files (B keeps the
-  parity design files unchanged). The run-branch proposal above is then optional.
-
-## 2026-11-21 16:36 — B — CHECKPOINT before Windows reboot (clean stop)
-- **Done since last checkpoint:** owner update 5 applied: detached launcher `experiments/gazebo_d/start_detached.ps1`
-  (WMI → wsl.exe → `job.sh`; parent WmiPrvSE.exe, survives VS Code restart; NOT sleep/reboot/wsl --shutdown).
-  Tested with a stub job: logs on disk, FINISHED state, duplicate launch refused. Runner logic tests 8/8 and
-  analysis tests 11/11 pass in the WSL research env; M4 verify() PASS from a worktree.
-  Runbook for A: `artifacts/gazebo-d-20261121/RUNBOOK_SESSION_A.md`. Hash record: `WRAPPER_FREEZE_2026-11-21.json`.
-- **Not yet done:** wrapper never run against real Gazebo (that is A's 52 controls in D1). Report addenda drafts
-  (F1, parity, Gazebo) and master README entry not started.
-- **Next for B after reboot:** report addenda drafts with empty tables (cite 11-17 lab Gazebo runs), master README
-  entry, rosa-research gate-log update.
-- No job running in B. The stub test job finished. Zero model calls by B. Session A commit f8e7570 on parity still unpushed by A.
-
-## 2026-11-21 16:48 — B — GATE B3: DONE (zero model calls)
-- Wrapper + detached launcher + analysis + runner tests + runbook: rosa-evaluation member/martin-gazebo 08675f4.
-- Report addenda drafts (F1, parity, Gazebo D; empty tables, 11-17 lab Gazebo runs cited): 24904de
-  (`artifacts/report-addenda-20261121/`). Master README entry on member/martin-gazebo.
-- rosa-research member/martin-gazebo gate log updated. member/martin untouched.
-- **For A:** D1 follows `artifacts/gazebo-d-20261121/RUNBOOK_SESSION_A.md` after Phase B admissions. Use your own
-  worktree. Fill addenda tables only from frozen analysis outputs.
-- B has no open tasks. B starts no model or Gazebo process. B will check STATUS when asked.
-
-## 2026-11-21 09:31 — B — teammate-overlap amendments (owner)
-- Parity `AMENDMENT_01_TEAMMATE_OVERLAP_2026-11-21.md`; Gazebo `D0_AMENDMENT_02_TEAMMATE_OVERLAP_2026-11-21.md`.
-  Parity ADJACENT (no argument coercion; SDK normalization reported as assistance); Gazebo D NEW; macro verification
-  CONSISTENT (do not claim the macro catches false reports; value = call efficiency). F1 ADJACENT: note in
-  ADDENDUM_F1 only; member/martin-f1 not touched. Teammates' reported evidence (rosa-contexts levinson 87eb2bd,
-  krln 8072aaf), not verified by us. Addenda: future-work line on a stock-ROSA arm via Levinson's baseline harness.
-- No design, criteria or analysis change. Zero model calls.
+- 2026-11-21T07:45Z (Sat 15:45 TPE) [A] A0 started. Lab unavailable (D16). Laptop on AC, 79% battery, power scheme Balanced. Parity server 0.40.6 up on :11440. Qwen in new store via hard links; manifest set to the G1 platform manifest → digest 56671c2a… size 6550825550 = G1 MATCH. Pulling Ministral, Granite, Llama (~15.9 GB). Next: F1 gate G1 (CPU-only) while downloads run.
+- 2026-11-21T07:41Z [A] F1 gate G1 (laptop, lab unavailable): controls C1 48/48, C2 8/8, 26/26 frozen inputs, 0 model requests → PASS. Stage 1 runner + analysis written (G3); scripted dry run dev 36/36 pass, 0 model requests; held-out dry run running. Gazebo smoke (no model, ROS_DOMAIN_ID 231): ready 8.4 s, controllers active, home pose, clean shutdown → PASS. Downloads: Ministral done, Granite done, Llama in progress. Note: G1 stage-4 freeze lists artifacts/macro-m5-20261027/status.json, edited by commit 37a7e19 (2026-11-20, pre-freeze doc correction); recorded, not code, not a G1 input.
+- 2026-11-21T07:51Z [A] F1 G1 + dry runs committed and pushed (member/martin-f1 c6a37bd; verify_freeze PASS). Qwen load-only check FAILED twice on the default CUDA backend: 17/33 layers placed on GPU, then llama-server crashed 'CUDA error: shared object initialization failed' (cuda_v13, ggml_cuda_kernel_can_use_pdl, exit 0xc0000409). Same binary loaded Qwen 17/33 on 2026-11-12 with cuda_v13. No tokens generated. Plan: after the Llama pull finishes, restart the parity server with OLLAMA_LLM_LIBRARY=cuda_v12 (lab driver 570/CUDA 12.8 could only run v12 libraries; inference H) and retry. Model/settings unchanged.
+- 2026-11-21T08:05Z [A] CHECKPOINT before owner's VS Code restart. Disk free C: 14.8 GB (only drive; all outputs on C:).
+  DONE: F1 G1 PASS + D14 dry runs 36/36 and 60/60 + runner/analysis (G3), pushed member/martin-f1 c6a37bd. Gazebo smoke PASS. Qwen (56671c2a) and Ministral (1922accd) in the parity store, digests MATCH G1. Phase B adapter = native-schema-v1 (rosa-research 8713f9b) classified in PHASE_B_ITERATION_LOG.md (Granite sentence = IBM text, SHA 7e12d9b5 match → transport; Llama sentence = its own template text → transport; FLAGGED: non-vendor header line, separate system-message placement, stream:false). Acceptance runner tools/parity/acceptance_run.py written (not yet run).
+  BLOCKED 1 (GPU): every model load crashes 'CUDA error: shared object initialization failed' (exit 0xc0000409), on cuda_v13 (2x) and cuda_v12 (1x). Same binary loaded Qwen 17/33 on 2026-11-12. Zero tokens generated. Likely a GPU/driver state problem; a Windows reboot is the first thing to try. No inference possible until fixed → F1 Stage 1a, Phase B, C, D1 all waiting.
+  BLOCKED 2 (download): Granite and Llama pulls fail: 'connection aborted by the software in your host machine' on every part; traffic leaves via the GlobalProtect VPN address 140.138.83.224. Partial files kept (resumable). Suggest: disconnect the VPN (lab is down anyway), then I retry.
+  NEXT (A): after restart → load check Qwen; if OK start F1 Stage 1a (pre-authorized); retry pulls; acceptance tests Granite, Llama, Qwen, Ministral.
+- 2026-11-21T08:33Z [A] RESUME after VS Code restart. Nothing was interrupted mid-run (no trial running; pulls had been stopped). Still running: parity Ollama 0.40.6 (Windows pid 34520, :11440, no model loaded), Phoenix (WSL pid 445, :6006, healthy). Disk free C: 15.2 GB. Windows last boot 2026-11-19 01:20; VPN adapter still Up.
+  GPU diagnosis: load with num_gpu=1 (1/33 layers) also crashes 'CUDA error: shared object initialization failed' on cuda_v12 → CUDA kernel init fails on Windows regardless of memory. NVIDIA driver 32.0.15.8186 unchanged since before 2026-11-12 (when the same binary worked). Zero tokens generated. Owner action requested: full Windows restart, and VPN off for the Granite/Llama downloads.
+  Owner updates 0-4 applied/recorded: W setup (done), native-schema-v1 as Phase B adapter + classification (PHASE_B_ITERATION_LOG.md, f8e7570), PA-1 sentence = IBM text → transport, rosa-research: no code change needed so far (runs cite 8713f9b; member/martin untouched). New rule 1 (detached WSL tmux jobs with logs/PIDs in STATUS) adopted for every long job from now on.
+- 2026-11-21T08:50Z [A] RESUME after full Windows restart (boot 2026-11-21 16:41 TPE), VPN adapter Disabled. Cleared safe caches only (pip 1.9 GB, Windows temp excl. Claude dir, old crash dumps; kept llama-server.exe.28280.dmp as CUDA-crash evidence; WSL uv/pip caches): C: 17.4 → 20.9 GB free.
+  Jobs (detached; survive VS Code): Ollama 0.40.6 Windows pid 26708 (Start-Process, :11440, OLLAMA_LLM_LIBRARY=cuda_v12, log .local/parity-ollama-state/stderr-*.log); WSL keepalive Windows pid 24156; tmux 'phoenix' (Phoenix pid 460, log weekend-run-20261121/logs/phoenix-service.log); tmux 'pull' (pid 547, log logs/pull.log: Granite then Llama); tmux 'f1-stage1a' (pid 576, log logs/f1-stage1a-dev-qwen-r0.log).
+  Qwen load-only check after reboot: PASS. digest 56671c2a MATCH, 17/33 layers on GPU (same as 2026-11-12 timing study), VRAM 4883/6141 MiB loaded, load 13.7 s, size_vram 3.49 of 6.40 GB (not fully GPU-resident; lab was 33/33). Flash attention auto, KV f16. Backend library cuda_v12 (recorded deviation from the 11-12 cuda_v13; lab driver 570 implies v12).
+  F1 G1 + D14 dry run: already PASS today on this host and env (c6a37bd); not rerun. Stage 1a (pre-authorized): run stage1a-dev-qwen-r0 started 08:49Z, 36 trials (18 dev x base/new, wording f1-w-r0).
+- 2026-11-21T09:59Z (Sat 17:59 TPE) [A-chain] CHAIN START pid 2213 (resume-safe; completed gates are skipped). Disk free C: 16.62 GB.
+- 2026-11-21T09:59Z (Sat 17:59 TPE) [A-chain] F1-H started: Qwen held-out (GPU) and Sol held-out (parallel, no GPU). Disk free C: 16.62 GB.
+- 2026-11-21T10:38Z [A] Check: F1 Sol held-out COMPLETE 60/60 (109 requests); Qwen held-out 22/60. Disk C: 9.9 GB (was 16 GB at chain start): cause = Windows auto-managed pagefile grown to 10.25 GB under memory pressure (RAM free 0.6/15.7 GB; commit 24.5/25.7 GB; llama-server commit 7.4 GB). Not run outputs (runs 79 MB, Phoenix 39 MB). Pagefile only shrinks on reboot. Owner asked to close non-essential apps (Chrome etc.) to stop further growth; runners stop between trials below 3 GB.
+- 2026-11-21T11:17Z (Sat 19:17 TPE) [A-chain] F1 Qwen held-out runner exited 0. Disk free C: 9.58 GB.
+- 2026-11-21T11:33Z (Sat 19:33 TPE) [A-chain] GATE PB-granite: FAIL/STOP; {"runner_exit": 0, "scorer_exit": 0, "result": "FAIL: not adaptable under parity rules", "admitted": false, "incomplete": false, "sdk_normalization_assistance": {"raw_tool_calls": 99, "calls_with_string_encoded_list_or_object": 0}, "arms": {"macro": {"recognized_turn_rate": 0.9512195121951219, "schema_valid_rate": 0.7906976744186046, "parse_crashes": 0, "pass": false}, "primitives": {"recognized_t Disk free C: 15.46 GB.
