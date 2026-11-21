@@ -45,6 +45,7 @@ TOLERANCE = .025
 OLLAMA_KWARGS = dict(num_ctx=8192, num_predict=1024, temperature=0, seed=42, use_mmap=True,
                      streaming=False, reasoning=False, cache=False, client_kwargs={'timeout': 180})
 FROZEN_INPUTS = ['experiments/gazebo_d/runner.py', 'experiments/gazebo_d/__init__.py',
+                 'experiments/gazebo_d/job.sh', 'experiments/gazebo_d/start_detached.ps1',
                  'artifacts/gazebo-d-20261121/cases/dev.json', 'artifacts/gazebo-d-20261121/cases/heldout.json',
                  'artifacts/gazebo-d-20261121/cases/template-groups.json',
                  'artifacts/gazebo-d-20261121/schedule/dev.json', 'artifacts/gazebo-d-20261121/schedule/heldout.json',
