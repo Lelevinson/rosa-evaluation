@@ -1,7 +1,7 @@
 """A0 load-only check (owner-approved): load each model on the parity server with num_ctx 8192 and an EMPTY
 prompt (Ollama 'load a model' API: no prompt -> no generation), record /api/ps, GPU offload from the server
 log, VRAM and load time, then unload (keep_alive 0). Zero generated tokens.
-Usage: python -I load_check.py <out.json>"""
+Usage: python -I load_check.py <out.json> [model tags...]"""
 import json, subprocess, sys, time, urllib.request
 from pathlib import Path
 
@@ -35,12 +35,15 @@ def log_lines(path, start):
 
 def main():
     out = Path(sys.argv[1])
+    only = set(sys.argv[2:])
     proc = json.loads((STATE / 'process.json').read_text(encoding='utf-8-sig'))
     log = STATE / proc['stderr']
     version = call('/api/version')['version']
     tags = {m['name']: m for m in call('/api/tags')['models']}
     results = {'server_version': version, 'endpoint': BASE, 'generated_tokens': 0, 'models': {}}
     for name, (digest, lab_size, lab_layers) in G1.items():
+        if only and name not in only:
+            continue
         r = {'tag_present': name in tags, 'digest': tags.get(name, {}).get('digest'),
              'digest_match_G1': tags.get(name, {}).get('digest') == digest, 'download_size': tags.get(name, {}).get('size')}
         if not r['digest_match_G1']:
