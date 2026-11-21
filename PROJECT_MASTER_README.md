@@ -244,6 +244,29 @@ user's earlier clarification. Its immediate experiment suggestions describe that
 historical point; the M1–M5 priorities below reflect subsequent decisions.
 
 ## 2. Current verified status
+### 2026-11-21 — Parity integration Phase A audit (zero model calls)
+
+On branch `member/martin-parity` (from `freeze-2026-11-21`):
+`artifacts/parity-integration-20261121/PARITY_AUDIT.md`. The lab was unreachable, so lab items are UNKNOWN.
+
+- **G1 multi-model used identical serving and adapter for all four local models**, by the owner's 11-19
+  rule: no template workarounds, failures recorded as results.
+- **Corrections to earlier assumptions:**
+  - the 8713f9b native-schema profile is for Llama and Granite only, not Qwen;
+  - Ministral, Llama and Granite already ran Gazebo UR5e on M4 cases on 2026-11-17.
+- **What Qwen got:** Ollama's built-in `qwen3.5` renderer and parser, and development exposure (the shared
+  prompt and catalogue were built with Sol and Qwen). The exposure cannot be equalized; disclose it with every
+  cross-model result.
+- **Granite (0 recognized calls):**
+  - it never emitted `<|tool_call|>`: 73 of 76 outputs are fenced JSON, 64 with a `"function"` key;
+  - cause: its official IBM template drops the tool-format sentence whenever a system prompt is supplied;
+  - no parity-clean fix exists, so Martin decides.
+- **Llama:** Ollama's template drops the tool schemas after the first tool result.
+  - All 214 schema rejections are at turn 2 or later.
+  - The prompt shrank at turn 2 in 61 of 76 trials, never for Qwen or Ministral.
+  - A template-only fix is allowed under the parity rules.
+- **Ministral:** no gap found.
+
 ### 2026-11-21 — D12 approved; F1 classified against Levinson's work (D13–D15)
 
 No model inference. On branch `member/martin-f1`, F1 `PROTOCOL.md` §12 and §14:
