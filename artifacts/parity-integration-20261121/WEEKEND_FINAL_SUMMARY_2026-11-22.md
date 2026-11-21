@@ -18,7 +18,9 @@ Ambiguous cases: F1 24, Phase C 4, D2 16. Blinded kits (labels hidden, no rating
 - Phase C: `artifacts/parity-integration-20261121/phase-c-review-kit/` (member/martin-parity-runs)
 - D2: `artifacts/gazebo-d-20261121/d2-review-kit/` (member/martin-gazebo-runs)
 
-Send `packet/` only to Levinson. Keep `private-key.json` private. Generator: `tools/review_kits/build_kit.py`.
+Send `packet/` only to Levinson. Private keys are kept off git (local + backup folder); each kit has `KEY_SHA256.txt` so the key can be verified later without revealing it. Generator: `tools/review_kits/build_kit.py`.
+
+**Incident (2026-11-22):** the first versions of the three kits had their `private-key.json` pushed to public branches (still in git history). Nothing had been sent or rated, so all three kits were regenerated with fresh random labels; the leaked keys no longer match. The old G1 `packet-map.json` is also public but already rated, so no effect.
 
 ## Not done / designed only
 - Granite adapter iteration (no admissible fix under parity rules).
