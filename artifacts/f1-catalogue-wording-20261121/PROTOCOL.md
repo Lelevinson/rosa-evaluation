@@ -196,7 +196,7 @@ including audits. **Sol API use ≈ 118 requests in total** (proposed physical c
 | Gate | What | State |
 |---|---|---|
 | G0 | Static inspection (laptop) | **PASS** (`controls/STATIC_CHECK.json`) |
-| G1 | Scripted controls C1–C3 on the lab (zero model) | **NOT RUN.** Lab unreachable on 2026-11-21: tried 3× during Stage 0, and again at 2026-11-20T17:08:07Z (`ssh: connect to host 140.138.155.162 port 22: Connection timed out`). Per the owner's gate order, G3 and G4 were not started. Ready: LAB_PLAN §2. Now 48 cases × 2 = 96 scripted trials |
+| G1 | Scripted controls C1–C3 on the lab (zero model) | **NOT RUN.** Lab unreachable on 2026-11-21: tried 3× during Stage 0, and again at 2026-11-20T17:08:07Z (`ssh: connect to host [lab host address withheld] port 22: Connection timed out`). Per the owner's gate order, G3 and G4 were not started. Ready: LAB_PLAN §2. Now 48 cases × 2 = 96 scripted trials |
 | G2 | Owner confirms thresholds (§6) and the code-location deviation | **DONE 2026-11-21** (§12). Open: the P-f′ question (§7 note) |
 | G3 | `analysis.py` and the Stage 1 runner written and tested on control rows | pending |
 | G4 | Lab readiness check (read-only) and an agreed exclusive GPU window with the other project | pending |
