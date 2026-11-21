@@ -16,6 +16,11 @@ frozen G1 records gives Qwen/Ministral PASS, Granite FAIL A1, Llama FAIL A2, mat
 Open: whether owner exception PA-1 (Granite sentence) survives the weekend rule "no per-model instructions".
 No model results yet. Next on this track: A2 adapter work by session A; B2 Gazebo D0 design by session B.
 
+**Weekend results - 2026-11-22 (final; details in `artifacts/parity-integration-20261121/WEEKEND_FINAL_SUMMARY_2026-11-22.md` on branch `member/martin-parity-runs`).**
+F1 Qwen wording: NOT ADOPTED. Parity: Qwen/Ministral PASS, Llama PASS (native-schema-v1, adapted), Granite FAIL (double-wrapped arguments, no repair allowed).
+Gazebo D2 held-out 160/160, no censoring; macro uses fewer calls for all four models. Phase C Llama rerun 43/76 PASS (laptop, not a lab replacement).
+Ambiguous cases (F1 24, Phase C 4, D2 16) are PRELIMINARY until Levinson rates the blinded kits. Chain finished 2026-11-22 01:08 TPE.
+
 
 
 
