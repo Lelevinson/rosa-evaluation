@@ -1,4 +1,4 @@
-> Copy of the shared log `weekend-status/STATUS.md` (final copy, 164 lines, taken 2026-11-22 after B's last entry "merge demo take 12 ... Demo complete"). Session A's own log with the chain entries is [STATUS.md](STATUS.md). Both are kept whole (consolidation 2026-11-22).
+> Copy of the shared log `weekend-status/STATUS.md` (final copy, 167 lines, taken 2026-11-22 after B's last entry "merge demo take 13 ... Demo complete"; B idle). Session A's own log with the chain entries is [STATUS.md](STATUS.md). Both are kept whole (consolidation 2026-11-22).
 
 # Weekend run 2026-11-21 → 2026-11-23 — shared status (append-only)
 
@@ -164,3 +164,6 @@ Sessions: **A = runner** (worktree `wt-a-f1`, owns GPU queue, F1 branch). **B = 
 
 ## 2026-11-22 - B - merge demo take 12: Sol works again after re-sign-in
 - member/martin-merge: take 12 all 3 tasks expected path. Demo complete. GPU/Gazebo free.
+
+## 2026-11-22 - B - merge demo take 13: zoomed visual backup done
+- member/martin-merge: take 13 (3/3 expected path), DEMO_BACKUP_take8_visual.mp4 (arm fills view) preferred in runbook. Take 8 was not interrupted (numbering corrected in report). No processes left. Demo complete.
