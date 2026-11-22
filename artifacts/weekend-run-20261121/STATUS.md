@@ -1,3 +1,5 @@
+> Two logs from the same weekend: this file is session A (runner) and the chain; the shared log kept by both sessions (mostly session B, designer) is [STATUS_SHARED_B.md](STATUS_SHARED_B.md). Both are kept whole (consolidation 2026-11-22).
+
 # Weekend run 2026-11-21 → 2026-11-23 — shared status (append-only)
 
 Canonical live copy: `C:\Proj\robotics\introtorobotics\weekend-run-20261121\STATUS.md` (outside every
@@ -64,3 +66,5 @@ read-only) as a new process: `http://172.31.0.1:11440`, models `.local/parity-ol
 - 2026-11-21T17:08Z (Sun 01:08 TPE) [A-chain] CHAIN END. See weekend-run-20261121/gates/*.json. Disk free C: 21.13 GB.
 - 2026-11-22 Sun morning [A] Chain verified finished (CHAIN END 01:08 TPE), no trial jobs running (Ollama :11440 and Phoenix idle services up). Phase C Llama 43/76 PASS. Review kits built (F1 24, PC 4, D2 16). Final summary written; pushing all branches.
 - 2026-11-22 [A] INCIDENT: first review kits' private-key.json were pushed to public branches (f1, parity-runs, gazebo-runs). No ratings or sends had happened. Kits regenerated with fresh labels; new keys off git (weekend-run-20261121/private-keys + backups/review-kit-keys-20261122), SHA-256 in KEY_SHA256.txt per kit; private-key*.json gitignored. Old G1 packet-map.json is also public (already rated, no effect).
+- 2026-11-22 [A] Stopped idle services: our Ollama (pid 26708, port 11440) and Phoenix (tmux phoenix + pid 460). Demo takes 1-3 used Sol only; qwen fallback not needed (restart: .local/start-parity-ollama.ps1). C: free 19.2 GB.
+- 2026-11-22 [A] Consolidation: member/martin-consolidated built from member/martin by merge commits; all five weekend branches merged, README entries from every branch kept, this STATUS.md plus STATUS_SHARED_B.md both kept.
