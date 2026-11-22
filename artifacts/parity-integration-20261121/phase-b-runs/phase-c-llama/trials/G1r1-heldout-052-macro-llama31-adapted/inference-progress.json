@@ -1,0 +1,390 @@
+{
+  "inference": {
+    "calls": 4,
+    "known_input_tokens": 7657,
+    "known_output_tokens": 111,
+    "output_upper_bound": 111,
+    "usage_complete": true,
+    "events": [
+      {
+        "call": 1,
+        "status": "RETURNED",
+        "requested_output_allowance": 1024,
+        "usage": {
+          "input_tokens": 2026,
+          "output_tokens": 20,
+          "total_tokens": 2046
+        },
+        "finish_reason": "stop",
+        "physical_request_index": 1
+      },
+      {
+        "call": 2,
+        "status": "RETURNED",
+        "requested_output_allowance": 1024,
+        "usage": {
+          "input_tokens": 1755,
+          "output_tokens": 24,
+          "total_tokens": 1779
+        },
+        "finish_reason": "stop",
+        "physical_request_index": 2
+      },
+      {
+        "call": 3,
+        "status": "RETURNED",
+        "requested_output_allowance": 1024,
+        "usage": {
+          "input_tokens": 1900,
+          "output_tokens": 35,
+          "total_tokens": 1935
+        },
+        "finish_reason": "stop",
+        "physical_request_index": 3
+      },
+      {
+        "call": 4,
+        "status": "RETURNED",
+        "requested_output_allowance": 1024,
+        "usage": {
+          "input_tokens": 1976,
+          "output_tokens": 32,
+          "total_tokens": 2008
+        },
+        "finish_reason": "stop",
+        "physical_request_index": 4
+      }
+    ],
+    "decision_calls": 4,
+    "infrastructure_failures": 0,
+    "returned_usage_valid": true
+  },
+  "snapshot": {
+    "module_version": "0.2.0",
+    "mode": "macro",
+    "limits": {
+      "native_operations": 10,
+      "tool_attempts": 16,
+      "corrections": 3,
+      "seconds": 360.0,
+      "tolerance": 0.025
+    },
+    "catalogue": {
+      "base.zephyr": {
+        "kind": "read_only_inspection",
+        "subject": "/g1_base/checks",
+        "required_checks": {
+          "localization": [
+            "pose_fix_valid"
+          ]
+        },
+        "max_writes": 0,
+        "success_means": "every required readiness check freshly observed true",
+        "evidence_encoding": "true=1.0, false=0.0, unavailable=null"
+      },
+      "base.jasper": {
+        "kind": "read_only_inspection",
+        "subject": "/g1_base/checks",
+        "required_checks": {
+          "localization": [
+            "pose_fix_valid"
+          ],
+          "map_lease": [
+            "map_lease_valid"
+          ]
+        },
+        "max_writes": 0,
+        "success_means": "every required readiness check freshly observed true",
+        "evidence_encoding": "true=1.0, false=0.0, unavailable=null"
+      },
+      "base.mica": {
+        "kind": "read_only_inspection",
+        "subject": "/g1_base/checks",
+        "required_checks": {
+          "localization": [
+            "pose_fix_valid"
+          ],
+          "map_lease": [
+            "map_lease_valid"
+          ],
+          "energy": [
+            "reserve_sufficient"
+          ],
+          "path": [
+            "path_clear"
+          ]
+        },
+        "max_writes": 0,
+        "success_means": "every required readiness check freshly observed true",
+        "evidence_encoding": "true=1.0, false=0.0, unavailable=null"
+      },
+      "base.onyx": {
+        "kind": "read_only_inspection",
+        "subject": "/g1_base/checks",
+        "required_checks": {
+          "localization": [
+            "pose_fix_valid"
+          ],
+          "map_lease": [
+            "map_lease_valid"
+          ],
+          "energy": [
+            "reserve_sufficient"
+          ],
+          "path": [
+            "path_clear"
+          ],
+          "odometry": [
+            "odometry_consistent"
+          ],
+          "traction": [
+            "traction_sufficient"
+          ]
+        },
+        "max_writes": 0,
+        "success_means": "every required readiness check freshly observed true",
+        "evidence_encoding": "true=1.0, false=0.0, unavailable=null"
+      },
+      "base.sable": {
+        "kind": "state_change",
+        "targets": {
+          "/g1_base/pose": {
+            "x_m": 1.2,
+            "y_m": -0.6,
+            "heading_fraction": 0.25
+          }
+        },
+        "max_writes": 1
+      }
+    },
+    "events": [
+      {
+        "type": "tool",
+        "call_index": 1,
+        "name": "select_skill",
+        "input": {
+          "skill_id": "base.sable"
+        },
+        "status": "RETURNED",
+        "span_id": "539658e81b4d2a0c",
+        "actor": "model"
+      },
+      {
+        "type": "workflow_transition",
+        "state": "SELECTED",
+        "reason": "model_selected_authorized_skill",
+        "actor": "model"
+      },
+      {
+        "type": "tool",
+        "call_index": 2,
+        "name": "read_state",
+        "input": {
+          "nodes": [
+            "/g1_base/pose"
+          ]
+        },
+        "status": "RETURNED",
+        "span_id": "e80e8f626481a2e1",
+        "actor": "program"
+      },
+      {
+        "type": "tool",
+        "call_index": 3,
+        "name": "write_state",
+        "input": {
+          "node_name": "/g1_base/pose",
+          "values": {
+            "x_m": 1.2,
+            "y_m": -0.6,
+            "heading_fraction": 0.25
+          }
+        },
+        "status": "RETURNED",
+        "span_id": "d0b3d3dddd7a9d01",
+        "actor": "program"
+      },
+      {
+        "type": "validation",
+        "code": "write_prerequisite_rejected",
+        "details": {
+          "reason": "movement is not authorized for this request"
+        },
+        "attempt": 1,
+        "native_dispatch_for_rejected_call": false
+      },
+      {
+        "type": "workflow_transition",
+        "state": "NEEDS_DECISION",
+        "reason": "prerequisite_rejected_no_automatic_retry",
+        "actor": "program"
+      },
+      {
+        "type": "tool",
+        "call_index": 4,
+        "name": "read_state",
+        "input": {
+          "nodes": [
+            "/g1_base/pose"
+          ]
+        },
+        "status": "RETURNED",
+        "span_id": "1e6f4698054e7db7",
+        "actor": "model"
+      },
+      {
+        "type": "tool",
+        "call_index": 5,
+        "name": "submit_report",
+        "input": {
+          "status": "UNKNOWN",
+          "observation_id": "obs-7873c0e389e1-2"
+        },
+        "status": "RETURNED",
+        "span_id": "28be183d570a3de8",
+        "actor": "model"
+      },
+      {
+        "type": "report_reference",
+        "actor": "model",
+        "status": "UNKNOWN",
+        "observation_id": "obs-7873c0e389e1-2",
+        "accepted": false,
+        "values_supplied_by": "program_from_existing_observation"
+      },
+      {
+        "type": "evidence_reuse",
+        "actor": "shared_contract",
+        "operation_ids": [
+          2
+        ]
+      },
+      {
+        "type": "validation",
+        "code": "outcome_classification_mismatch",
+        "details": {
+          "observed_outcome": "FAILURE"
+        },
+        "attempt": 2,
+        "native_dispatch_for_rejected_call": false
+      }
+    ],
+    "operations": [
+      {
+        "operation_id": 1,
+        "kind": "read",
+        "actor": "program",
+        "status": "RETURNED",
+        "started": 29889.901072226,
+        "result": {
+          "heading_fraction": 0.0,
+          "x_m": 0.0,
+          "y_m": 0.0
+        },
+        "finished": 29889.901153203
+      },
+      {
+        "operation_id": 2,
+        "kind": "read",
+        "actor": "model",
+        "status": "RETURNED",
+        "started": 29892.616787646,
+        "result": {
+          "heading_fraction": 0.0,
+          "x_m": 0.0,
+          "y_m": 0.0
+        },
+        "finished": 29892.616899751
+      }
+    ],
+    "observations": [
+      {
+        "observed_values": {
+          "/g1_base/pose": {
+            "heading_fraction": 0.0,
+            "x_m": 0.0,
+            "y_m": 0.0
+          }
+        },
+        "evidence": [
+          {
+            "node": "/g1_base/pose",
+            "operation_id": 1,
+            "after_write": 0,
+            "acquired_monotonic": 29889.901176844,
+            "actor": "program",
+            "unavailable": null
+          }
+        ],
+        "observation_id": "obs-7873c0e389e1-1"
+      },
+      {
+        "observed_values": {
+          "/g1_base/pose": {
+            "heading_fraction": 0.0,
+            "x_m": 0.0,
+            "y_m": 0.0
+          }
+        },
+        "evidence": [
+          {
+            "node": "/g1_base/pose",
+            "operation_id": 2,
+            "after_write": 0,
+            "acquired_monotonic": 29892.616927458,
+            "actor": "model",
+            "unavailable": null
+          }
+        ],
+        "observation_id": "obs-7873c0e389e1-2"
+      }
+    ],
+    "reports": [
+      {
+        "status": "UNKNOWN",
+        "observed_values": {
+          "/g1_base/pose": {
+            "heading_fraction": 0.0,
+            "x_m": 0.0,
+            "y_m": 0.0
+          }
+        },
+        "actor": "model",
+        "accepted": false,
+        "observation_id": "obs-7873c0e389e1-2",
+        "values_supplied_by": "program_from_existing_observation"
+      }
+    ],
+    "verification": {
+      "observed_values": {
+        "/g1_base/pose": {
+          "heading_fraction": 0.0,
+          "x_m": 0.0,
+          "y_m": 0.0
+        }
+      },
+      "evidence": [
+        {
+          "node": "/g1_base/pose",
+          "operation_id": 2,
+          "after_write": 0,
+          "acquired_monotonic": 29892.616927458,
+          "actor": "model",
+          "unavailable": null
+        }
+      ],
+      "after_write": 0,
+      "goal_reached": false,
+      "actor": "shared_evidence_reuse"
+    },
+    "last_write": 0,
+    "validation_errors": 2,
+    "tool_calls": 5,
+    "selected_skill": "base.sable",
+    "workflow_state": "NEEDS_DECISION",
+    "program_managed": true,
+    "base_macro_version": "0.1.0",
+    "selected_max_writes": 1
+  },
+  "error_metadata": []
+}

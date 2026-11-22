@@ -76,7 +76,8 @@ def sha(p):
 
 
 def git(*args, cwd):
-    return subprocess.run(['git', *args], cwd=cwd, capture_output=True, text=True).stdout.strip()
+    return subprocess.run(['git', '-c', 'core.fileMode=false', '-c', 'core.autocrlf=true', *args], cwd=cwd,
+                          capture_output=True, text=True).stdout.strip()
 
 
 def research_commit():
