@@ -68,3 +68,6 @@ read-only) as a new process: `http://172.31.0.1:11440`, models `.local/parity-ol
 - 2026-11-22 [A] INCIDENT: first review kits' private-key.json were pushed to public branches (f1, parity-runs, gazebo-runs). No ratings or sends had happened. Kits regenerated with fresh labels; new keys off git (weekend-run-20261121/private-keys + backups/review-kit-keys-20261122), SHA-256 in KEY_SHA256.txt per kit; private-key*.json gitignored. Old G1 packet-map.json is also public (already rated, no effect).
 - 2026-11-22 [A] Stopped idle services: our Ollama (pid 26708, port 11440) and Phoenix (tmux phoenix + pid 460). Demo takes 1-3 used Sol only; qwen fallback not needed (restart: .local/start-parity-ollama.ps1). C: free 19.2 GB.
 - 2026-11-22 [A] Consolidation: member/martin-consolidated built from member/martin by merge commits; all five weekend branches merged, README entries from every branch kept, this STATUS.md plus STATUS_SHARED_B.md both kept.
+
+## 2026-11-22 - A - Levinson's ratings bound, results final
+- Zip kept as received (SHA-256 9e31d731...ed20), keys verified, declaration text forwarded by Martin (five items YES, AI use "no", self-reported). Frozen analyses rerun unchanged via tools/review_kits/bind_and_rerun_weekend.py. F1 NOT ADOPTED stands; D-P4 final Support; Phase C resolved. member/martin e587535. A idle.

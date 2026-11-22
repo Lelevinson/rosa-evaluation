@@ -33,3 +33,11 @@ Send `packet/` only to Levinson. Private keys are kept off git (local + backup f
 - Page file / hibernation file were removed on Windows during the weekend; I assumed the owner did this.
 
 verify_freeze output: see below, per branch.
+
+## Update 2026-11-22 (evening): ambiguous cases rated, results final
+
+This replaces every "PRELIMINARY until rated" statement above. Levinson (teammate, self-attested, AI use denied, not verified) rated all 44 ambiguous cases. Details: `artifacts/weekend-ratings-intake-20261122/INTAKE_RECEIPT.json` and the dated entry in PROJECT_MASTER_README.md.
+- F1: Qwen cleared 0 of 12 ambiguous cases under either wording; net with ambiguous cases 0; NOT ADOPTED stands (the earlier +3 was the automated screen; it disagreed with Levinson on 5 Qwen trials).
+- D2: Sol 4/4 correct, Qwen/Ministral/Llama 0/4 each; macro and primitives equal; D-P4 (Qwen inspection-first) final: Support (14 of 15).
+- Phase C Llama: the 4 cases are NO/NO, counts unchanged (43/33; primitives 23/38, macro 20/38); WITHHELD resolved, no campaign verdict is issued by the frozen layer.
+- One rater, not independent validation.
