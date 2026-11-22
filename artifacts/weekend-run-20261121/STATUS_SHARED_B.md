@@ -1,4 +1,4 @@
-> Copy of the shared log `weekend-status/STATUS.md` (162 lines at consolidation). Session A's own log with the chain entries is [STATUS.md](STATUS.md). Both are kept whole (consolidation 2026-11-22).
+> Copy of the shared log `weekend-status/STATUS.md` (final copy, 164 lines, taken 2026-11-22 after B's last entry "merge demo take 12 ... Demo complete"). Session A's own log with the chain entries is [STATUS.md](STATUS.md). Both are kept whole (consolidation 2026-11-22).
 
 # Weekend run 2026-11-21 → 2026-11-23 — shared status (append-only)
 
@@ -161,3 +161,6 @@ Sessions: **A = runner** (worktree `wt-a-f1`, owns GPU queue, F1 branch). **B = 
 
 ## 2026-11-22 - B - merge demo takes 8-11 (zoomed viewer): blocked, Sol sign-in invalid
 - member/martin-merge: takes 8-9 ran 3/3 expected path but GUI recorded black (my helper moved a dead old window); takes 10-11 no task ran (Sol invalid_grant). Camera move_to works. Needs Martin to sign in to Sol again. GPU/Gazebo free.
+
+## 2026-11-22 - B - merge demo take 12: Sol works again after re-sign-in
+- member/martin-merge: take 12 all 3 tasks expected path. Demo complete. GPU/Gazebo free.
