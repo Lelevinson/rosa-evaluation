@@ -38,6 +38,21 @@ F1 Qwen wording: NOT ADOPTED. Parity: Qwen/Ministral PASS, Llama PASS (native-sc
 Gazebo D2 held-out 160/160, no censoring; macro uses fewer calls for all four models. Phase C Llama rerun 43/76 PASS (laptop, not a lab replacement).
 Ambiguous cases (F1 24, Phase C 4, D2 16) are PRELIMINARY until Levinson rates the blinded kits. Chain finished 2026-11-22 01:08 TPE.
 
+<!-- entries carried from branch martin-f1 (consolidation 2026-11-22; nothing dropped; kept as history, not deleted) -->
+
+**Superseded by the 2026-11-22 weekend entry (F1 Stage 1b ran: verdict NOT ADOPTED).** These four lines from branch `member/martin-f1` described the state before the weekend runs. The current Results and Claims ledger sections replace them.
+
+> F1 Stage 0 (2026-11-21) is design only, with no trials, so it has no row.
+> Source checks: 100 literal strings across 37 rows, all found.
+> Ledger checks: 33 literal strings across 24 rows, all found.
+
+Old ledger row (superseded by the F1 rows in the Claims ledger below; **superseded by the 2026-11-22 weekend entry**):
+
+| Claim | Status | Basis | Source |
+|---|---|---|---|
+| The F1 catalogue wording fixes Qwen | **Not allowed** | F1 is designed but untested (Stage 0 only); no F1 model run has happened. | this README |
+
+
 > **Where to start (2026-11-21).** The current state is the dated entries at the top of
 > [section 2](#2-current-verified-status), newest first. For the report, start with
 > [Results at a glance](#results-at-a-glance-all-studies) and the
