@@ -18,12 +18,12 @@ LAB = 'docs/LAB_CONTAINER_CHECK_2026-11-20.md'
 S4 = 'artifacts/stage4-batching-completion-20261021/FINAL_REPORT_FOR_CHATGPT.md'
 SV = 'docs/QWEN_SERVING_PHASE1_REPORT_2026-11-13.md'
 PM = 'PROJECT_MASTER_README.md'
-W_F1 = 'artifacts/f1-catalogue-wording-20261121/runs/STAGE1B_ANALYSIS.json'
+W_F1 = 'artifacts/f1-catalogue-wording-20261121/runs/STAGE1B_ANALYSIS_WITH_RATINGS.json'
 W_LLA = 'artifacts/parity-integration-20261121/phase-b-runs/acceptance-llama/ACCEPTANCE_RESULT.json'
 W_LLS = 'artifacts/parity-integration-20261121/phase-b-runs/acceptance-llama/SDK_NORMALIZATION.json'
 W_GRA = 'artifacts/parity-integration-20261121/phase-b-runs/acceptance-granite/ACCEPTANCE_RESULT.json'
-W_D2 = 'artifacts/gazebo-d-20261121/runs/heldout/analysis/ANALYSIS.md'
-W_PCS = 'artifacts/parity-integration-20261121/phase-b-runs/phase-c-llama/PHASE_C_SUMMARY.json'
+W_D2 = 'artifacts/gazebo-d-20261121/runs/heldout/analysis-with-ratings/ANALYSIS.md'
+W_PCS = 'artifacts/parity-integration-20261121/phase-b-runs/phase-c-llama/PHASE_C_SUMMARY_WITH_RATINGS.json'
 
 A, Q, N = 'Allowed', 'Allowed, with the stated qualification', '**Not allowed**'
 # (claim, status, qualification / reason, [evidence files], [(file, literal check), ...])
@@ -81,9 +81,10 @@ ROWS = [
  ('The F1 wording fixed the mechanism it targeted', Q, 'Qwen inspection-first on movement types 4 → 0, but no net pass gain; the 4 → 0 count is a diagnostic, not a pass-rate claim; laptop stratum.', [W_F1], [(W_F1, '"base": 4')]),
  ('Llama 3.1 8B can be integrated under the parity rules', Q, 'Admitted with native-schema-v1 on the laptop; SDK list-string normalization (14 of 86 raw calls) is assistance and reported separately.', [W_LLA, W_LLS], [(W_LLA, '"model_pass": true'), (W_LLS, '"raw_tool_calls": 86'), (W_LLS, '"calls_with_string_encoded_list_or_object": 14')]),
  ('Granite 3.3 8B can be integrated under the parity rules', N, 'Not adaptable under the parity rules (schema-valid 0.791 / 0.809; double-wrapped arguments would need argument repair).', [W_GRA], [(W_GRA, '"model_pass": false'), (W_GRA, '"schema_valid_rate": 0.7906976744186046')]),
- ('On fresh Gazebo cases (D2) the macro cut calls for all four models without lowering passes', Q, 'Matched-pair call reduction 33–48%; macro passes ≥ primitives for Sol, Qwen and Llama, and 15 vs 16 for Ministral (not worse by the frozen rule); native operations not lower in macro was **against** for Qwen; 18 known-goal per arm, laptop stratum, ambiguous cases PRELIMINARY.', [W_D2], [(W_D2, '| 0.4783 |'), (W_D2, '| 0.3333 |')]),
+ ('On fresh Gazebo cases (D2) the macro cut calls for all four models without lowering passes', Q, 'Matched-pair call reduction 33–48%; macro passes ≥ primitives for Sol, Qwen and Llama, and 15 vs 16 for Ministral (not worse by the frozen rule); native operations not lower in macro was **against** for Qwen; 18 known-goal per arm, laptop stratum, ambiguous cases rated by Levinson (teammate, self-attested).', [W_D2], [(W_D2, '| 0.4783 |'), (W_D2, '| 0.3333 |')]),
  ('The macro helps Llama', N, 'D2 shows 8 → 11, but the Phase C rerun shows primitives 23/38 → macro 20/38; opposite directions, not pooled.', [W_D2, W_PCS], [(W_D2, '| llama | primitives | 8/18'), (W_PCS, '"PASS": 43')]),
- ('Weekend ambiguous-case results are final', N, 'PRELIMINARY until a human rates the blinded kits. Kit keys were pushed publicly once and the kits regenerated before any rating (2026-11-22).', [W_PCS], [(W_PCS, '"final_correctness_ready": false')]),
+ ('Weekend ambiguous-case results are independently validated', N, 'Rated by one teammate (Levinson, 2026-11-22); eligibility is self-attested from forwarded declaration text, not a signed file, and AI assistance was denied (self-reported, not verified). The ratings are final inputs to the frozen scorers, not external validation. Kit keys were pushed publicly once and the kits regenerated before any rating.', [W_PCS], [(W_PCS, '"final_correctness_ready": true')]),
+ ('The F1 wording is ruled out for Qwen after ambiguous cases were rated', Q, 'With the ratings from Levinson, Qwen cleared 0 of 12 ambiguous cases under either wording; net with ambiguous cases is 0; decision NOT ADOPTED stands; one rater, laptop stratum.', [W_F1], [(W_F1, '"decision": "NOT ADOPTED"'), (W_F1, '"neither": 11')]),
  ('Qwen was trained or its weights improved; JTVR or episodic memory was completed; physical-robot safety was shown; the full ROSA catalogue was benchmarked', N,
   'None of these happened (§17 closing note).', [PM], [(PM, 'memory/JTVR was completed, or physical robot safety was demonstrated')]),
 ]

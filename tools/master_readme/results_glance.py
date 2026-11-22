@@ -27,12 +27,12 @@ GQ = 'G1_QWEN_ADJUDICATED_REPORT_2026-11-20.md'
 GM = 'G1_MULTIMODEL_ADJUDICATED_REPORT_2026-11-20.md'
 F0 = 'docs/F1_STEP0_LENGTH_STOPS_2026-11-20.md'
 
-W_F1 = 'artifacts/f1-catalogue-wording-20261121/runs/STAGE1B_ANALYSIS.json'
+W_F1 = 'artifacts/f1-catalogue-wording-20261121/runs/STAGE1B_ANALYSIS_WITH_RATINGS.json'
 W_LLA = 'artifacts/parity-integration-20261121/phase-b-runs/acceptance-llama/ACCEPTANCE_RESULT.json'
 W_LLS = 'artifacts/parity-integration-20261121/phase-b-runs/acceptance-llama/SDK_NORMALIZATION.json'
 W_GRA = 'artifacts/parity-integration-20261121/phase-b-runs/acceptance-granite/ACCEPTANCE_RESULT.json'
-W_D2 = 'artifacts/gazebo-d-20261121/runs/heldout/analysis/ANALYSIS.md'
-W_PCS = 'artifacts/parity-integration-20261121/phase-b-runs/phase-c-llama/PHASE_C_SUMMARY.json'
+W_D2 = 'artifacts/gazebo-d-20261121/runs/heldout/analysis-with-ratings/ANALYSIS.md'
+W_PCS = 'artifacts/parity-integration-20261121/phase-b-runs/phase-c-llama/PHASE_C_SUMMARY_WITH_RATINGS.json'
 
 # (study, setting, backend, denominator/conditions, correctness, cost, source, [literal checks])
 ROWS = [
@@ -109,16 +109,16 @@ ROWS = [
  ('', '', 'Llama 3.1 8B', 'same', 'all 0/38 → 1/38; known-goal 0/36 → 1/36', 'calls 203 → 185', GM, ['| llama | 0/38 → 1/38 | 0/36 → 1/36 | 203 → 185 |']),
  ('F1 step 0 (2026-11-20)', 'trace classification, no runs', 'Qwen', '116 trials scanned (M4 40 + G1 76)', '12 length stops: 8 class A, 4 class C', '—', F0,
   ['| **Total** | 116 | **12** |', '| **8** (all 5 M4 + 3 G1) |', '| **4** (all G1, first call) |']),
- ('F1 Stage 1b held-out (2026-11-21, **laptop**)', 'mock F1 cases, base vs new catalogue wording; verdict **NOT ADOPTED**', 'Qwen3.5 9B', '24 known-goal pairs (60 trials/backend)', 'known-goal net 0 (15 both, 2 new-only, 2 base-only; P-a needs net ≥ 3); inspection-first 4 → 0 (diagnostic); with ambiguous cases (PRELIMINARY) net +3', 'length stops 5 → 5; no censoring', W_F1, ['"net": 0', '"both": 15', '"new_only": 2', '"base_only": 2', '"net": 3', '"holds": false']),
- ('', '', 'Sol', '24 known-goal pairs', '24/24 both wordings; net 0', 'no censoring', W_F1, ['"both": 24']),
+ ('F1 Stage 1b held-out (2026-11-21, **laptop**)', 'mock F1 cases, base vs new catalogue wording; verdict **NOT ADOPTED**', 'Qwen3.5 9B', '24 known-goal pairs (60 trials/backend)', 'known-goal net 0 (15 both, 2 new-only, 2 base-only; P-a needs net ≥ 3); inspection-first 4 → 0 (diagnostic); ambiguous cases now rated by Levinson (2026-11-22): Qwen 0 of 12 clarified correctly under either wording, so with ambiguous cases net is still 0 (15 both, 2 new-only, 2 base-only, 11 neither; the earlier automated screen had shown +3)', 'length stops 5 → 5; no censoring', W_F1, ['"net": 0', '"both": 15', '"new_only": 2', '"base_only": 2', '"neither": 11', '"holds": false', '"decision": "NOT ADOPTED"']),
+ ('', '', 'Sol', '24 known-goal pairs', '24/24 known-goal both wordings, and 6/6 ambiguous rated correct for each wording; net 0', 'no censoring', W_F1, ['"both": 24']),
  ('Parity Phase B acceptance (2026-11-21, **laptop**)', '10 tasks × 2 arms; criteria: recognized ≥ 0.90, schema-valid ≥ 0.90, 0 parse crashes', 'Llama 3.1 8B', '10 trials per arm', '**admitted (adapted, native-schema-v1)**: recognized 1.0 and schema-valid 1.0 in both arms; SDK list-string normalization is assistance (14 of 86 raw calls), reported separately', '—', W_LLA, ['"model_pass": true', '"schema_valid_rate": 1.0']),
  ('', '', 'Llama (assistance)', '86 raw tool calls', '14 calls had string-encoded list/object arguments before SDK normalization', '—', W_LLS, ['"raw_tool_calls": 86', '"calls_with_string_encoded_list_or_object": 14']),
  ('', '', 'Granite 3.3 8B', '10 trials per arm', '**not adaptable under parity rules**: schema-valid 0.791 (macro) / 0.809 (primitives), below 0.90; arguments double-wrapped, a fix would need argument repair', '—', W_GRA, ['"model_pass": false', '"schema_valid_rate": 0.7906976744186046', '"schema_valid_rate": 0.8085106382978723', '"tool_rejected_transport": 9']),
- ('Gazebo D2 held-out (2026-11-21/22, **laptop**)', 'fresh Gazebo cases, 160/160 trials, no censoring; ambiguous cases PRELIMINARY (human rating pending)', 'Sol', '18 known-goal per arm', 'primitives 18/18 → macro 18/18; macro not worse on passes.', 'calls (all attempts) 70 → 39; matched-pair call reduction 46%', W_D2, ['| sol | primitives | 18/18 | 18/18 | 0 | 70 | 41 | 18 | 0.4559 |', '| sol | macro | 18/18 | 18/18 | 0 | 39 | 41 | 18 | 0.4559 |']),
- ('', '', 'Qwen3.5 9B', '18 known-goal per arm', 'primitives 12/18 → macro 13/18; macro not worse on passes. Native-ops prediction D-P2: **against**.', 'calls (all attempts) 91 → 50; matched-pair call reduction 48%', W_D2, ['| qwen | primitives | 12/18 | 12/18 | 0 | 91 | 50 | 11 | 0.4783 |', '| qwen | macro | 13/18 | 13/18 | 0 | 50 | 49 | 11 | 0.4783 |']),
+ ('Gazebo D2 held-out (2026-11-21/22, **laptop**)', 'fresh Gazebo cases, 160/160 trials, no censoring; 16 ambiguous cases rated by Levinson 2026-11-22 (Sol 4/4 correct, Qwen, Ministral, Llama 0/4 each; macro and primitives equal)', 'Sol', '18 known-goal per arm', 'primitives 18/18 → macro 18/18; macro not worse on passes.', 'calls (all attempts) 70 → 39; matched-pair call reduction 46%', W_D2, ['| sol | primitives | 18/18 | 18/18 | 0 | 70 | 41 | 18 | 0.4559 |', '| sol | macro | 18/18 | 18/18 | 0 | 39 | 41 | 18 | 0.4559 |']),
+ ('', '', 'Qwen3.5 9B', '18 known-goal per arm', 'primitives 12/18 → macro 13/18; macro not worse on passes. Native-ops prediction D-P2: **against**. D-P4 (Qwen inspection-first) is now final: **Support**, 14 of 15 failures inspection-first (was 10 of 11 preliminary).', 'calls (all attempts) 91 → 50; matched-pair call reduction 48%', W_D2, ['| qwen | primitives | 12/18 | 12/18 | 0 | 91 | 50 | 11 | 0.4783 |', '| qwen | macro | 13/18 | 13/18 | 0 | 50 | 49 | 11 | 0.4783 |', "D-P4 (Qwen inspection-first): {'failed': 15, 'inspection_first': 14"]),
  ('', '', 'Ministral 3 8B', '18 known-goal per arm', 'primitives 16/18 → macro 15/18; macro not worse on passes.', 'calls (all attempts) 81 → 50; matched-pair call reduction 46%', W_D2, ['| ministral | primitives | 16/18 | 16/18 | 0 | 81 | 39 | 14 | 0.459 |', '| ministral | macro | 15/18 | 15/18 | 0 | 50 | 46 | 14 | 0.459 |']),
  ('', '', 'Llama 3.1 8B', '18 known-goal per arm', 'primitives 8/18 → macro 11/18; macro not worse on passes.', 'calls (all attempts) 89 → 56; matched-pair call reduction 33%', W_D2, ['| llama | primitives | 8/18 | 8/18 | 0 | 89 | 51 | 8 | 0.3333 |', '| llama | macro | 11/18 | 11/18 | 0 | 56 | 55 | 8 | 0.3333 |']),
- ('Phase C Llama rerun (2026-11-21/22, **laptop**, "adapted-integration rerun")', '76 G1 held-out cases (38 per arm), native-schema-v1; not a lab-G1 replacement', 'Llama 3.1 8B', '76 retained, 0 censored, 4 semantic judgments pending', "overall 43 PASS / 33 FAIL; **primitives 23/38 → macro 20/38** (per-arm counts taken from the file's 76 outcome rows; opposite direction to D2, where Llama went 8 → 11)", 'calls 164 → 118', W_PCS, ['"PASS": 43', '"FAIL": 33', '"calls": 164', '"calls": 118', '"retained": 38']),
+ ('Phase C Llama rerun (2026-11-21/22, **laptop**, "adapted-integration rerun")', '76 G1 held-out cases (38 per arm), native-schema-v1; not a lab-G1 replacement', 'Llama 3.1 8B', '76 retained, 0 censored, 4 ambiguous rated by Levinson (all NO/NO = FAIL, same as the automated result)', "overall 43 PASS / 33 FAIL; **primitives 23/38 → macro 20/38** (per-arm counts taken from the file's 76 outcome rows; opposite direction to D2, where Llama went 8 → 11)", 'calls 164 → 118', W_PCS, ['"PASS": 43', '"FAIL": 33', '"calls": 164', '"calls": 118', '"retained": 38', '"final_correctness_ready": true', '"semantic_judgments_pending": []']),
 ]
 
 problems = []
@@ -147,7 +147,7 @@ for study, setting, backend, den, corr, cost, src, _ in ROWS:
     name = Path(src).name
     lines.append(f'| {study} | {setting} | {backend} | {den} | {corr} | {cost} | [{name}]({src}) |')
 lines += ['', 'Weekend rows (2026-11-21/22) were run on the **laptop stratum** (RTX 4050 6 GB; Qwen only 17/33 layers on GPU) with G1 digests and settings; never compare them with lab rows. '
-  'Timing is descriptive only and not reported here. Ambiguous cases are PRELIMINARY until rated; the three review kits were regenerated after their first keys were pushed publicly (incident 2026-11-22, no ratings existed). '
+  'Timing is descriptive only and not reported here. Ambiguous cases were rated by Levinson (teammate) on 2026-11-22; eligibility is self-attested from forwarded declaration text and AI assistance was denied (self-reported), so this is not independent validation. The three review kits were regenerated after their first keys were pushed publicly (incident 2026-11-22, no ratings existed). '
   'Llama pointed in opposite directions (D2 macro better, Phase C primitives better): report both, do not pool them.']
 lines += ['', f'Source checks: {sum(len(r[7]) for r in ROWS)} literal strings across {len(ROWS)} rows, all found.', '']
 out.write_text('\n'.join(lines), encoding='utf-8', newline='\n')
