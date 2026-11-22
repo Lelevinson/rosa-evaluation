@@ -2,6 +2,25 @@
 
 Updated: **2026-11-21**. Maintained project context, decision history and evidence map.
 
+<!-- entries carried from branch martin-parity (consolidation 2026-11-22; nothing dropped) -->
+
+**Weekend run - 2026-11-21 (branch `member/martin-parity`; other branches carry their own entries).**
+Owner decision **D16 (= PX-1)**: the lab is unavailable until Monday 2026-11-23, so F1, parity and Gazebo D
+run on the laptop (RTX 4050 6 GB), with G1 digests/settings, no machine mixing, offload recorded and timing
+descriptive only. Two Claude Code sessions: A runner (`wt-a-f1`), B designer (this checkout + `wt-b-gazebo`).
+Shared log: `weekend-status/STATUS.md` (outside git; snapshots in `artifacts/weekend-run-20261121/`).
+**Gate B1 PASS (16:10, zero model calls):** 12 scratch + 10 acceptance parity tasks (leakage 22/22 OK with
+the F1 checker), frozen [acceptance criteria](artifacts/parity-integration-20261121/ACCEPTANCE_CRITERIA.md)
+(A1 recognized calls ≥ 0.90, A2 schema-valid ≥ 0.90, A3 zero parse crashes, both arms). The scorer on
+frozen G1 records gives Qwen/Ministral PASS, Granite FAIL A1, Llama FAIL A2, matching the Phase A audit.
+Open: whether owner exception PA-1 (Granite sentence) survives the weekend rule "no per-model instructions".
+No model results yet. Next on this track: A2 adapter work by session A; B2 Gazebo D0 design by session B.
+
+**Weekend results - 2026-11-22 (final; details in `artifacts/parity-integration-20261121/WEEKEND_FINAL_SUMMARY_2026-11-22.md` on branch `member/martin-parity-runs`).**
+F1 Qwen wording: NOT ADOPTED. Parity: Qwen/Ministral PASS, Llama PASS (native-schema-v1, adapted), Granite FAIL (double-wrapped arguments, no repair allowed).
+Gazebo D2 held-out 160/160, no censoring; macro uses fewer calls for all four models. Phase C Llama rerun 43/76 PASS (laptop, not a lab replacement).
+Ambiguous cases (F1 24, Phase C 4, D2 16) are PRELIMINARY until Levinson rates the blinded kits. Chain finished 2026-11-22 01:08 TPE.
+
 > **Where to start (2026-11-21).** The current state is the dated entries at the top of
 > [section 2](#2-current-verified-status), newest first. For the report, start with
 > [Results at a glance](#results-at-a-glance-all-studies) and the
